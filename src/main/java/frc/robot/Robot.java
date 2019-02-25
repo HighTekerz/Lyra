@@ -18,6 +18,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.subsystems.MultiArm;
 import frc.robot.subsystems.Sensors;
+import frc.robot.tekerz.utilities.L;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -147,6 +148,7 @@ public class Robot extends TimedRobot {
     Robot.Subsystems.multiArm.log();
     Robot.Subsystems.drivetrain.log();
     Robot.Subsystems.habLifter.log();
+    L.ogSD("dipStick Dpad POV", Robot.oi.dipStick.getPOV(0));
   }
 
 }

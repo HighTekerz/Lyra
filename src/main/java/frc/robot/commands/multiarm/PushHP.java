@@ -5,12 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hablifter;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DeployArms extends Command {
-  public DeployArms() {
+public class PushHP extends Command {
+  public PushHP() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }

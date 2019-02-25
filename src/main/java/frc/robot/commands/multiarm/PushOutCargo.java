@@ -5,19 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.elevator;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class SetHeight extends Command {
-  private double height = 0.0;
-
-  private SetHeight() {}
-  public SetHeight(double height) {
+public class PushOutCargo extends Command {
+  public PushOutCargo() {
     // Use requires() here to declare subsystem dependencies
-    this.height = height;
-    requires(Robot.Subsystems.elevator);
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time

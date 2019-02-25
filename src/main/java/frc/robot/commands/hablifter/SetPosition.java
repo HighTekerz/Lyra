@@ -5,14 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.elevator;
+package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class LowHatch extends Command {
-  public LowHatch() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class SetPosition extends Command {
+  private double position = 0.0;
+
+  // public setPosition() {
+    
+  // }
+
+  public SetPosition(double position) {
+    this.position = position;
+    requires(Robot.Subsystems.habLifter);
   }
 
   // Called just before this Command runs the first time

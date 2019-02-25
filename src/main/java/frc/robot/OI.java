@@ -21,7 +21,7 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-
+        
     }
 
     public double leftStickY() {
