@@ -7,11 +7,14 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.tekerz.PIDF;
+import frc.robot.tekerz.utilities.L;
 
 /**
  * Add your docs here.
@@ -19,10 +22,16 @@ import frc.robot.RobotMap;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
   TalonSRX 
     liftLead = RobotMap.Talons.liftLead,
     liftFollower = RobotMap.Talons.liftFollower;
+
+  double 
+    p = .01,
+    i = 0.0,
+    d = 0.001,
+    f = 0.0;
+  PIDF pid = new PIDF(p, i, d);
 
   public Elevator() {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
@@ -30,12 +39,30 @@ public class Elevator extends Subsystem {
     liftFollower.configAllSettings(config);
 
     liftFollower.follow(liftLead);
+
+    pid.setIMax(.5);
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public double getEncoder() {
+    return liftLead.getSelectedSensorPosition();
+  }
+
+  public void setSetpoint(double setpoint) {
+    pid.setSetpoint(setpoint);
+    pid.start();
+  }
+
+  public void executePID() {
+    double speed = pid.loop(this.getEncoder());
+    L.ogSD("PID Sensor", this.getEncoder());
+    L.ogSD("PID ouput", speed);
+    liftLead.set(ControlMode.PercentOutput, speed);
   }
 
   public void log() {

@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.test;
 
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.tekerz.L;
+import frc.robot.tekerz.utilities.L;
 
 public class TestSparkMotors extends Command {
   CANSparkMax spark;
@@ -20,9 +20,10 @@ public class TestSparkMotors extends Command {
 
   private TestSparkMotors() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.Subsystems.sparkSub);
-    requires(Robot.Subsystems.talonSub);
-    requires(Robot.Subsystems.talonEncoderSub);
+    requires(Robot.Subsystems.drivetrain);
+    requires(Robot.Subsystems.elevator);
+    requires(Robot.Subsystems.habLifter);
+    requires(Robot.Subsystems.multiArm);
   }
 
   public TestSparkMotors(CANSparkMax spark, String name) {
@@ -60,9 +61,9 @@ public class TestSparkMotors extends Command {
     // }
 
     if (Robot.oi.getButtonB()) {
-      spark.set(Robot.oi.getLeftY() / 10.0);
+      spark.set(Robot.oi.getLeftStickY() / 10.0);
     } else if (Robot.oi.getButtonY()) {
-      spark.set(Robot.oi.getLeftY());      
+      spark.set(Robot.oi.getLeftStickY());      
     } else {
       spark.set(0.0);
     }

@@ -74,7 +74,9 @@ public class RobotMap {
 
   public static class Switches {
     public static DigitalInput
-      cargoSensor = new DigitalInput(0);
+      hPSensor0 = new DigitalInput(0),
+      hPSensor1 = new DigitalInput(1),
+      cargoSensor = new DigitalInput(2);
   }
 
 }

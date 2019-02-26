@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.test;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -13,15 +13,17 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.tekerz.L;
+import frc.robot.tekerz.utilities.L;
 
 public class TestTalonMotors extends Command {
-  TalonSRX talon = RobotMap.Talons.testTalonEncoder;
+  TalonSRX talon;
+  TalonSRX talonFollower;
   public TestTalonMotors() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.Subsystems.sparkSub);
-    requires(Robot.Subsystems.talonSub);
-    requires(Robot.Subsystems.talonEncoderSub);
+    requires(Robot.Subsystems.drivetrain);
+    requires(Robot.Subsystems.elevator);
+    requires(Robot.Subsystems.habLifter);
+    requires(Robot.Subsystems.multiArm);
   }
 
   public TestTalonMotors(TalonSRX talon, String name) {
@@ -54,9 +56,9 @@ public class TestTalonMotors extends Command {
     // }
 
     if (Robot.oi.getButtonB()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftY() / 10.0);
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY() / 10.0);
     } else if (Robot.oi.getButtonY()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftY());      
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY());
     } else {
       talon.set(ControlMode.PercentOutput, 0.0);
     }

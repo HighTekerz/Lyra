@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,11 +25,27 @@ public class OI {
         
     }
 
-    public double leftStickY() {
+    public double getLeftStickY() {
         return -dipStick.getRawAxis(1);
     }
 
-    public double rightStickX() {
+    public double getRightStickY() {
+        return -dipStick.getY(Hand.kRight);
+    }
+
+    public double getRightStickX() {
         return dipStick.getRawAxis(4);
     }
-}
+
+    public boolean getButtonA() {
+        return dipStick.getAButton();
+      }
+    
+      public boolean getButtonB() {
+        return dipStick.getBButton();
+      }
+    
+      public boolean getButtonY() {
+        return dipStick.getYButton();
+      }
+    }
