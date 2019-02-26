@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DoNothing;
+import frc.robot.commands.test.AddTestCommands;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
@@ -51,6 +52,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Do Nothing", new DoNothing());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    SmartDashboard.putData(new AddTestCommands());
   }
 
   /**
