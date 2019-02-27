@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
@@ -32,6 +33,8 @@ public class MultiArm extends Subsystem {
     intake = RobotMap.Talons.intake;
 
   DigitalInput
+    hPSensor0 = RobotMap.Switches.hPSensor0,
+    hPSensor1 = RobotMap.Switches.hPSensor1,
     cargoSensor = RobotMap.Switches.cargoSensor;
 
   public MultiArm() {
@@ -43,6 +46,42 @@ public class MultiArm extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public boolean hasCargo() {
+    return cargoSensor.get();
+  }
+
+  public boolean hasHP() {
+    return (this.hPSensor0.get() || this.hPSensor1.get());
+  }
+
+  public void runIntake(double speed) {
+    this.intake.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void intakeFlapUp() {
+    this.intakeFlap.set(true);
+  }
+
+  public void intakeFlapDown() {
+    this.intakeFlap.set(false);
+  }
+
+  public void hPFlapUp() {
+    this.hPFlap.set(true);
+  }
+
+  public void hPFlapDown() {
+    this.hPFlap.set(false);
+  }
+
+  public void hPPusherOut() {
+    this.hPPusher.set(true);
+  }
+
+  public void hPPusherIn() {
+    this.hPPusher.set(false);
   }
 
   public void log() {

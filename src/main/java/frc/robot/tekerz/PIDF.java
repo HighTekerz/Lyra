@@ -7,6 +7,10 @@
 
 package frc.robot.tekerz;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -22,7 +26,7 @@ import edu.wpi.first.wpilibj.Timer;
  * set to 0
  * 
  */
-public class PIDF {
+public class PIDF extends Thread {
     enum FType {
         CONSTANT,
         SPEED_DEPENDENT,
@@ -30,16 +34,24 @@ public class PIDF {
     }
     double p,i,d,f;
     PIDF.FType fType = FType.CONSTANT;
-    double
+    double //system parameters
         iMax = Double.MAX_VALUE,
+        setpoint = 0.0,
+        motorFullReverse = -1.0,
+        motorFullStop = 0.0,
+        motorFullForward = 1.0,
+        motorForwardRange = 1.0,
+        rampRateMax = 0.0,
+        sensorMin = 0.0,
+        sensorMax = 0.0,
+        sensorAtTop = 0.0,
+        sensorCountPerDegree = 0.0;
+
+    double //calculation assists
         error = 0.0, 
         accumulatedError = 0.0,
         previousError = 0.0,
         changeInError = 0.0,
-        setpoint = 0.0,
-        motorStopValue = 0.0,
-        motorMaxValue = 1.0,
-        rampRateMax = 0.0,
         output = 0.0,
         lastOutput = 0.0,
         changeInOutputRate = 0.0,
@@ -48,8 +60,9 @@ public class PIDF {
         timeLast = 0.0,
         fPart = 0.0;
 
-    Timer timer = new Timer();
-    
+    Consumer<Double> outputMethod;
+    Supplier<Double> feedbackMethod;
+
     public PIDF(double p, double i, double d) {
         this.setPIDF(p, i, d);
     }
@@ -60,12 +73,32 @@ public class PIDF {
         this.d = d;
     }
 
+    public void setOutputMethod(Consumer<Double> setter) {
+        this.outputMethod = setter;
+    }
+
+    public void setOutputMethod(Consumer<Double> setter, double fullReverse, double fullStop, double fullForward) {
+        this.motorFullForward = fullForward;
+        this.motorFullStop = fullStop;
+        this.motorFullReverse = fullReverse;
+        this.motorForwardRange = fullForward - fullStop;
+        this.outputMethod = setter;
+    }
+
+    public void setFeedbackMethod(Supplier<Double> getter, double minReading, double maxReading) {
+        this.sensorMin = minReading;
+        this.sensorMax = maxReading;
+        this.feedbackMethod = getter;
+    }
+
     public void setFConstant (double f) {
         this.fType = FType.CONSTANT;
         this.f = f;
     }
 
-    public void setFGravityArm(double f, double sensorAtTop, double sensorAtBottom, double motorValueAt90) {
+    public void setFGravityArm(double f, double sensorAtTop, double countPerDegree) {
+        this.sensorAtTop = sensorAtTop;
+        this.sensorCountPerDegree = countPerDegree;
         this.fType = FType.GRAVITY_ARM;
         this.f = f;
     }
@@ -91,9 +124,15 @@ public class PIDF {
             changeInOutputRate =
             previousError = 
             0.0;
-        timer.reset();
-        timer.start();
-        timeLast = timer.get();
+        timeLast = time();
+        while (true) {
+            // the magic!
+            this.outputMethod.accept(loop(this.feedbackMethod.get()));
+        }
+    }
+
+    private double time() {
+        return RobotController.getFPGATime() / 1000.0;
     }
 
     /**
@@ -102,7 +141,7 @@ public class PIDF {
      * @return motor output
      */
     public double loop(double sensorData) {
-        timeNow = timer.get();
+        timeNow = time();
         elapsedTime = timeNow - timeLast;
         timeLast = timeNow; // save for next time
 
@@ -115,9 +154,11 @@ public class PIDF {
 
         switch (this.fType) {
             case SPEED_DEPENDENT:
-                //TODO: make this scale correctly
+                fPart = (sensorMax - this.setpoint) / (sensorMax - sensorMin) * this.motorFullForward;
                 break;
             case GRAVITY_ARM:
+                // might need to divide by error
+                fPart = Math.sin(this.sensorAtTop - this.setpoint);
                 break;
             case CONSTANT:
                 fPart = f;
