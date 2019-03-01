@@ -9,6 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.commands.multiarm.CargoCollect;
+import frc.robot.commands.multiarm.CargoEject;
+import frc.robot.tekerz.utilities.TriggerButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,7 +25,11 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-        
+        TriggerButton leftTriggerButton = new TriggerButton(dipStick, LEFT_TRIGGER) ;
+        leftTriggerButton.whileHeld(new CargoEject());
+
+        TriggerButton rightTriggerButton = new TriggerButton(dipStick, RIGHT_TRIGGER);
+        rightTriggerButton.whileHeld(new  CargoCollect());
     }
 
     public double getLeftStickY() {
@@ -48,4 +55,5 @@ public class OI {
       public boolean getButtonY() {
         return dipStick.getYButton();
       }
+
     }

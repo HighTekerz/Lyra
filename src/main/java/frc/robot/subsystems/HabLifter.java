@@ -27,8 +27,8 @@ public class HabLifter extends Subsystem {
   // here. Call these from Commands.
 
   TalonSRX
-    habLifterRollingLead = RobotMap.Talons.habLifterRollingLead,
-    habLifterRollingFollower = RobotMap.Talons.habLifterRollingFollower;
+    habLifterRollingLead = RobotMap.Talons.habLifterWheelLead,
+    habLifterRollingFollower = RobotMap.Talons.habLifterWheelFollower;
 
   CANSparkMax
     habLifterArmsLead = RobotMap.Sparks.habLifterArmsLead,
@@ -55,6 +55,8 @@ public class HabLifter extends Subsystem {
     habLifterRollingFollower.follow(habLifterRollingLead);
 
     pid.setIMax(.5);
+
+    habLifterArmsFollower.follow(habLifterArmsLead);
   }
 
   @Override

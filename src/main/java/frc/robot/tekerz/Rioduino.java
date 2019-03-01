@@ -29,6 +29,4 @@ public class Rioduino {
 		int pt = output.indexOf((char)255);
 		return (String) output.subSequence(0, pt < 0 ? 0 : pt);
 	}
-	
-	
 }

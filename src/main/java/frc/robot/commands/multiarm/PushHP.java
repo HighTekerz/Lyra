@@ -8,8 +8,11 @@
 package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class PushHP extends Command {
+  private boolean amIFinished = false;
+
   public PushHP() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -18,17 +21,24 @@ public class PushHP extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    amIFinished = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (timeSinceInitialized() < 0.5) {
+      Robot.Subsystems.multiArm.hPPusherIn();
+    } else {
+      Robot.Subsystems.multiArm.hPPusherIn();
+      amIFinished = true;
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return amIFinished;
   }
 
   // Called once after isFinished returns true

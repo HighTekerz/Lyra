@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.drivetrain.DriveWithJoy;
+import frc.robot.tekerz.utilities.L;
 
 public class Drivetrain extends Subsystem {
   CANSparkMax 
@@ -26,6 +27,7 @@ public class Drivetrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new DriveWithJoy());
+    L.ogSD("DriveWithJoy", this);
   }
 
   public Drivetrain() {

@@ -29,7 +29,7 @@ public class DriveWithJoy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drivetrain.setWheelSpeed(oi.getLeftStickY(), oi.getRightStickY());
+    drivetrain.arcadeDrive(oi.getLeftStickY(), oi.getRightStickX());
   }
 
   // Make this return true when this Command no longer needs to run execute()

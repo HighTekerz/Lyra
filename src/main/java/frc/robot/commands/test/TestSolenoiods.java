@@ -5,19 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.test;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.tekerz.utilities.L;
 
-public class CollectHatchFloor extends Command {
-  public CollectHatchFloor() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class TestSolenoiods extends Command {
+  public TestSolenoiods() {
+    requires(Robot.Subsystems.multiArm);
+    requires(Robot.Subsystems.habLifter);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run

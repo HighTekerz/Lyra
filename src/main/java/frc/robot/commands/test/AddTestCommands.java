@@ -25,12 +25,12 @@ public class AddTestCommands extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putData(new TestSparkMotors(RobotMap.Sparks.habLifterArmsLead, "hablifter arms"));
-    SmartDashboard.putData(new TestSparkMotors(RobotMap.Sparks.leftMotorLead, "left drive"));
-    SmartDashboard.putData(new TestSparkMotors(RobotMap.Sparks.rightMotorLead, "right drive"));
-    SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.habLifterRollingLead, "hablifter wheels"));
-    SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.intake, "cargo intake"));
-    SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.liftLead, "elevator"));
+    SmartDashboard.putData(new TestSparkMotors(RobotMap.Sparks.habLifterArmsLead, "5,6 hablifter arms"));
+    SmartDashboard.putData(new TestSparkMotors(RobotMap.Sparks.leftMotorLead, "1,3 left drive"));
+    SmartDashboard.putData(new TestSparkMotors(RobotMap.Sparks.rightMotorLead, "2,4 right drive"));
+    SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.habLifterWheelLead, "7,8 hablifter wheels"));
+    SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.intake, "11 cargo intake"));
+    SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.liftLead, "9, 10 elevator"));
   }
 
   // Make this return true when this Command no longer needs to run execute()

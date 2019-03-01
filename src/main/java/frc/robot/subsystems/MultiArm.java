@@ -27,7 +27,7 @@ public class MultiArm extends Subsystem {
     intakeFlap = RobotMap.Pneumatics.intakeFlap,
     hPFlap = RobotMap.Pneumatics.hPFlap,
     hPPusher = RobotMap.Pneumatics.hPPusher,
-    hPStabilizer = RobotMap.Pneumatics.hPStabilizer;
+    hPFinger = RobotMap.Pneumatics.hPFinger;
 
   TalonSRX
     intake = RobotMap.Talons.intake;
@@ -82,6 +82,18 @@ public class MultiArm extends Subsystem {
 
   public void hPPusherIn() {
     this.hPPusher.set(false);
+  }
+
+  public void setIntakeSpeed(double speed){
+    intake.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setFingerUp(){
+    hPFinger.set(true);
+  }
+
+  public void setFingerDown(){
+    hPFinger.set(false);
   }
 
   public void log() {

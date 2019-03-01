@@ -23,11 +23,13 @@ import edu.wpi.first.wpilibj.Solenoid;
  * floating around.
  */
 public class RobotMap {
+  // public static int PCM_ON_ARM = 30;
+  // public static int PCM_ON_MAIN = 31;
 
   public static class Talons {
     public static TalonSRX 
-      habLifterRollingLead = new TalonSRX(7),
-      habLifterRollingFollower = new TalonSRX(8),
+      habLifterWheelLead = new TalonSRX(7),
+      habLifterWheelFollower = new TalonSRX(8),
       liftLead = new TalonSRX(9),
       liftFollower = new TalonSRX(10),
       intake = new TalonSRX(11);
@@ -36,23 +38,26 @@ public class RobotMap {
 
   public static class Sparks {
     public static CANSparkMax 
-      rightMotorLead = new CANSparkMax(1, MotorType.kBrushless),
-      rightMotorFollower = new CANSparkMax(1, MotorType.kBrushless),
+      rightMotorLead = new CANSparkMax(2, MotorType.kBrushless),
+      rightMotorFollower = new CANSparkMax(4, MotorType.kBrushless),
       leftMotorLead = new CANSparkMax(1, MotorType.kBrushless),
-      leftMotorFollower = new CANSparkMax(1, MotorType.kBrushless),
-      habLifterArmsLead = new CANSparkMax(1, MotorType.kBrushless),
-      habLifterArmsFollower = new CANSparkMax(1, MotorType.kBrushless);
+      leftMotorFollower = new CANSparkMax(3, MotorType.kBrushless),
+      habLifterArmsLead = new CANSparkMax(5, MotorType.kBrushless),
+      habLifterArmsFollower = new CANSparkMax(6, MotorType.kBrushless);
 
   }
 
   public static class Pneumatics {
+    public static int PCM_ON_ARM = 30;
+    public static int PCM_ON_MAIN = 31;
+
     public static Solenoid
-      intakeFlap = new Solenoid(30,0),
-      hPFlap = new Solenoid(30,1),
-      hPPusher = new Solenoid(30,2),
-      hPStabilizer = new Solenoid(30,3),
-      habLifterLegs1 = new Solenoid(31,0),
-      habLifterLegs2 = new Solenoid(31,1);
+      intakeFlap = new Solenoid(PCM_ON_ARM,2),
+      hPFlap = new Solenoid(PCM_ON_ARM,3),
+      hPPusher = new Solenoid(PCM_ON_ARM,4),
+      hPFinger = new Solenoid(PCM_ON_ARM,5),
+      habLifterLegs1 = new Solenoid(PCM_ON_MAIN,0),
+      habLifterLegs2 = new Solenoid(PCM_ON_MAIN,1);
   }
 
   public static class Analog {

@@ -31,11 +31,6 @@ public class TestSparkMotors extends Command {
     this.spark = spark;
   }
 
-  public TestSparkMotors(CANSparkMax lead, CANSparkMax follow, String name) {
-    this(lead, name);
-    this.sparkFollow = follow;
-  }
-
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {

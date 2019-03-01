@@ -5,30 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.elevator;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.tekerz.utilities.L;
 
-public class SetHeight extends Command {
-  private double height = 0.0;
-
-  @SuppressWarnings("unused")
-  private SetHeight() {}
-  public SetHeight(double height) {
-    // Use requires() here to declare subsystem dependencies
-    this.height = height;
-    requires(Robot.Subsystems.elevator);
+public class CargoEject extends Command {
+  public CargoEject() {
+    requires(Robot.Subsystems.multiArm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.Subsystems.multiArm.setIntakeSpeed(-0.5);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,11 +37,13 @@ public class SetHeight extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
   }
 }
