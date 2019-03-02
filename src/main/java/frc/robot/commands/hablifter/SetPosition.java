@@ -9,6 +9,7 @@ package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.tekerz.utilities.L;
 
 public class SetPosition extends Command {
   private double position = 0.0;
@@ -25,6 +26,7 @@ public class SetPosition extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run

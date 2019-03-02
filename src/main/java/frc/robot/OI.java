@@ -30,6 +30,8 @@ public class OI {
 
         TriggerButton rightTriggerButton = new TriggerButton(dipStick, RIGHT_TRIGGER);
         rightTriggerButton.whileHeld(new  CargoCollect());
+
+        
     }
 
     public double getLeftStickY() {

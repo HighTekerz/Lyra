@@ -22,6 +22,8 @@ import frc.robot.tekerz.utilities.L;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  public static double ticksPerInch = 360;
+
   TalonSRX 
     liftLead = RobotMap.Talons.liftLead,
     liftFollower = RobotMap.Talons.liftFollower;
@@ -45,8 +47,6 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 
   public double getEncoder() {
