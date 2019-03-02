@@ -13,17 +13,17 @@ import frc.robot.Robot;
 import frc.robot.tekerz.utilities.L;
 
 public class TestSolenoiods extends Command {
-  private Solenoid solenoid;
+  private Solenoid testSolenoid;
 
   private TestSolenoiods() {
     requires(Robot.Subsystems.multiArm);
     requires(Robot.Subsystems.habLifter);
   }
 
-  public TestSolenoiods(Solenoid s, String name) {
+  public TestSolenoiods(Solenoid testSolenoid, String name){
     this();
     this.setName(name);
-    this.solenoid = s;
+    this.testSolenoid = testSolenoid;
   }
 
   // Called just before this Command runs the first time
@@ -35,10 +35,10 @@ public class TestSolenoiods extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.oi.getButtonX()) {
-      this.solenoid.set(true);
-    } else {
-      this.solenoid.set(false);
+    if(Robot.oi.getButtonA()){
+      testSolenoid.set(true);
+    } else if(Robot.oi.getButtonB()){
+      testSolenoid.set(false);
     }
   }
 
@@ -51,11 +51,13 @@ public class TestSolenoiods extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
   }
 }

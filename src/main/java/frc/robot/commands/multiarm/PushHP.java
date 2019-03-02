@@ -9,19 +9,20 @@ package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.tekerz.utilities.L;
 
 public class PushHP extends Command {
   private boolean amIFinished = false;
 
   public PushHP() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.Subsystems.multiArm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     amIFinished = false;
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run

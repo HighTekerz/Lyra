@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.tekerz.utilities.L;
 
-public class HatchFlapDown extends Command {
-  public HatchFlapDown() {
+public class CargoArmPosition extends Command {
+  private CargoArmPosition() {
     requires(Robot.Subsystems.multiArm);
   }
+
+
 
   // Called just before this Command runs the first time
   @Override
@@ -25,7 +27,7 @@ public class HatchFlapDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.multiArm.hPFlapDown();
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

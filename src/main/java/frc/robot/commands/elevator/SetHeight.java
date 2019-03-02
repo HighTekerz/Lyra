@@ -9,21 +9,28 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.tekerz.utilities.L;
 
 public class SetHeight extends Command {
-  private double height = 0.0;
+  private double 
+    targetHeightInInches = 0.0,
+	  targetHeight = 0.0;
+
+  private boolean isFinished;
 
   @SuppressWarnings("unused")
   private SetHeight() {}
-  public SetHeight(double height) {
+  public SetHeight(double targetHeightInInches) {
     // Use requires() here to declare subsystem dependencies
-    this.height = height;
+    this.targetHeightInInches = targetHeightInInches;
     requires(Robot.Subsystems.elevator);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+		L.ogCmdInit(this);
+		isFinished = false;    	
   }
 
   // Called repeatedly when this Command is scheduled to run

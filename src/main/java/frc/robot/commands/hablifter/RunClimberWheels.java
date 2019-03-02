@@ -8,16 +8,18 @@
 package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.tekerz.utilities.L;
 
-public class RollHome extends Command {
-  public RollHome() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class RunClimberWheels extends Command {
+  public RunClimberWheels() {
+    requires(Robot.Subsystems.habLifter);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run
