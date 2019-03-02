@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -26,13 +27,16 @@ public class Drivetrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new DriveWithJoy());
-    L.ogSD("DriveWithJoy", this);
+    // setDefaultCommand(new DriveWithJoy());
+    // L.ogSD("DriveWithJoy", this);
   }
 
   public Drivetrain() {
     rightMotorFollower.follow(rightMotorLead);
     leftMotorFollower.follow(leftMotorLead);
+
+    rightMotorLead.setInverted(true);
+    rightMotorFollower.setInverted(true);
   }
 
   public void setWheelSpeed(double leftSpeed, double rightSpeed){

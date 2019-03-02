@@ -46,14 +46,19 @@ public class OI {
 
     public boolean getButtonA() {
         return dipStick.getAButton();
-      }
-    
-      public boolean getButtonB() {
-        return dipStick.getBButton();
-      }
-    
-      public boolean getButtonY() {
-        return dipStick.getYButton();
-      }
-
     }
+    
+    public boolean getButtonB() {
+        return dipStick.getBButton();
+    }
+
+    public boolean getButtonY() {
+        return dipStick.getYButton();
+    }
+
+    public boolean getButtonX() {
+        return dipStick.getXButton();
+    }
+
+
+}

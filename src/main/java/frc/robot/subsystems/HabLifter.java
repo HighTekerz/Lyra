@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.CANEncoder;
@@ -51,12 +52,17 @@ public class HabLifter extends Subsystem {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
     habLifterRollingLead.configAllSettings(config);
     habLifterRollingFollower.configAllSettings(config);
+    habLifterRollingFollower.setInverted(true);
 
     habLifterRollingFollower.follow(habLifterRollingLead);
 
     pid.setIMax(.5);
 
-    habLifterArmsFollower.follow(habLifterArmsLead);
+    habLifterArmsLead.restoreFactoryDefaults();
+    habLifterArmsFollower.restoreFactoryDefaults();
+    habLifterArmsLead.setInverted(false);
+    habLifterArmsFollower.setInverted(false);
+    // habLifterArmsFollower.follow(habLifterArmsLead);
   }
 
   @Override

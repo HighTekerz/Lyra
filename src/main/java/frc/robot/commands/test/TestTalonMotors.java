@@ -57,6 +57,8 @@ public class TestTalonMotors extends Command {
 
     if (Robot.oi.getButtonB()) {
       talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY() / 10.0);
+    } else if (Robot.oi.getButtonA()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY() / 5.0);      
     } else if (Robot.oi.getButtonY()) {
       talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY());
     } else {

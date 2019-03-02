@@ -7,14 +7,23 @@
 
 package frc.robot.commands.test;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.tekerz.utilities.L;
 
 public class TestSolenoiods extends Command {
-  public TestSolenoiods() {
+  private Solenoid solenoid;
+
+  private TestSolenoiods() {
     requires(Robot.Subsystems.multiArm);
     requires(Robot.Subsystems.habLifter);
+  }
+
+  public TestSolenoiods(Solenoid s, String name) {
+    this();
+    this.setName(name);
+    this.solenoid = s;
   }
 
   // Called just before this Command runs the first time
@@ -26,6 +35,11 @@ public class TestSolenoiods extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (Robot.oi.getButtonX()) {
+      this.solenoid.set(true);
+    } else {
+      this.solenoid.set(false);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
