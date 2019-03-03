@@ -31,6 +31,7 @@ public class HabLifter extends Subsystem {
   public static final double FULL_HOLD_POWER = 0.2;
   public static final double DEGREES_PER_ROTATION = 90.0 / 32.0;
   public static final double START_DEGREES_OFF_TDC = 0.0;
+  public static final double TICKS_PER_INCH = .036;
 
   TalonSRX
     habLifterRollingLead = RobotMap.Talons.habLifterWheelLead,

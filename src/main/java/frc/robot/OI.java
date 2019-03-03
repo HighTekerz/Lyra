@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.drivetrain.DriveForDistance;
 import frc.robot.commands.drivetrain.TurnToDegree;
+import frc.robot.commands.elevator.SetHeight;
+import frc.robot.commands.hablifter.SetPosition;
 import frc.robot.commands.multiarm.CargoCollect;
 import frc.robot.commands.multiarm.CargoEject;
 import frc.robot.commands.multiarm.HatchFlapDown;
@@ -44,6 +46,12 @@ public class OI {
         
         Button hPFlapUp = new JoystickButton(dipStick, B_BUTTON);
         hPFlapUp.whenPressed(new HatchFlapUp());
+
+        Button elevatorToFiveInches = new JoystickButton(dipStick, Y_BUTTON);
+        elevatorToFiveInches.whenPressed(new SetHeight(5));
+
+        Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
+        habArmToMinusTen.whenPressed(new SetPosition(-10));
 
         Button driveFive = new DpadButton(dipStick, 0, 0);
         driveFive.whenPressed(new DriveForDistance(5.0, 0.3));

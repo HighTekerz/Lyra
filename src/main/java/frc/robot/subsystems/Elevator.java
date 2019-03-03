@@ -27,7 +27,7 @@ public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public static double MOTOR_HOLD_VALUE = 0.1;
-  public static double TICKS_PER_INCH = 360;
+  public static double TICKS_PER_INCH = .036;
 
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 
