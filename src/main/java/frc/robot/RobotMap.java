@@ -48,7 +48,8 @@ public class RobotMap {
   }
 
   public static class Pneumatics {
-    public static int PCM_ON_ARM = 30;
+    public static int PCM_ON_ARM = 31;
+    // public static int PCM_ON_ARM = 30;
     public static int PCM_ON_MAIN = 31;
 
     public static Solenoid
@@ -74,7 +75,7 @@ public class RobotMap {
 
   public static class Pigeon {
     public static PigeonIMU
-      imu = new PigeonIMU(RobotMap.Talons.intake);
+      imu = new PigeonIMU(RobotMap.Talons.liftFollower);
   }
 
   public static class Switches {

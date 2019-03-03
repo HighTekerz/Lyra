@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putData(new AddTestCommands());
+    SmartDashboard.putData(Scheduler.getInstance());
   }
 
   /**
@@ -150,6 +151,7 @@ public class Robot extends TimedRobot {
     Robot.Subsystems.multiArm.log();
     Robot.Subsystems.drivetrain.log();
     Robot.Subsystems.habLifter.log();
+    L.ogSD("Dipstick right joy X value", Robot.oi.getRightStickX());
     L.ogSD("dipStick Dpad POV", Robot.oi.dipStick.getPOV(0));
   }
 

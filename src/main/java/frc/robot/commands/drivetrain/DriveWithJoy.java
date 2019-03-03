@@ -16,8 +16,11 @@ public class DriveWithJoy extends Command {
   Drivetrain drivetrain = Robot.Subsystems.drivetrain;
   OI oi = Robot.oi;
 
+  private double
+    throttle,
+    turn;
+
   public DriveWithJoy() {
-    // Use requires() here to declare subsystem dependencies
     requires(drivetrain);
   }
 
@@ -29,7 +32,16 @@ public class DriveWithJoy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drivetrain.arcadeDrive(oi.getLeftStickY(), oi.getRightStickX());
+    throttle = oi.getLeftStickY();
+    if(Math.abs(throttle) < .075){
+      throttle = 0;
+    }
+    turn = oi.getRightStickX();
+    if(Math.abs(turn) < .075){
+      turn = 0;
+    }
+    drivetrain.arcadeDrive(throttle, turn);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

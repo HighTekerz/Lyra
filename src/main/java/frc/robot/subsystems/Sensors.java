@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -17,9 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Sensors extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private Thread updater = new Thread(new SensorUpdater());
-  private AnalogInput ai0 = new AnalogInput(0);
-  private AnalogInput ai1 = new AnalogInput(1);
+  private SensorUpdater sensorThread = new SensorUpdater();
+  private Thread updater = new Thread(sensorThread);
 
   public Sensors() {
     updater.start();
@@ -32,7 +32,7 @@ public class Sensors extends Subsystem {
   }
 
   public void log() {
-    SmartDashboard.putNumber("analog 0", ai0.getAverageVoltage());
-    SmartDashboard.putNumber("analog 1", ai1.getAverageVoltage());
+    SmartDashboard.putNumber("Distance from Bay", sensorThread.distanceFromBay);
+    SmartDashboard.putNumber("Distance from Bar", sensorThread.distanceSinceBar);
   }
 }
