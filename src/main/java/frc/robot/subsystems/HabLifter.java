@@ -14,6 +14,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -26,6 +30,7 @@ import frc.robot.tekerz.utilities.L;
 public class HabLifter extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  public static final double REVOLUTIONSS_PER_INCH = 1.0;
 
   TalonSRX
     habLifterRollingLead = RobotMap.Talons.habLifterWheelLead,
@@ -45,9 +50,33 @@ public class HabLifter extends Subsystem {
     p = .01,
     i = 0.0,
     d = 0.001,
-    f = 0.0;
-  PIDF pid = new PIDF(p, i, d);
+    loopLengthInSeconds = .005;
 
+  private final PIDOutput output = this::setArmPIDOutput;
+  private final PIDSource input = new PIDSource() {
+    
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+    }
+  
+    @Override
+    public double pidGet() {
+      return getArmPosition();
+    }
+  
+    @Override
+    public PIDSourceType getPIDSourceType() {
+      return PIDSourceType.kDisplacement;
+    }
+  };
+  
+  private final PIDController pIDLoop = new PIDController(p,i,d, input, output, loopLengthInSeconds) {
+    @Override
+    protected double calculateFeedForward() {
+      return feedForwardAmount();
+    }
+  };
+    
   public HabLifter() {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
     habLifterRollingLead.configAllSettings(config);
@@ -56,13 +85,11 @@ public class HabLifter extends Subsystem {
 
     habLifterRollingFollower.follow(habLifterRollingLead);
 
-    pid.setIMax(.5);
-
     habLifterArmsLead.restoreFactoryDefaults();
     habLifterArmsFollower.restoreFactoryDefaults();
+
     habLifterArmsLead.setInverted(false);
-    habLifterArmsFollower.setInverted(false);
-    // habLifterArmsFollower.follow(habLifterArmsLead);
+    habLifterArmsFollower.follow(habLifterArmsLead, true);
   }
 
   @Override
@@ -83,19 +110,35 @@ public class HabLifter extends Subsystem {
     this.habLifterLegs2.set(false);
   }
 
-  public void log() {
-    
+  private void setArmPIDOutput (double out) {
+    habLifterArmsLead.set(out);
+    L.ogSD("PID ouput", out);
+  }
+
+  public double getArmPosition () {
+    return habLifterEnc.getPosition();
   }
 
   public void setArmSetpoint(double setpoint) {
-    pid.setSetpoint(setpoint);
-    pid.start();
   }
 
-  public void executePID() {
-    double speed = pid.loop(habLifterEnc.getPosition());
-    L.ogSD("PID Sensor", habLifterEnc.getPosition());
-    L.ogSD("PID ouput", speed);
-    habLifterArmsLead.set(speed);
+  public void enableArm() {
+
+  }
+
+  public void disableArm() {
+
+  }
+
+  public void clearEncoder() {
+    habLifterEnc.setPosition(0.0);
+  }
+
+  private double feedForwardAmount() {
+    return 0.0;
+  }
+
+  public void log() {
+    L.ogSD("PID Sensor", getArmPosition());
   }
 }
