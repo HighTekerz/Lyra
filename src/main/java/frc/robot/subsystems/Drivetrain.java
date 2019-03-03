@@ -8,12 +8,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.drivetrain.DriveWithJoy;
 import frc.robot.tekerz.utilities.L;
 
 public class Drivetrain extends Subsystem {
@@ -23,7 +21,15 @@ public class Drivetrain extends Subsystem {
     leftMotorLead = RobotMap.Sparks.leftMotorLead,
     leftMotorFollower = RobotMap.Sparks.leftMotorFollower;
 
-  PigeonIMU imu = RobotMap.Pigeon.imu;
+  PigeonIMU ageSwine = RobotMap.Pigeon.imu;
+
+  CANEncoder
+    driveEncLeft = leftMotorLead.getEncoder(),
+    driveEncRight = rightMotorLead.getEncoder();
+
+  public static double
+  //TODO: fix this number
+    TICKS_PER_INCH = .03;
 
   @Override
   public void initDefaultCommand() {
@@ -50,8 +56,26 @@ public class Drivetrain extends Subsystem {
 
     setWheelSpeed(leftSpeed, rightSpeed);
   }
+  /**
+   * a method to check the encoder vaues of the drivetrain wheels, 1 at a time.
+   * 
+   * @param leftEnc True to get the left value, false to get the right
+   * @return
+   */
+  public double getEnc(boolean leftEnc){
+    if(leftEnc){
+      return driveEncLeft.getPosition();
+    } else{
+      return driveEncRight.getPosition();
+    }
+  }
+
+  public double getAngle(){
+    return ageSwine.getCompassHeading();
+  }
 
   public void log() {
-    
+    L.ogSD("Left Drive Encoder", getEnc(true));
+    L.ogSD("Right Drive Encoder", getEnc(false));
   }
 }
