@@ -11,6 +11,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.tekerz.PIDF;
@@ -23,17 +27,31 @@ public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public static double ticksPerInch = 360;
+  public static double MOTOR_HOLD_VALUE = 0.1;
 
-  TalonSRX 
-    liftLead = RobotMap.Talons.liftLead,
-    liftFollower = RobotMap.Talons.liftFollower;
+  TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 
-  double 
-    p = .01,
-    i = 0.0,
-    d = 0.001,
-    f = 0.0;
-  PIDF pid = new PIDF(p, i, d);
+  double p = .0001, i = 0.0, d = 0.0, loopLengthInSeconds = .005;
+
+  private final PIDOutput output = this::setElevatorPIDOutput;
+  private final PIDSource input = new PIDSource(){
+  
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+    }
+  
+    @Override
+    public double pidGet() {
+      return getElevatorPosition();
+    }
+  
+    @Override
+    public PIDSourceType getPIDSourceType() {
+      return PIDSourceType.kDisplacement;
+    }
+  };
+
+  private final PIDController pIDLoop=new PIDController(p,i,d,input,output,loopLengthInSeconds){@Override protected double calculateFeedForward(){return feedForwardAmount();}};
 
   public Elevator() {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
@@ -41,31 +59,39 @@ public class Elevator extends Subsystem {
     liftFollower.configAllSettings(config);
 
     liftFollower.follow(liftLead);
-
-    pid.setIMax(.5);
   }
 
-  @Override
-  public void initDefaultCommand() {
+  private void setElevatorPIDOutput(double out) {
+    liftLead.set(ControlMode.PercentOutput, out);
+    L.ogSD("ARM PID ouput", out);
   }
 
-  public double getEncoder() {
+  public double getElevatorPosition() {
     return liftLead.getSelectedSensorPosition();
   }
 
   public void setSetpoint(double setpoint) {
-    pid.setSetpoint(setpoint);
-    pid.start();
+    this.pIDLoop.setSetpoint(setpoint);
   }
 
-  public void executePID() {
-    double speed = pid.loop(this.getEncoder());
-    L.ogSD("PID Sensor", this.getEncoder());
-    L.ogSD("PID ouput", speed);
-    liftLead.set(ControlMode.PercentOutput, speed);
+  public void enableElevator() {
+    this.pIDLoop.enable();
+  }
+
+  public void disableElevator() {
+    this.pIDLoop.disable();
+  }
+
+  private double feedForwardAmount() {
+    // MULTIPLYU
+    return MOTOR_HOLD_VALUE;
   }
 
   public void log() {
-    
+
+  }
+
+  @Override
+  protected void initDefaultCommand() {
   }
 }

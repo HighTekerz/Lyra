@@ -21,16 +21,16 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.tekerz.PIDF;
 import frc.robot.tekerz.utilities.L;
 
 /**
- * Add your docs here.
+ * The hablifter implements the 
  */
 public class HabLifter extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  public static final double REVOLUTIONSS_PER_INCH = 1.0;
+  // we had 32 rotations per 90 degrees
+  public static final double FULL_HOLD_POWER = 0.2;
+  public static final double DEGREES_PER_ROTATION = 90.0 / 32.0;
+  public static final double START_DEGREES_OFF_TDC = 0.0;
 
   TalonSRX
     habLifterRollingLead = RobotMap.Talons.habLifterWheelLead,
@@ -47,9 +47,9 @@ public class HabLifter extends Subsystem {
     habLifterLegs2 = RobotMap.Pneumatics.habLifterLegs2;
 
   double 
-    p = .01,
+    p = 0.0001,
     i = 0.0,
-    d = 0.001,
+    d = 0.0,
     loopLengthInSeconds = .005;
 
   private final PIDOutput output = this::setArmPIDOutput;
@@ -112,7 +112,7 @@ public class HabLifter extends Subsystem {
 
   private void setArmPIDOutput (double out) {
     habLifterArmsLead.set(out);
-    L.ogSD("PID ouput", out);
+    L.ogSD("ARM PID ouput", out);
   }
 
   public double getArmPosition () {
@@ -120,14 +120,15 @@ public class HabLifter extends Subsystem {
   }
 
   public void setArmSetpoint(double setpoint) {
+    this.pIDLoop.setSetpoint(setpoint);
   }
 
   public void enableArm() {
-
+    this.pIDLoop.enable();
   }
 
   public void disableArm() {
-
+    this.pIDLoop.disable();
   }
 
   public void clearEncoder() {
@@ -135,7 +136,8 @@ public class HabLifter extends Subsystem {
   }
 
   private double feedForwardAmount() {
-    return 0.0;
+    // MULTIPLYU
+    return Math.sin(getArmPosition() * DEGREES_PER_ROTATION);
   }
 
   public void log() {
