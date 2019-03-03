@@ -12,39 +12,65 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.tekerz.utilities.L;
 
-public class AutoDeploySideways extends Command {
-  Drivetrain drivetrain = Robot.Subsystems.drivetrain;
+public class DriveForDistance extends Command {
+  Double 
+    inches,
+    speed,
+    tickTargetLeft,
+    tickTargetRight;
 
-  public AutoDeploySideways() {
-    // Use requires() here to declare subsystem dependencies
-    requires(drivetrain);
+  public DriveForDistance(Double inches, double speed) {
+    requires(Robot.Subsystems.drivetrain);
+    this.inches = inches;
+    this.speed = speed;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
+    tickTargetLeft = (inches * Drivetrain.TICKS_PER_INCH) + Robot.Subsystems.drivetrain.getEnc(true);
+    tickTargetRight = (inches * Drivetrain.TICKS_PER_INCH) + Robot.Subsystems.drivetrain.getEnc(false);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.Subsystems.drivetrain.arcadeDrive(speed, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if (Robot.Subsystems.drivetrain.getEnc(true) >= tickTargetLeft && 
+        Robot.Subsystems.drivetrain.getEnc(false) >= tickTargetRight) {
+      return true;
+    } else {
+      log();
+      return false;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.Subsystems.drivetrain.arcadeDrive(0.0, 0.0);
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
+  }
+
+  public void log(){
+    if (Robot.Subsystems.drivetrain.getEnc(true) < tickTargetLeft){
+      L.og("I have not reached LEFT target. currently: " + Robot.Subsystems.drivetrain.getEnc(true));
+    }
+    if(Robot.Subsystems.drivetrain.getEnc(false) < tickTargetRight){
+      L.og("I have not reached RIGHT target. currently: " + Robot.Subsystems.drivetrain.getEnc(false));
+    }
   }
 }
