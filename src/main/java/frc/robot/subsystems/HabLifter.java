@@ -81,9 +81,9 @@ public class HabLifter extends Subsystem {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
     habLifterRollingLead.configAllSettings(config);
     habLifterRollingFollower.configAllSettings(config);
+    
     habLifterRollingFollower.setInverted(true);
-
-    habLifterRollingFollower.follow(habLifterRollingLead);
+    habLifterRollingFollower.follow(habLifterRollingLead);;
 
     habLifterArmsLead.restoreFactoryDefaults();
     habLifterArmsFollower.restoreFactoryDefaults();
