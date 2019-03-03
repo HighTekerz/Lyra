@@ -9,6 +9,7 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
 import frc.robot.tekerz.utilities.L;
 
 public class SetHeight extends Command {
@@ -30,12 +31,14 @@ public class SetHeight extends Command {
   @Override
   protected void initialize() {
 		L.ogCmdInit(this);
-		isFinished = false;    	
+    isFinished = false;
+    targetHeight = targetHeightInInches * Elevator.TICKS_PER_INCH;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.Subsystems.elevator.setSetpoint(targetHeight);
   }
 
   // Make this return true when this Command no longer needs to run execute()

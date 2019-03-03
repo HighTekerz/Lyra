@@ -29,7 +29,7 @@ public class PushHP extends Command {
   @Override
   protected void execute() {
     if (timeSinceInitialized() < 0.5) {
-      Robot.Subsystems.multiArm.hPPusherIn();
+      Robot.Subsystems.multiArm.hPPusherOut();
     } else {
       Robot.Subsystems.multiArm.hPPusherIn();
       amIFinished = true;
