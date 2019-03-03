@@ -15,14 +15,21 @@ import frc.robot.tekerz.utilities.L;
 public class DriveForDistance extends Command {
   Double 
     inches,
-    speed,
-    tickTargetLeft,
+    speed, 
+    tickTargetLeft, 
     tickTargetRight;
+
+  boolean reverse;
 
   public DriveForDistance(Double inches, double speed) {
     requires(Robot.Subsystems.drivetrain);
     this.inches = inches;
     this.speed = speed;
+    if (inches < 0) {
+      reverse = true;
+      this.speed = -this.speed;
+    }
+
   }
 
   // Called just before this Command runs the first time
@@ -42,12 +49,23 @@ public class DriveForDistance extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.Subsystems.drivetrain.getEnc(true) >= tickTargetLeft && 
-        Robot.Subsystems.drivetrain.getEnc(false) >= tickTargetRight) {
-      return true;
-    } else {
-      log();
-      return false;
+    if (reverse) {
+      if (Robot.Subsystems.drivetrain.getEnc(true) <= tickTargetLeft
+          && Robot.Subsystems.drivetrain.getEnc(false) <= tickTargetRight) {
+        return true;
+      } else {
+        log();
+        return false;
+      }
+    } else{
+      if (Robot.Subsystems.drivetrain.getEnc(true) >= tickTargetLeft
+      && Robot.Subsystems.drivetrain.getEnc(false) >= tickTargetRight) {
+    return true;
+  } else {
+    log();
+    return false;
+  }
+
     }
   }
 
@@ -65,11 +83,11 @@ public class DriveForDistance extends Command {
     L.ogCmdInterrupted(this);
   }
 
-  public void log(){
-    if (Robot.Subsystems.drivetrain.getEnc(true) < tickTargetLeft){
+  public void log() {
+    if (Robot.Subsystems.drivetrain.getEnc(true) < tickTargetLeft) {
       L.og("I have not reached LEFT target. currently: " + Robot.Subsystems.drivetrain.getEnc(true));
     }
-    if(Robot.Subsystems.drivetrain.getEnc(false) < tickTargetRight){
+    if (Robot.Subsystems.drivetrain.getEnc(false) < tickTargetRight) {
       L.og("I have not reached RIGHT target. currently: " + Robot.Subsystems.drivetrain.getEnc(false));
     }
   }

@@ -12,6 +12,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.drivetrain.DriveWithJoy;
 import frc.robot.tekerz.utilities.L;
 
 public class Drivetrain extends Subsystem {
@@ -33,11 +34,16 @@ public class Drivetrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // setDefaultCommand(new DriveWithJoy());
-    // L.ogSD("DriveWithJoy", this);
+    setDefaultCommand(new DriveWithJoy());
+    L.ogSD("DriveWithJoy", this);
   }
 
   public Drivetrain() {
+    rightMotorLead.restoreFactoryDefaults();
+    rightMotorFollower.restoreFactoryDefaults();
+    leftMotorLead.restoreFactoryDefaults();
+    leftMotorFollower.restoreFactoryDefaults();
+
     rightMotorFollower.follow(rightMotorLead);
     leftMotorFollower.follow(leftMotorLead);
 
@@ -51,8 +57,8 @@ public class Drivetrain extends Subsystem {
   }
 
   public void arcadeDrive(double straightSpeed, double turnSpeed){
-    double leftSpeed = -straightSpeed - turnSpeed;
-    double rightSpeed = -(-straightSpeed + turnSpeed);
+    double leftSpeed = straightSpeed + turnSpeed;
+    double rightSpeed = straightSpeed - turnSpeed;
 
     setWheelSpeed(leftSpeed, rightSpeed);
   }
@@ -71,11 +77,12 @@ public class Drivetrain extends Subsystem {
   }
 
   public double getAngle(){
-    return ageSwine.getCompassHeading();
+    return ageSwine.getFusedHeading();
   }
 
   public void log() {
     L.ogSD("Left Drive Encoder", getEnc(true));
     L.ogSD("Right Drive Encoder", getEnc(false));
+    L.ogSD("Robot Angle", getAngle());
   }
 }

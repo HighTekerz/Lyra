@@ -15,14 +15,12 @@ import frc.robot.tekerz.utilities.L;
 public class TurnToDegree extends Command {
   private double 
     relativeDegreeToReach,
-	  degreeToReach,
-	  speed,
+	degreeToReach,
+	speed,
     currentAngle,
     acceptableError = 3;
 
 	public TurnToDegree(double targetDegree, double speed) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 		this.speed = speed;
 		this.degreeToReach = targetDegree;
 		requires(Robot.Subsystems.drivetrain);
@@ -39,10 +37,10 @@ public class TurnToDegree extends Command {
 	protected void execute() {			
 		// TODO: fix this so that the current angle is being populated
 		if (relativeDegreeToReach > Robot.Subsystems.drivetrain.getAngle()) {
-			speed = -Math.abs(speed);
+			speed = Math.abs(speed);
 		}
 		else {
-			speed = -speed;
+			speed = -Math.abs(speed);
 		}
 
 		currentAngle = Robot.Subsystems.drivetrain.getAngle();
@@ -56,7 +54,8 @@ public class TurnToDegree extends Command {
 	protected boolean isFinished() {
     if (currentAngle > relativeDegreeToReach - acceptableError &&
         currentAngle < relativeDegreeToReach + acceptableError) {
-			Robot.Subsystems.drivetrain.arcadeDrive(0, 0);
+			
+			
 			System.out.println("TurnToDegree Is Finished at: " + currentAngle);
 			return true;
 		} else {

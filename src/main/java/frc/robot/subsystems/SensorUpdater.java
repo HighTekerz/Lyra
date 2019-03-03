@@ -19,6 +19,10 @@ public class SensorUpdater implements Runnable {
     double lastTime = 0.0;
     double now = 0.0;
 
+    public static volatile double
+        distanceSinceBar,
+        distanceFromBay;
+
     int i = 0;
     public void run() {
         t.start();
