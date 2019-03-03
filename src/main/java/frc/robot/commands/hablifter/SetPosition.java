@@ -9,10 +9,12 @@ package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.L;
 
 public class SetPosition extends Command {
   private double position = 0.0;
+  HabLifter h = Robot.Subsystems.habLifter;
 
   // public setPosition() {
     
@@ -20,13 +22,15 @@ public class SetPosition extends Command {
 
   public SetPosition(double position) {
     this.position = position;
-    requires(Robot.Subsystems.habLifter);
+    requires(h);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
+    h.setArmSetpoint(this.position);
+    h.enableArm();
   }
 
   // Called repeatedly when this Command is scheduled to run
