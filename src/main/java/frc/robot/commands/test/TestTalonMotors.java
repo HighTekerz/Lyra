@@ -55,12 +55,12 @@ public class TestTalonMotors extends Command {
     //   lastMotor = currentMotor;
     // }
 
-    if (Robot.oi.getButtonB()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY() / 10.0);
-    } else if (Robot.oi.getButtonA()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY() / 5.0);      
-    } else if (Robot.oi.getButtonY()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickY());
+    if (Robot.oi.getButtonBRip()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYRip() / 10.0);
+    } else if (Robot.oi.getButtonARip()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYRip() / 5.0);      
+    } else if (Robot.oi.getButtonYRip()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYRip());
     } else {
       talon.set(ControlMode.PercentOutput, 0.0);
     }

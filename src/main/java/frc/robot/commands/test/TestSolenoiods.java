@@ -35,9 +35,9 @@ public class TestSolenoiods extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.oi.getButtonA()){
+    if(Robot.oi.getButtonARip()){
       testSolenoid.set(true);
-    } else if(Robot.oi.getButtonB()){
+    } else if(Robot.oi.getButtonBRip()){
       testSolenoid.set(false);
     }
   }

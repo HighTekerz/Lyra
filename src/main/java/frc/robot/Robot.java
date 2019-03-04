@@ -151,7 +151,7 @@ public class Robot extends TimedRobot {
     Robot.Subsystems.multiArm.log();
     Robot.Subsystems.drivetrain.log();
     Robot.Subsystems.habLifter.log();
-    L.ogSD("Dipstick right joy X value", Robot.oi.getRightStickX());
+    L.ogSD("Dipstick right joy X value", Robot.oi.getRightStickXDip());
     L.ogSD("dipStick Dpad POV", Robot.oi.dipStick.getPOV(0));
   }
 

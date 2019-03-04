@@ -35,59 +35,59 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-        TriggerButton ejectCargo = new TriggerButton(dipStick, LEFT_TRIGGER) ;
-        ejectCargo.whileHeld(new CargoEject());
+        // TriggerButton ejectCargo = new TriggerButton(dipStick, LEFT_TRIGGER) ;
+        // ejectCargo.whileHeld(new CargoEject());
 
-        TriggerButton collectCargo = new TriggerButton(dipStick, RIGHT_TRIGGER);
-        collectCargo.whileHeld(new  CargoCollect());
+        // TriggerButton collectCargo = new TriggerButton(dipStick, RIGHT_TRIGGER);
+        // collectCargo.whileHeld(new  CargoCollect());
 
-        Button hPFlapDown = new JoystickButton(dipStick, A_BUTTON);
-        hPFlapDown.whenPressed(new HatchFlapDown());
+        // Button hPFlapDown = new JoystickButton(dipStick, A_BUTTON);
+        // hPFlapDown.whenPressed(new HatchFlapDown());
         
-        Button hPFlapUp = new JoystickButton(dipStick, B_BUTTON);
-        hPFlapUp.whenPressed(new HatchFlapUp());
+        // Button hPFlapUp = new JoystickButton(dipStick, B_BUTTON);
+        // hPFlapUp.whenPressed(new HatchFlapUp());
 
         Button elevatorToFiveInches = new JoystickButton(dipStick, Y_BUTTON);
         elevatorToFiveInches.whenPressed(new SetHeight(5));
 
-        Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
-        habArmToMinusTen.whenPressed(new SetPosition(-10));
+        // Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
+        // habArmToMinusTen.whenPressed(new SetPosition(-10));
 
-        Button driveFive = new DpadButton(dipStick, 0, 0);
-        driveFive.whenPressed(new DriveForDistance(5.0, 0.3));
+        // Button driveFive = new DpadButton(dipStick, 0, 0);
+        // driveFive.whenPressed(new DriveForDistance(5.0, 0.3));
         
-        Button driveFiveEvilTwin = new DpadButton(dipStick, 0, 180);
-        driveFiveEvilTwin.whenPressed(new DriveForDistance(-5.0, 0.3));
+        // Button driveFiveEvilTwin = new DpadButton(dipStick, 0, 180);
+        // driveFiveEvilTwin.whenPressed(new DriveForDistance(-5.0, 0.3));
 
-        Button rotateFortyEight = new DpadButton(dipStick, 0, 90);
-        rotateFortyEight.whenPressed(new TurnToDegree(48.0, 0.3));
+        // Button rotateFortyEight = new DpadButton(dipStick, 0, 90);
+        // rotateFortyEight.whenPressed(new TurnToDegree(48.0, 0.3));
 
-        Button rotateFortyEightEvilTwin = new DpadButton(dipStick, 0, 270);
-        rotateFortyEightEvilTwin.whenPressed(new TurnToDegree(-48.0, 0.3));
+        // Button rotateFortyEightEvilTwin = new DpadButton(dipStick, 0, 270);
+        // rotateFortyEightEvilTwin.whenPressed(new TurnToDegree(-48.0, 0.3));
     }
 
-    public double getLeftStickY() {
-        return -dipStick.getRawAxis(1);
+    public double getLeftStickYRip() {
+        return -ripStick.getRawAxis(1);
     }
 
-    public double getRightStickY() {
-        return -dipStick.getY(Hand.kRight);
-    }
-
-    public double getRightStickX() {
+    public double getRightStickXDip() {
         return dipStick.getRawAxis(4);
     }
 
-    public boolean getButtonA() {
-        return dipStick.getAButton();
+    public double getLeftStickYDip(){
+        return -dipStick.getRawAxis(1);
+    }
+
+    public boolean getButtonARip() {
+        return ripStick.getAButton();
       }
     
-      public boolean getButtonB() {
-        return dipStick.getBButton();
+      public boolean getButtonBRip() {
+        return ripStick.getBButton();
       }
     
-      public boolean getButtonY() {
-        return dipStick.getYButton();
+      public boolean getButtonYRip() {
+        return ripStick.getYButton();
       }
 
     }

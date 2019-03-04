@@ -54,12 +54,12 @@ public class TestSparkMotors extends Command {
     //   lastMotor = currentMotor;
     // }
 
-    if (Robot.oi.getButtonB()) {
-      spark.set(Robot.oi.getLeftStickY() / 10.0);
-    } else if (Robot.oi.getButtonA()) {
-      spark.set(Robot.oi.getLeftStickY() / 5.0);      
-    } else if (Robot.oi.getButtonY()) {
-      spark.set(Robot.oi.getLeftStickY());      
+    if (Robot.oi.getButtonBRip()) {
+      spark.set(Robot.oi.getLeftStickYRip() / 10.0);
+    } else if (Robot.oi.getButtonARip()) {
+      spark.set(Robot.oi.getLeftStickYRip() / 5.0);      
+    } else if (Robot.oi.getButtonYRip()) {
+      spark.set(Robot.oi.getLeftStickYRip());      
     } else {
       spark.set(0.0);
     }

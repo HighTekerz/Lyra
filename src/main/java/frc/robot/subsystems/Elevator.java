@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.tekerz.PIDF;
 import frc.robot.tekerz.utilities.L;
 
 /**
@@ -27,31 +26,43 @@ public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public static double MOTOR_HOLD_VALUE = 0.1;
-  public static double TICKS_PER_INCH = .036;
+  // measured ticks
+  public static double TICKS_PER_INCH = -1449 / 15;
+  // system length is 30 inches
+  public static double MAX_ERROR = 30 * TICKS_PER_INCH;
 
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 
-  double p = .0001, i = 0.0, d = 0.0, loopLengthInSeconds = .005;
+  double 
+  p = -(0.1 / MAX_ERROR), 
+  i = 0.0, 
+  d = 0.0, 
+  loopLengthInSeconds = .005;
 
   private final PIDOutput output = this::setElevatorPIDOutput;
-  private final PIDSource input = new PIDSource(){
-  
+  private final PIDSource input = new PIDSource() {
+
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {
     }
-  
+
     @Override
     public double pidGet() {
       return getElevatorPosition();
     }
-  
+
     @Override
     public PIDSourceType getPIDSourceType() {
       return PIDSourceType.kDisplacement;
     }
   };
 
-  private final PIDController pIDLoop=new PIDController(p,i,d,input,output,loopLengthInSeconds){@Override protected double calculateFeedForward(){return feedForwardAmount();}};
+  private final PIDController pIDLoop = new PIDController(p, i, d, input, output, loopLengthInSeconds) {
+    @Override
+    protected double calculateFeedForward() {
+      return -feedForwardAmount();
+    }
+  };
 
   public Elevator() {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
@@ -63,7 +74,7 @@ public class Elevator extends Subsystem {
 
   private void setElevatorPIDOutput(double out) {
     liftLead.set(ControlMode.PercentOutput, out);
-    L.ogSD("ARM PID ouput", out);
+    L.ogSD("Elevator PID ouput", out);
   }
 
   public double getElevatorPosition() {
@@ -88,7 +99,7 @@ public class Elevator extends Subsystem {
   }
 
   public void log() {
-
+    L.ogSD("Elevator Position", getElevatorPosition());
   }
 
   @Override
