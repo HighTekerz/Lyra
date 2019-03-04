@@ -50,8 +50,8 @@ public class OI {
         Button elevatorToFiveInches = new JoystickButton(dipStick, Y_BUTTON);
         elevatorToFiveInches.whenPressed(new SetHeight(5));
 
-        // Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
-        // habArmToMinusTen.whenPressed(new SetPosition(-10));
+        Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
+        habArmToMinusTen.whenPressed(new SetPosition(-10));
 
         // Button driveFive = new DpadButton(dipStick, 0, 0);
         // driveFive.whenPressed(new DriveForDistance(5.0, 0.3));

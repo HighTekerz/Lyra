@@ -33,6 +33,6 @@ public class Sensors extends Subsystem {
 
   public void log() {
     SmartDashboard.putNumber("Distance from Bay", sensorThread.distanceFromBay);
-    SmartDashboard.putNumber("Distance from Bar", sensorThread.distanceSinceBar);
+    SmartDashboard.putNumber("Distance since Bar", sensorThread.distanceSinceBar);
   }
 }

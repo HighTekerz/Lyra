@@ -28,10 +28,10 @@ import frc.robot.tekerz.utilities.L;
  */
 public class HabLifter extends Subsystem {
   // we had 32 rotations per 90 degrees
-  public static final double FULL_HOLD_POWER = 0.2;
-  public static final double ROTATIONS_PER_DEGREE = 32.0 / 90.0;
-  public static final double START_DEGREES_OFF_TDC = 0.0;
-  public static final double TICKS_PER_INCH = .036;
+  public static final double 
+    FULL_HOLD_POWER = 0.2,
+    ROTATIONS_PER_DEGREE = 32.0 / 90.0,
+    START_DEGREES_OFF_TDC = 0.0;
 
   TalonSRX
     habLifterRollingLead = RobotMap.Talons.habLifterWheelLead,
@@ -48,7 +48,7 @@ public class HabLifter extends Subsystem {
     habLifterLegs2 = RobotMap.Pneumatics.habLifterLegs2;
 
   double 
-    p = 0.0001,
+    p = 0.1 / 58.0,
     i = 0.0,
     d = 0.0,
     loopLengthInSeconds = .005;
@@ -141,8 +141,10 @@ public class HabLifter extends Subsystem {
   }
 
   private double feedForwardAmount() {
-    // MULTIPLYU
-    return Math.sin(getArmPosition() * ROTATIONS_PER_DEGREE);
+    // MULTIPLY
+    double fF = Math.sin(getArmPosition() / -ROTATIONS_PER_DEGREE * Math.PI/ 180.0);
+    L.ogSD("feedforward", fF);
+    return fF;
   }
 
   public void log() {

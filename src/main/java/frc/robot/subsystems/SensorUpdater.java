@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotMap;
+import frc.robot.tekerz.utilities.L;
 
 /**
  * Add your docs here.
@@ -30,10 +32,8 @@ public class SensorUpdater implements Runnable {
             while (true) {
                 Thread.sleep(2);
                 now = t.get();
-                SmartDashboard.putNumber("thread", i++);
-                SmartDashboard.putNumber("thread length", now - lastTime);
                 lastTime = now;
-
+                distanceFromBay = RobotMap.Analog.sensor0.getVoltage() - RobotMap.Analog.sensor1.getVoltage();
             }
         } catch (Exception ex) {
             System.out.println(ex);
