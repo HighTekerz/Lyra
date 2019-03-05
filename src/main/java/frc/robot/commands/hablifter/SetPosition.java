@@ -13,15 +13,15 @@ import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.L;
 
 public class SetPosition extends Command {
-  private double position = 0.0;
+  private double positionInDegrees = 0.0;
   HabLifter h = Robot.Subsystems.habLifter;
 
   // public setPosition() {
     
   // }
 
-  public SetPosition(double position) {
-    this.position = position;
+  public SetPosition(double positionInDegrees) {
+    this.positionInDegrees = positionInDegrees;
     requires(h);
   }
 
@@ -29,7 +29,8 @@ public class SetPosition extends Command {
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
-    h.setArmSetpoint(this.position);
+    h.setArmSetpoint(this.positionInDegrees);
+    L.og("setpoint in degrees: " + this.positionInDegrees);
     h.enableArm();
   }
 

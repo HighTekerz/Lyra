@@ -31,6 +31,9 @@ public class HabLifter extends Subsystem {
   public static final double 
     FULL_HOLD_POWER = 0.2,
     ROTATIONS_PER_DEGREE = 32.0 / 90.0,
+    MAX_SENSOR_READING = 10.0,
+    MIN_SETSOR_READING = -48.0,
+    FULL_SENSOR_RANGE = MAX_SENSOR_READING - MIN_SETSOR_READING,
     START_DEGREES_OFF_TDC = 0.0;
 
   TalonSRX
@@ -48,7 +51,7 @@ public class HabLifter extends Subsystem {
     habLifterLegs2 = RobotMap.Pneumatics.habLifterLegs2;
 
   double 
-    p = 0.1 / 58.0,
+    p = 2.0 / FULL_SENSOR_RANGE,
     i = 0.0,
     d = 0.0,
     loopLengthInSeconds = .005;
@@ -74,7 +77,11 @@ public class HabLifter extends Subsystem {
   private final PIDController pIDLoop = new PIDController(p,i,d, input, output, loopLengthInSeconds) {
     @Override
     protected double calculateFeedForward() {
-      return feedForwardAmount();
+      // MULTIPLY
+      double amountOfGravity = Math.sin(Math.toRadians(getArmPosition() / -ROTATIONS_PER_DEGREE));
+      double fF = amountOfGravity * FULL_HOLD_POWER;
+      L.ogSD("PID ARM FF", fF);
+      return fF / 10.0;
     }
   };
     
@@ -113,7 +120,7 @@ public class HabLifter extends Subsystem {
 
   private void setArmPIDOutput (double out) {
     habLifterArmsLead.set(out);
-    L.ogSD("ARM PID ouput", out);
+    L.ogSD("PID ARM ouput", out);
   }
 
   public double getArmPosition () {
@@ -121,10 +128,10 @@ public class HabLifter extends Subsystem {
   }
 /**
  * 
- * @param setpoint the angle (in degrees) you want the arm to travel to.
+ * @param setpointInDegrees the angle (in degrees) you want the arm to travel to.
  */
-  public void setArmSetpoint(double setpoint) {
-    setpoint = setpoint * HabLifter.ROTATIONS_PER_DEGREE;
+  public void setArmSetpoint(double setpointInDegrees) {
+    double setpoint = setpointInDegrees * ROTATIONS_PER_DEGREE;
     this.pIDLoop.setSetpoint(setpoint);
   }
 
@@ -140,14 +147,7 @@ public class HabLifter extends Subsystem {
     habLifterEnc.setPosition(0.0);
   }
 
-  private double feedForwardAmount() {
-    // MULTIPLY
-    double fF = Math.sin(getArmPosition() / -ROTATIONS_PER_DEGREE * Math.PI/ 180.0);
-    L.ogSD("feedforward", fF);
-    return fF;
-  }
-
   public void log() {
-    L.ogSD("ARM PID Sensor", getArmPosition());
+    L.ogSD("PID ARM Sensor Degrees", getArmPosition() / HabLifter.ROTATIONS_PER_DEGREE);
   }
 }

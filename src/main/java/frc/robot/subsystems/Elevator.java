@@ -60,7 +60,7 @@ public class Elevator extends Subsystem {
   private final PIDController pIDLoop = new PIDController(p, i, d, input, output, loopLengthInSeconds) {
     @Override
     protected double calculateFeedForward() {
-      return -feedForwardAmount();
+      return MOTOR_HOLD_VALUE;
     }
   };
 
@@ -74,15 +74,15 @@ public class Elevator extends Subsystem {
 
   private void setElevatorPIDOutput(double out) {
     liftLead.set(ControlMode.PercentOutput, out);
-    L.ogSD("Elevator PID ouput", out);
+    L.ogSD("PID Elevator ouput", out);
   }
 
   public double getElevatorPosition() {
     return liftLead.getSelectedSensorPosition();
   }
 
-  public void setSetpoint(double setpoint) {
-    this.pIDLoop.setSetpoint(setpoint);
+  public void setSetpoint(double setpointInInches) {
+    this.pIDLoop.setSetpoint(setpointInInches * TICKS_PER_INCH);
   }
 
   public void enableElevator() {
@@ -93,13 +93,8 @@ public class Elevator extends Subsystem {
     this.pIDLoop.disable();
   }
 
-  private double feedForwardAmount() {
-    // MULTIPLYU
-    return MOTOR_HOLD_VALUE;
-  }
-
   public void log() {
-    L.ogSD("Elevator Position", getElevatorPosition());
+    L.ogSD("PID Elevator Sensor Inches", getElevatorPosition() / TICKS_PER_INCH);
   }
 
   @Override
