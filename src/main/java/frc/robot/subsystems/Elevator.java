@@ -35,7 +35,7 @@ public class Elevator extends Subsystem {
 
   double 
   p = -(0.1 / MAX_ERROR), 
-  i = 0.0, 
+  i = 0.01, 
   d = 0.0, 
   loopLengthInSeconds = .005;
 
@@ -68,7 +68,6 @@ public class Elevator extends Subsystem {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
     liftLead.configAllSettings(config);
     liftFollower.configAllSettings(config);
-
     liftFollower.follow(liftLead);
   }
 
