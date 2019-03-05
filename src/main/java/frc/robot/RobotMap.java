@@ -61,16 +61,16 @@ public class RobotMap {
       habLifterLegs2 = new Solenoid(PCM_ON_MAIN,1);
   }
 
-  public static class Analog {
+  public static class Analogs {
     public static AnalogInput
-      sensor0 = new AnalogInput(0),
-      sensor1 = new AnalogInput(1),
-      sensor2 = new AnalogInput(2),
-      sensor3 = new AnalogInput(3),
-      sensor4 = new AnalogInput(4),
-      sensor5 = new AnalogInput(5),
-      sensor6 = new AnalogInput(6),
-      sensor7 = new AnalogInput(7);
+      a0 = new AnalogInput(0),
+      a1 = new AnalogInput(1),
+      a2 = new AnalogInput(2),
+      a3 = new AnalogInput(3),
+      a4 = new AnalogInput(4),
+      a5 = new AnalogInput(5),
+      a6 = new AnalogInput(6),
+      a7 = new AnalogInput(7);
   }
 
   public static class Pigeon {

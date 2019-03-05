@@ -32,16 +32,15 @@ public class DriveWithJoy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // throttle = oi.getLeftStickYDip();
-    // if(Math.abs(throttle) < .1){
-    //   throttle = 0;
-    // }
-    // turn = oi.getRightStickXDip();
-    // if(Math.abs(turn) < .1){
-    //   turn = 0;
-    // }
-    // drivetrain.arcadeDrive(throttle, turn);
-
+    throttle = oi.getLeftStickYDip();
+    if(Math.abs(throttle) < .1){
+      throttle = 0.0;
+    }
+    turn = oi.getRightStickXDip();
+    if(Math.abs(turn) < .1){
+      turn = 0.0;
+    }
+    drivetrain.arcadeDrive(throttle, turn);
   }
 
   // Make this return true when this Command no longer needs to run execute()

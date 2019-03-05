@@ -9,11 +9,14 @@ package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.MultiArm;
 import frc.robot.tekerz.utilities.L;
 
 public class CargoCollect extends Command {
+  private MultiArm gm = Robot.Subsystems.multiArm;
+
   public CargoCollect() {
-    requires(Robot.Subsystems.multiArm);
+    requires(gm);
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +28,12 @@ public class CargoCollect extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.multiArm.setIntakeSpeed(0.5);
+    if (!gm.hasCargo()) {
+      gm.setIntakeSpeed(0.5);
+    } else {
+      gm.setIntakeSpeed(0.0);
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

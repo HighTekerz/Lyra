@@ -8,8 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.Analogs;
 import frc.robot.tekerz.utilities.L;
 
 /**
@@ -20,6 +20,7 @@ public class SensorUpdater implements Runnable {
     Timer t = new Timer();
     double lastTime = 0.0;
     double now = 0.0;
+
 
     public static volatile double
         distanceSinceBar,
@@ -33,7 +34,9 @@ public class SensorUpdater implements Runnable {
                 Thread.sleep(2);
                 now = t.get();
                 lastTime = now;
-                distanceFromBay = RobotMap.Analog.sensor0.getVoltage() - RobotMap.Analog.sensor1.getVoltage();
+                distanceFromBay = RobotMap.Analogs.a0.getVoltage() - RobotMap.Analogs.a1.getVoltage();
+                distanceSinceBar = RobotMap.Sparks.leftMotorLead.getEncoder().getPosition();
+                L.ogSD("sensor class encoder value", distanceSinceBar);
             }
         } catch (Exception ex) {
             System.out.println(ex);
