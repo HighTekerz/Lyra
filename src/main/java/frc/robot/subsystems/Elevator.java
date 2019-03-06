@@ -35,7 +35,7 @@ public class Elevator extends Subsystem {
 
   double 
   p = -(0.1 / MAX_ERROR), 
-  i = 0.0, 
+  i = 0.01, 
   d = 0.0, 
   loopLengthInSeconds = .005;
 
@@ -60,7 +60,7 @@ public class Elevator extends Subsystem {
   private final PIDController pIDLoop = new PIDController(p, i, d, input, output, loopLengthInSeconds) {
     @Override
     protected double calculateFeedForward() {
-      return -feedForwardAmount();
+      return MOTOR_HOLD_VALUE;
     }
   };
 
@@ -68,21 +68,20 @@ public class Elevator extends Subsystem {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
     liftLead.configAllSettings(config);
     liftFollower.configAllSettings(config);
-
     liftFollower.follow(liftLead);
   }
 
   private void setElevatorPIDOutput(double out) {
     liftLead.set(ControlMode.PercentOutput, out);
-    L.ogSD("Elevator PID ouput", out);
+    L.ogSD("PID Elevator ouput", out);
   }
 
   public double getElevatorPosition() {
     return liftLead.getSelectedSensorPosition();
   }
 
-  public void setSetpoint(double setpoint) {
-    this.pIDLoop.setSetpoint(setpoint);
+  public void setSetpoint(double setpointInInches) {
+    this.pIDLoop.setSetpoint(setpointInInches * TICKS_PER_INCH);
   }
 
   public void enableElevator() {
@@ -93,13 +92,8 @@ public class Elevator extends Subsystem {
     this.pIDLoop.disable();
   }
 
-  private double feedForwardAmount() {
-    // MULTIPLYU
-    return MOTOR_HOLD_VALUE;
-  }
-
   public void log() {
-    L.ogSD("Elevator Position", getElevatorPosition());
+    L.ogSD("PID Elevator Sensor Inches", getElevatorPosition() / TICKS_PER_INCH);
   }
 
   @Override

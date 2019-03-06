@@ -5,42 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.drivetrain;
+package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.HabLifter;
+import frc.robot.tekerz.utilities.L;
 
-public class DriveWithJoy extends Command {
-  Drivetrain drivetrain = Robot.Subsystems.drivetrain;
-  OI oi = Robot.oi;
-
-  private double
-    throttle,
-    turn;
-
-  public DriveWithJoy() {
-    requires(drivetrain);
+public class StopRightThereCriminalScum extends Command {
+  HabLifter hL = Robot.Subsystems.habLifter;
+  public StopRightThereCriminalScum() {
+    requires(hL);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
+    hL.setArmSetpoint(hL.getArmPositionDegrees());
+    hL.enableArm();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    throttle = oi.getLeftStickYDip();
-    if(Math.abs(throttle) < .1){
-      throttle = 0;
-    }
-    turn = oi.getRightStickXDip();
-    if(Math.abs(turn) < .1){
-      turn = 0;
-    }
-    drivetrain.arcadeDrive(throttle, turn);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -58,5 +46,6 @@ public class DriveWithJoy extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    
   }
 }

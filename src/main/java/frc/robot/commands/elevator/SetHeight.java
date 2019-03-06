@@ -16,10 +16,7 @@ import frc.robot.tekerz.utilities.L;
 public class SetHeight extends Command {
   private Elevator el = Robot.Subsystems.elevator;
   private double 
-    targetHeightInInches = 0.0,
-	  targetHeight = 0.0;
-
-  private boolean isFinished;
+    targetHeightInInches = 0.0;
 
   @SuppressWarnings("unused")
   private SetHeight() {}
@@ -33,9 +30,7 @@ public class SetHeight extends Command {
   @Override
   protected void initialize() {
 		L.ogCmdInit(this);
-    isFinished = false;
-    targetHeight = targetHeightInInches * Elevator.TICKS_PER_INCH;
-    el.setSetpoint(targetHeight);
+    el.setSetpoint(targetHeightInInches);
     el.enableElevator();
   }
 

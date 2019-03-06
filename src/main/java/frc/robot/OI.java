@@ -19,6 +19,7 @@ import frc.robot.commands.multiarm.CargoCollect;
 import frc.robot.commands.multiarm.CargoEject;
 import frc.robot.commands.multiarm.HatchFlapDown;
 import frc.robot.commands.multiarm.HatchFlapUp;
+import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.DpadButton;
 import frc.robot.tekerz.utilities.TriggerButton;
 
@@ -35,23 +36,17 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-        // TriggerButton ejectCargo = new TriggerButton(dipStick, LEFT_TRIGGER) ;
-        // ejectCargo.whileHeld(new CargoEject());
-
-        // TriggerButton collectCargo = new TriggerButton(dipStick, RIGHT_TRIGGER);
-        // collectCargo.whileHeld(new  CargoCollect());
-
-        // Button hPFlapDown = new JoystickButton(dipStick, A_BUTTON);
-        // hPFlapDown.whenPressed(new HatchFlapDown());
-        
-        // Button hPFlapUp = new JoystickButton(dipStick, B_BUTTON);
-        // hPFlapUp.whenPressed(new HatchFlapUp());
-
-        Button elevatorToFiveInches = new JoystickButton(dipStick, Y_BUTTON);
-        elevatorToFiveInches.whenPressed(new SetHeight(5));
+        Button habArmToTop = new JoystickButton(dipStick, Y_BUTTON);
+        habArmToTop.whenPressed(new SetPosition(HabLifter.TOP_DEAD_CENTER));
 
         Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
         habArmToMinusTen.whenPressed(new SetPosition(-10));
+
+        Button habArmTo18Inch = new JoystickButton(dipStick, B_BUTTON);
+        habArmTo18Inch.whenPressed(new SetPosition(HabLifter.START_DEGREES_FOR_HAB_CLIMB));
+
+        Button habArmToDownPos = new JoystickButton(dipStick, A_BUTTON);
+        habArmToDownPos.whenPressed(new SetPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
 
         // Button driveFive = new DpadButton(dipStick, 0, 0);
         // driveFive.whenPressed(new DriveForDistance(5.0, 0.3));

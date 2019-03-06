@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.hablifter.StopRightThereCriminalScum;
 import frc.robot.tekerz.utilities.L;
 
 /**
@@ -28,10 +29,17 @@ import frc.robot.tekerz.utilities.L;
  */
 public class HabLifter extends Subsystem {
   // we had 32 rotations per 90 degrees
-  public static final double 
-    FULL_HOLD_POWER = 0.2,
+  private final double 
+    FULL_HOLD_POWER = -0.1,
     ROTATIONS_PER_DEGREE = 32.0 / 90.0,
-    START_DEGREES_OFF_TDC = 0.0;
+    MAX_SENSOR_READING = 0.0,
+    MIN_SENSOR_READING = -113.0,
+    FULL_SENSOR_RANGE = MAX_SENSOR_READING - MIN_SENSOR_READING;
+
+  public static final double
+    START_DEGREES_FOR_HAB_CLIMB = -45.0,
+    END_DEGREES_FOR_HAB_CLIMB = -113.0,
+    TOP_DEAD_CENTER = -14.0;
 
   TalonSRX
     habLifterRollingLead = RobotMap.Talons.habLifterWheelLead,
@@ -48,7 +56,7 @@ public class HabLifter extends Subsystem {
     habLifterLegs2 = RobotMap.Pneumatics.habLifterLegs2;
 
   double 
-    p = 0.1 / 58.0,
+    p = 2.0 / FULL_SENSOR_RANGE,
     i = 0.0,
     d = 0.0,
     loopLengthInSeconds = .005;
@@ -74,7 +82,11 @@ public class HabLifter extends Subsystem {
   private final PIDController pIDLoop = new PIDController(p,i,d, input, output, loopLengthInSeconds) {
     @Override
     protected double calculateFeedForward() {
-      return feedForwardAmount();
+      // MULTIPLY
+      double amountOfGravity = Math.sin(Math.toRadians((getArmPosition() / ROTATIONS_PER_DEGREE) + (-TOP_DEAD_CENTER)));
+      double fF = amountOfGravity * FULL_HOLD_POWER;
+      L.ogSD("PID ARM FF", fF);
+      return fF;
     }
   };
     
@@ -95,6 +107,7 @@ public class HabLifter extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    // setDefaultCommand(new StopRightThereCriminalScum());
   }
 
   public void driveWheels(double speed) {
@@ -111,20 +124,24 @@ public class HabLifter extends Subsystem {
     this.habLifterLegs2.set(false);
   }
 
-  private void setArmPIDOutput (double out) {
+  private void setArmPIDOutput(double out) {
     habLifterArmsLead.set(out);
-    L.ogSD("ARM PID ouput", out);
+    L.ogSD("PID ARM ouput", out);
   }
 
-  public double getArmPosition () {
+  public double getArmPosition() {
     return habLifterEnc.getPosition();
   }
-/**
+
+  public double getArmPositionDegrees() {
+    return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
+  }
+  /**
  * 
- * @param setpoint the angle (in degrees) you want the arm to travel to.
+ * @param setpointInDegrees the angle (in degrees) you want the arm to travel to.
  */
-  public void setArmSetpoint(double setpoint) {
-    setpoint = setpoint * HabLifter.ROTATIONS_PER_DEGREE;
+  public void setArmSetpoint(double setpointInDegrees) {
+    double setpoint = setpointInDegrees * ROTATIONS_PER_DEGREE;
     this.pIDLoop.setSetpoint(setpoint);
   }
 
@@ -139,15 +156,8 @@ public class HabLifter extends Subsystem {
   public void clearEncoder() {
     habLifterEnc.setPosition(0.0);
   }
-
-  private double feedForwardAmount() {
-    // MULTIPLY
-    double fF = Math.sin(getArmPosition() / -ROTATIONS_PER_DEGREE * Math.PI/ 180.0);
-    L.ogSD("feedforward", fF);
-    return fF;
-  }
-
+  
   public void log() {
-    L.ogSD("ARM PID Sensor", getArmPosition());
+    L.ogSD("PID ARM Sensor Degrees", getArmPositionDegrees());
   }
 }
