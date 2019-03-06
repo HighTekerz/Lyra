@@ -46,6 +46,7 @@ public class StopRightThereCriminalScum extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    
+    L.ogCmdInterrupted(this);
+    hL.disableArm();
   }
 }

@@ -40,7 +40,7 @@ public class DriveWithJoy extends Command {
     if(Math.abs(turn) < .1){
       turn = 0;
     }
-    drivetrain.arcadeDrive(throttle, turn);
+    drivetrain.arcadeDrive(Math.pow(throttle, 3), Math.pow(turn, 3));
   }
 
   // Make this return true when this Command no longer needs to run execute()

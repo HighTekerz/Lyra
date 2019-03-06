@@ -107,7 +107,7 @@ public class HabLifter extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // setDefaultCommand(new StopRightThereCriminalScum());
+    setDefaultCommand(new StopRightThereCriminalScum());
   }
 
   public void driveWheels(double speed) {
