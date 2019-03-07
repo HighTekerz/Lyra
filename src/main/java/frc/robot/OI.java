@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AutoLift.CompleteStageThreeAutoLift;
+import frc.robot.commands.AutoLift.PrepareStageThreeAutoLift;
 import frc.robot.commands.AutoLift.ReturnToBasePosition;
 import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.commands.drivetrain.DriveForDistance;
@@ -38,29 +40,31 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-        Button returnToCease = new DpadButton(dipStick, 0, 0);
+        /**
+         * dipstick:
+         *  left trigger: outtake
+         *  right trigger: intake
+         *  A button: Double flap down
+         *  B button: Double flap up
+         * 
+         */
+
+        /**
+         * ripStick
+         *  A = Level 1
+         *  B = Level 2
+         *  Y = Level 3
+         *  ???: complete climb procedure
+         */
+
+        Button returnToCease = new DpadButton(ripStick, 0, 0);
         returnToCease.whenPressed(new ReturnToBasePosition());
 
-        Button returnToStop = new DpadButton(dipStick, 0, 90);
-        returnToStop.whenPressed(new )
-
-        Button  = new DpadButton(dipStick, 0, 0);
-        .whenPressed(new )
-
-        Button  = new DpadButton(dipStick, 0, 0);
-        .whenPressed(new )
-
-        Button rainbowMode = new DpadButton(ripStick, 0, 0);
-        rainbowMode.whenPressed(new SetMode("3"));
-
-        Button johnWipeMode = new DpadButton(ripStick, 0, 90);
-        johnWipeMode.whenPressed(new SetMode("4"));
-
-        Button bouncyDotMode = new DpadButton(ripStick, 0, 270);
-        bouncyDotMode.whenPressed(new SetMode("2"));
+        Button prepForStage3 = new DpadButton(ripStick, 0, 180);
+        prepForStage3.whenPressed(new PrepareStageThreeAutoLift());
         
-        Button greenMode = new DpadButton(ripStick, 0, 180);
-        greenMode.whenPressed(new SetMode("1"));
+        Button rainbowMode = new DpadButton(ripStick, 0, 90);
+        rainbowMode.whenPressed(new SetMode("3"));
     }
 
     public double getLeftStickYRip() {
