@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AutoLift.ReturnToBasePosition;
 import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.commands.drivetrain.DriveForDistance;
 import frc.robot.commands.drivetrain.TurnToDegree;
@@ -37,29 +38,17 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-        Button habArmToTop = new JoystickButton(dipStick, Y_BUTTON);
-        habArmToTop.whenPressed(new SetHabArmPosition(HabLifter.TOP_DEAD_CENTER));
+        Button returnToCease = new DpadButton(dipStick, 0, 0);
+        returnToCease.whenPressed(new ReturnToBasePosition());
 
-        Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
-        habArmToMinusTen.whenPressed(new SetHabArmPosition(-10));
+        Button returnToStop = new DpadButton(dipStick, 0, 90);
+        returnToStop.whenPressed(new )
 
-        Button habArmTo18Inch = new JoystickButton(dipStick, B_BUTTON);
-        habArmTo18Inch.whenPressed(new SetHabArmPosition(HabLifter.START_DEGREES_FOR_HAB_CLIMB));
+        Button  = new DpadButton(dipStick, 0, 0);
+        .whenPressed(new )
 
-        Button habArmToDownPos = new JoystickButton(dipStick, A_BUTTON);
-        habArmToDownPos.whenPressed(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
-
-        Button driveFive = new DpadButton(dipStick, 0, 0);
-        driveFive.whenPressed(new DriveForDistance(12.0, 0.3));
-        
-        Button driveFiveEvilTwin = new DpadButton(dipStick, 0, 180);
-        driveFiveEvilTwin.whenPressed(new DriveForDistance(-12.0, 0.3));
-
-        Button rotateFortyEight = new DpadButton(dipStick, 0, 90);
-        rotateFortyEight.whenPressed(new TurnToDegree(-48.0, 0.3));
-
-        Button rotateFortyEightEvilTwin = new DpadButton(dipStick, 0, 270);
-        rotateFortyEightEvilTwin.whenPressed(new TurnToDegree(48.0, 0.3));
+        Button  = new DpadButton(dipStick, 0, 0);
+        .whenPressed(new )
 
         Button rainbowMode = new DpadButton(ripStick, 0, 0);
         rainbowMode.whenPressed(new SetMode("3"));

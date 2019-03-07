@@ -36,7 +36,7 @@ public class Drivetrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // setDefaultCommand(new DriveWithJoy());
+    setDefaultCommand(new DriveWithJoy());
     L.ogSD("DriveWithJoy", this);
   }
 
@@ -65,9 +65,9 @@ public class Drivetrain extends Subsystem {
     setWheelSpeed(leftSpeed, rightSpeed);
   }
 
-  public void stopMotors(){
-    rightMotorLead.stopMotor();
-    leftMotorLead.stopMotor();
+  public void startBrakeMode(){
+    rightMotorLead.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    leftMotorLead.setIdleMode(CANSparkMax.IdleMode.kBrake);
   }
   /**
    * a method to check the encoder vaues of the drivetrain wheels, 1 at a time.

@@ -30,7 +30,7 @@ import frc.robot.tekerz.utilities.L;
 public class HabLifter extends Subsystem {
   // we had 32 rotations per 90 degrees
   private final double 
-    FULL_HOLD_POWER = -0.1,
+    FULL_HOLD_POWER = -0.0001,
     ROTATIONS_PER_DEGREE = 32.0 / 90.0,
     MAX_SENSOR_READING = 0.0,
     MIN_SENSOR_READING = -113.0,

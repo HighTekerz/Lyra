@@ -29,13 +29,13 @@ public class DriveForDistance extends Command {
       reverse = true;
       this.speed = -this.speed;
     }
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
+    Robot.Subsystems.drivetrain.startBrakeMode();
     tickTargetLeft = (inches * Drivetrain.TICKS_PER_INCH) + Robot.Subsystems.drivetrain.getEnc(true);
     tickTargetRight = (inches * Drivetrain.TICKS_PER_INCH) + Robot.Subsystems.drivetrain.getEnc(false);
   }
@@ -72,7 +72,6 @@ public class DriveForDistance extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.Subsystems.drivetrain.stopMotors();
     L.ogCmdEnd(this);
   }
 
