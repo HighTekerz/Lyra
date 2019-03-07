@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.wpilibj.Counter.Mode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.drivetrain.DriveWithJoy;
@@ -30,11 +32,11 @@ public class Drivetrain extends Subsystem {
 
   public static double
   //TODO: fix this number
-    TICKS_PER_INCH = .03;
+    TICKS_PER_INCH = 0.5;
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new DriveWithJoy());
+    // setDefaultCommand(new DriveWithJoy());
     L.ogSD("DriveWithJoy", this);
   }
 
@@ -61,6 +63,11 @@ public class Drivetrain extends Subsystem {
     double rightSpeed = straightSpeed - turnSpeed;
 
     setWheelSpeed(leftSpeed, rightSpeed);
+  }
+
+  public void stopMotors(){
+    rightMotorLead.stopMotor();
+    leftMotorLead.stopMotor();
   }
   /**
    * a method to check the encoder vaues of the drivetrain wheels, 1 at a time.

@@ -12,42 +12,46 @@ import frc.robot.Robot;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.L;
 
-public class RunClimberWheels extends Command {
-  
-  HabLifter hL = Robot.Subsystems.habLifter;
-  double wheelSpeed;
+public class SetHabArmPosition extends Command {
+  private double positionInDegrees = 0.0;
+  HabLifter h = Robot.Subsystems.habLifter;
 
-  public RunClimberWheels(double wheelSpeed) {
-    requires(hL);
-    this.wheelSpeed = wheelSpeed;
+  public SetHabArmPosition(double positionInDegrees) {
+    this.positionInDegrees = positionInDegrees;
+    requires(h);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
+    h.setArmSetpoint(this.positionInDegrees);
+    L.og("setpoint in degrees: " + this.positionInDegrees);
+    h.enableArm();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    hL.driveWheels(wheelSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
+    h.disableArm();
   }
 }

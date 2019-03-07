@@ -19,6 +19,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.subsystems.MultiArm;
 import frc.robot.subsystems.Sensors;
+import frc.robot.tekerz.Rioduino;
 import frc.robot.tekerz.utilities.L;
 
 /**
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
     public static Sensors sensors = new Sensors();
     public static MultiArm multiArm = new MultiArm();
     public static HabLifter habLifter = new HabLifter();
+    public static Rioduino rioduino = new Rioduino();
   }
 
   public static OI oi = new OI();

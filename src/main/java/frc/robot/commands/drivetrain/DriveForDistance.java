@@ -72,7 +72,7 @@ public class DriveForDistance extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.Subsystems.drivetrain.arcadeDrive(0.0, 0.0);
+    Robot.Subsystems.drivetrain.stopMotors();
     L.ogCmdEnd(this);
   }
 

@@ -5,33 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hablifter;
+package frc.robot.commands.Rioduino;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.HabLifter;
-import frc.robot.tekerz.utilities.L;
+import frc.robot.tekerz.Rioduino;
 
-public class SetPosition extends Command {
-  private double positionInDegrees = 0.0;
-  HabLifter h = Robot.Subsystems.habLifter;
+public class SetMode extends Command {
+  
+  String mode;
 
-  // public setPosition() {
-    
-  // }
-
-  public SetPosition(double positionInDegrees) {
-    this.positionInDegrees = positionInDegrees;
-    requires(h);
+  public SetMode(String mode) {
+    this.mode = mode;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    L.ogCmdInit(this);
-    h.setArmSetpoint(this.positionInDegrees);
-    L.og("setpoint in degrees: " + this.positionInDegrees);
-    h.enableArm();
+    Robot.Subsystems.rioduino.write(mode);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -48,14 +39,11 @@ public class SetPosition extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    L.ogCmdInterrupted(this);
-    h.disableArm();
   }
 }

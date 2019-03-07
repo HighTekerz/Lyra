@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class Rioduino {
     private static I2C Wire = new I2C(Port.kMXP, 4);//uses the i2c port on the RoboRIO
-														//uses address 4, must match arduino
+													//uses address 4, must match arduino
 	private static final int MAX_BYTES = 32;
 	
 	public void write(String input){//writes to the arduino 

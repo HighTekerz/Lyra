@@ -11,10 +11,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.commands.drivetrain.DriveForDistance;
 import frc.robot.commands.drivetrain.TurnToDegree;
 import frc.robot.commands.elevator.SetHeight;
-import frc.robot.commands.hablifter.SetPosition;
+import frc.robot.commands.hablifter.SetHabArmPosition;
 import frc.robot.commands.multiarm.CargoCollect;
 import frc.robot.commands.multiarm.CargoEject;
 import frc.robot.commands.multiarm.HatchFlapDown;
@@ -37,28 +38,40 @@ public class OI {
 
     public OI() {
         Button habArmToTop = new JoystickButton(dipStick, Y_BUTTON);
-        habArmToTop.whenPressed(new SetPosition(HabLifter.TOP_DEAD_CENTER));
+        habArmToTop.whenPressed(new SetHabArmPosition(HabLifter.TOP_DEAD_CENTER));
 
         Button habArmToMinusTen = new JoystickButton(dipStick, X_BUTTON);
-        habArmToMinusTen.whenPressed(new SetPosition(-10));
+        habArmToMinusTen.whenPressed(new SetHabArmPosition(-10));
 
         Button habArmTo18Inch = new JoystickButton(dipStick, B_BUTTON);
-        habArmTo18Inch.whenPressed(new SetPosition(HabLifter.START_DEGREES_FOR_HAB_CLIMB));
+        habArmTo18Inch.whenPressed(new SetHabArmPosition(HabLifter.START_DEGREES_FOR_HAB_CLIMB));
 
         Button habArmToDownPos = new JoystickButton(dipStick, A_BUTTON);
-        habArmToDownPos.whenPressed(new SetPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
+        habArmToDownPos.whenPressed(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
 
-        // Button driveFive = new DpadButton(dipStick, 0, 0);
-        // driveFive.whenPressed(new DriveForDistance(5.0, 0.3));
+        Button driveFive = new DpadButton(dipStick, 0, 0);
+        driveFive.whenPressed(new DriveForDistance(12.0, 0.3));
         
-        // Button driveFiveEvilTwin = new DpadButton(dipStick, 0, 180);
-        // driveFiveEvilTwin.whenPressed(new DriveForDistance(-5.0, 0.3));
+        Button driveFiveEvilTwin = new DpadButton(dipStick, 0, 180);
+        driveFiveEvilTwin.whenPressed(new DriveForDistance(-12.0, 0.3));
 
-        // Button rotateFortyEight = new DpadButton(dipStick, 0, 90);
-        // rotateFortyEight.whenPressed(new TurnToDegree(48.0, 0.3));
+        Button rotateFortyEight = new DpadButton(dipStick, 0, 90);
+        rotateFortyEight.whenPressed(new TurnToDegree(-48.0, 0.3));
 
-        // Button rotateFortyEightEvilTwin = new DpadButton(dipStick, 0, 270);
-        // rotateFortyEightEvilTwin.whenPressed(new TurnToDegree(-48.0, 0.3));
+        Button rotateFortyEightEvilTwin = new DpadButton(dipStick, 0, 270);
+        rotateFortyEightEvilTwin.whenPressed(new TurnToDegree(48.0, 0.3));
+
+        Button rainbowMode = new DpadButton(ripStick, 0, 0);
+        rainbowMode.whenPressed(new SetMode("3"));
+
+        Button johnWipeMode = new DpadButton(ripStick, 0, 90);
+        johnWipeMode.whenPressed(new SetMode("4"));
+
+        Button bouncyDotMode = new DpadButton(ripStick, 0, 270);
+        bouncyDotMode.whenPressed(new SetMode("2"));
+        
+        Button greenMode = new DpadButton(ripStick, 0, 180);
+        greenMode.whenPressed(new SetMode("1"));
     }
 
     public double getLeftStickYRip() {

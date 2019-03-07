@@ -35,27 +35,22 @@ public class TurnToDegree extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {			
-		// TODO: fix this so that the current angle is being populated
 		if (relativeDegreeToReach > Robot.Subsystems.drivetrain.getAngle()) {
-			speed = Math.abs(speed);
+			speed = -Math.abs(speed);
 		}
 		else {
-			speed = -Math.abs(speed);
+			speed = Math.abs(speed);
 		}
 
 		currentAngle = Robot.Subsystems.drivetrain.getAngle();
 
 		Robot.Subsystems.drivetrain.arcadeDrive(0, speed);
-
-		L.og("angle " + currentAngle);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
     if (currentAngle > relativeDegreeToReach - acceptableError &&
         currentAngle < relativeDegreeToReach + acceptableError) {
-			
-			
 			System.out.println("TurnToDegree Is Finished at: " + currentAngle);
 			return true;
 		} else {
@@ -67,6 +62,7 @@ public class TurnToDegree extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		relativeDegreeToReach = degreeToReach;
+		Robot.Subsystems.drivetrain.arcadeDrive(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same
