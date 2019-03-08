@@ -5,21 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.AutoLift;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.hablifter.RetractLegs;
-import frc.robot.commands.hablifter.RunClimberWheels;
-import frc.robot.commands.hablifter.SetHabArmPosition;
-import frc.robot.subsystems.HabLifter;
+import frc.robot.commands.DoNothing;
 
-public class ReturnToBasePosition extends CommandGroup {
+public class BothFlapsUp extends CommandGroup {
   /**
-   * 
+   * Add your docs here.
    */
-  public ReturnToBasePosition() {
-    addSequential(new SetHabArmPosition(0.0));
-    addSequential(new RunClimberWheels(0.0));
-    addSequential(new RetractLegs());
+  public BothFlapsUp() {
+    addSequential(new CargoArmUp());
+    addSequential(new DoNothing(.1));
+    addSequential(new HatchFlapUp());
   }
 }

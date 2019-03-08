@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.multiarm.HatchFingerRelease;
 
 /**
  * Add your docs here.
@@ -44,8 +45,7 @@ public class MultiArm extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new HatchFingerRelease());
   }
 
   public boolean hasCargo() {
@@ -64,7 +64,7 @@ public class MultiArm extends Subsystem {
     this.intakeFlap.set(true);
   }
 
-  public void intakeFlapDown() {
+  public void intakeFlap() {
     this.intakeFlap.set(false);
   }
 
@@ -94,6 +94,13 @@ public class MultiArm extends Subsystem {
 
   public void setFingerDown(){
     hPFinger.set(false);
+  }
+
+  /**
+   * @return is hp flap up.
+   */
+  public boolean getHPFlapIsUp(){
+    return hPFlap.get();
   }
 
   public void log() {

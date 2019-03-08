@@ -36,7 +36,6 @@ public class Drivetrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new DriveWithJoy());
-    L.ogSD("DriveWithJoy", this);
   }
 
   public Drivetrain() {
@@ -50,6 +49,13 @@ public class Drivetrain extends Subsystem {
 
     rightMotorLead.setInverted(true);
     rightMotorFollower.setInverted(true);
+
+    startBrakeMode();
+
+    rightMotorLead.setClosedLoopRampRate(0.5);
+    rightMotorLead.setOpenLoopRampRate(0.5);
+    leftMotorLead.setClosedLoopRampRate(0.5);
+    leftMotorLead.setOpenLoopRampRate(0.5);
   }
 
   public void setWheelSpeed(double leftSpeed, double rightSpeed) {
@@ -93,9 +99,10 @@ public class Drivetrain extends Subsystem {
   }
 
   public void log() {
-    L.ogSD("Left Drive Encoder", getEnc(true));
-    L.ogSD("Right Drive Encoder", getEnc(false));
+    // L.ogSD("Left Drive Encoder", getEnc(true));
+    // L.ogSD("Right Drive Encoder", getEnc(false));
     L.ogSD("Robot Angle", getAngle());
+    // L.ogSD("Drivetrain", this);
   }
 
   /******************************************** STUFF FOR PID */

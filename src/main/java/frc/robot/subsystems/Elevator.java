@@ -25,17 +25,17 @@ import frc.robot.tekerz.utilities.L;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public static double MOTOR_HOLD_VALUE = 0.1;
+  public static double MOTOR_HOLD_VALUE = 0.0;
   // measured ticks
-  public static double TICKS_PER_INCH = -1449 / 15;
+  public static double TICKS_PER_INCH = -653 / 20;
   // system length is 30 inches
   public static double MAX_ERROR = 30 * TICKS_PER_INCH;
 
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 
   double 
-  p = -(0.1 / MAX_ERROR), 
-  i = 0.01, 
+  p = 0.002, 
+  i = 0.0, 
   d = 0.0, 
   loopLengthInSeconds = .005;
 
@@ -69,6 +69,8 @@ public class Elevator extends Subsystem {
     liftLead.configAllSettings(config);
     liftFollower.configAllSettings(config);
     liftFollower.follow(liftLead);
+  
+    pIDLoop.setOutputRange(-0.3, 0.3);
   }
 
   private void setElevatorPIDOutput(double out) {
@@ -93,7 +95,7 @@ public class Elevator extends Subsystem {
   }
 
   public void log() {
-    L.ogSD("PID Elevator Sensor Inches", getElevatorPosition() / TICKS_PER_INCH);
+    L.ogSD("Elevator Ticks", getElevatorPosition());
   }
 
   @Override

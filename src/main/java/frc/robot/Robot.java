@@ -17,6 +17,7 @@ import frc.robot.commands.test.AddTestCommands;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
+import frc.robot.subsystems.HabLifterWheels;
 import frc.robot.subsystems.MultiArm;
 import frc.robot.subsystems.Sensors;
 import frc.robot.tekerz.Rioduino;
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
     public static Sensors sensors = new Sensors();
     public static MultiArm multiArm = new MultiArm();
     public static HabLifter habLifter = new HabLifter();
+    public static HabLifterWheels habLifterWheels = new HabLifterWheels();
     public static Rioduino rioduino = new Rioduino();
   }
 
@@ -153,8 +155,7 @@ public class Robot extends TimedRobot {
     Robot.Subsystems.multiArm.log();
     Robot.Subsystems.drivetrain.log();
     Robot.Subsystems.habLifter.log();
-    L.ogSD("Dipstick right joy X value", Robot.oi.getRightStickXDip());
-    L.ogSD("dipStick Dpad POV", Robot.oi.dipStick.getPOV(0));
+    Robot.oi.log();
   }
 
 }
