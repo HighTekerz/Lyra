@@ -5,29 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hablifter;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.HabLifter;
-import frc.robot.subsystems.HabLifterWheels;
 import frc.robot.tekerz.utilities.L;
 
-public class RunClimberWheels extends Command {
-  
-  HabLifterWheels hLW = Robot.Subsystems.habLifterWheels;
-  HabLifter hL = Robot.Subsystems.habLifter;
-  double wheelSpeed;
-
-  public RunClimberWheels(double wheelSpeed) {
-    requires(hLW);
-    this.wheelSpeed = wheelSpeed;
+public class CargoArmUp extends Command {
+  public CargoArmUp() {
+    requires(Robot.Subsystems.multiArm);
   }
-
-  // public RunClimberWheels(double wheelSpeed, boolean neverStop) {
-  //   requires(hL);
-  //   this.wheelSpeed = wheelSpeed;
-  // }
 
   // Called just before this Command runs the first time
   @Override
@@ -38,7 +25,7 @@ public class RunClimberWheels extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    hL.driveWheels(wheelSpeed);
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -50,14 +37,11 @@ public class RunClimberWheels extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    L.ogCmdInterrupted(this);
-    hL.driveWheels(0);
   }
 }

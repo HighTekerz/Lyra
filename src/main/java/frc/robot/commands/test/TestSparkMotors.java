@@ -19,10 +19,10 @@ public class TestSparkMotors extends Command {
 
   private TestSparkMotors() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.Subsystems.drivetrain);
-    requires(Robot.Subsystems.elevator);
-    requires(Robot.Subsystems.habLifter);
-    requires(Robot.Subsystems.multiArm);
+    // requires(Robot.Subsystems.drivetrain);
+    // requires(Robot.Subsystems.elevator);
+    // requires(Robot.Subsystems.habLifter);
+    // requires(Robot.Subsystems.multiArm);
   }
 
   public TestSparkMotors(CANSparkMax spark, String name) {

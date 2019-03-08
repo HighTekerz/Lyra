@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.PIDBase;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -37,8 +38,8 @@ public class HabLifter extends Subsystem {
     FULL_SENSOR_RANGE = MAX_SENSOR_READING - MIN_SENSOR_READING;
 
   public static final double
-    START_DEGREES_FOR_HAB_CLIMB = -45.0,
-    END_DEGREES_FOR_HAB_CLIMB = -113.0,
+    START_DEGREES_FOR_HAB_CLIMB = -55.0,
+    END_DEGREES_FOR_HAB_CLIMB = -128.0,
     TOP_DEAD_CENTER = -14.0;
 
   TalonSRX
@@ -56,7 +57,7 @@ public class HabLifter extends Subsystem {
     habLifterLegs2 = RobotMap.Pneumatics.habLifterLegs2;
 
   double 
-    p = 2.0 / FULL_SENSOR_RANGE,
+    p = 8.0 / FULL_SENSOR_RANGE,
     i = 0.0,
     d = 0.0,
     loopLengthInSeconds = .005;
@@ -103,6 +104,8 @@ public class HabLifter extends Subsystem {
 
     habLifterArmsLead.setInverted(false);
     habLifterArmsFollower.follow(habLifterArmsLead, true);
+
+    pIDLoop.setOutputRange(-0.2, 0.2);
   }
 
   @Override
@@ -141,6 +144,7 @@ public class HabLifter extends Subsystem {
  * @param setpointInDegrees the angle (in degrees) you want the arm to travel to.
  */
   public void setArmSetpoint(double setpointInDegrees) {
+
     double setpoint = setpointInDegrees * ROTATIONS_PER_DEGREE;
     this.pIDLoop.setSetpoint(setpoint);
   }

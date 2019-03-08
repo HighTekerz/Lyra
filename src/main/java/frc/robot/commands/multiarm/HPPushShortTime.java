@@ -5,59 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hablifter;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.HabLifter;
-import frc.robot.subsystems.HabLifterWheels;
 import frc.robot.tekerz.utilities.L;
 
-public class RunClimberWheels extends Command {
-  
-  HabLifterWheels hLW = Robot.Subsystems.habLifterWheels;
-  HabLifter hL = Robot.Subsystems.habLifter;
-  double wheelSpeed;
+public class HPPushShortTime extends Command {
+  private boolean amIFinished = false;
 
-  public RunClimberWheels(double wheelSpeed) {
-    requires(hLW);
-    this.wheelSpeed = wheelSpeed;
+  public HPPushShortTime() {
+    requires(Robot.Subsystems.multiArm);
   }
-
-  // public RunClimberWheels(double wheelSpeed, boolean neverStop) {
-  //   requires(hL);
-  //   this.wheelSpeed = wheelSpeed;
-  // }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    amIFinished = false;
     L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    hL.driveWheels(wheelSpeed);
+    if (timeSinceInitialized() < 0.5) {
+      Robot.Subsystems.multiArm.hPPusherOut();
+    } else {
+      Robot.Subsystems.multiArm.hPPusherIn();
+      amIFinished = true;
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return amIFinished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    L.ogCmdInterrupted(this);
-    hL.driveWheels(0);
   }
 }

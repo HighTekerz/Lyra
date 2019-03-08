@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.hablifter.ClearEncoder;
+import frc.robot.commands.hablifter.SetHabArmPosition;
+import frc.robot.subsystems.HabLifter;
 
 public class AddTestCommands extends Command {
   public AddTestCommands() {
@@ -38,7 +40,6 @@ public class AddTestCommands extends Command {
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFlap, "ArmPCM-3"));
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPPusher, "ArmPCM-4"));
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFinger, "ArmPCM-5"));
-    SmartDashboard.putData("clear arm encs", new ClearEncoder());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -37,7 +37,6 @@ public class Drivetrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new DriveWithJoy());
-    L.ogSD("DriveWithJoy", this);
   }
 
   public Drivetrain() {
@@ -88,8 +87,9 @@ public class Drivetrain extends Subsystem {
   }
 
   public void log() {
-    L.ogSD("Left Drive Encoder", getEnc(true));
-    L.ogSD("Right Drive Encoder", getEnc(false));
+    // L.ogSD("Left Drive Encoder", getEnc(true));
+    // L.ogSD("Right Drive Encoder", getEnc(false));
     L.ogSD("Robot Angle", getAngle());
+    // L.ogSD("Drivetrain", this);
   }
 }

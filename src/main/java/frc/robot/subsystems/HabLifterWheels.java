@@ -5,28 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.tekerz.utilities;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Add your docs here.
  */
-public class TriggerButton extends Button {
-	
-    GenericHID m_joystick;
-    int m_axis;
+public class HabLifterWheels extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
-   public TriggerButton(GenericHID joystick, int axis) {
-      m_joystick = joystick;
-      m_axis = axis;
-   }
-   public boolean get() {
-      if (m_joystick.getRawAxis(m_axis) >= 0.5) {
-           return true;
-       } else {
-           return false;
-       }
-   }
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+  }
 }

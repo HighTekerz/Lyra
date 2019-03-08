@@ -12,8 +12,7 @@ import frc.robot.Robot;
 
 public class ClearEncoder extends Command {
   public ClearEncoder() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.Subsystems.habLifter);
   }
 
   // Called just before this Command runs the first time

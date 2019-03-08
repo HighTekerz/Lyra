@@ -9,25 +9,24 @@ package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.tekerz.utilities.L;
+import frc.robot.subsystems.MultiArm;
 
-public class CargoArmPosition extends Command {
-  private CargoArmPosition() {
-    requires(Robot.Subsystems.multiArm);
+public class HPPushWhileHeld extends Command {
+  MultiArm m = Robot.Subsystems.multiArm;
+
+  public HPPushWhileHeld() {
+    requires(m);
   }
-
-
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    m.hPPusherOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,11 +38,13 @@ public class CargoArmPosition extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    m.hPPusherIn();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    m.hPPusherIn();
   }
 }
