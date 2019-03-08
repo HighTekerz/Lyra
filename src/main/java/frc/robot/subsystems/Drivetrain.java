@@ -50,6 +50,13 @@ public class Drivetrain extends Subsystem {
 
     rightMotorLead.setInverted(true);
     rightMotorFollower.setInverted(true);
+
+    startBrakeMode();
+
+    rightMotorLead.setClosedLoopRampRate(0.5);
+    rightMotorLead.setOpenLoopRampRate(0.5);
+    leftMotorLead.setClosedLoopRampRate(0.5);
+    leftMotorLead.setOpenLoopRampRate(0.5);
   }
 
   public void setWheelSpeed(double leftSpeed, double rightSpeed){

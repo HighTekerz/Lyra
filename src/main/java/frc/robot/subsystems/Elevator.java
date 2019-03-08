@@ -34,7 +34,7 @@ public class Elevator extends Subsystem {
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 
   double 
-  p = 0.005, 
+  p = 0.002, 
   i = 0.0, 
   d = 0.0, 
   loopLengthInSeconds = .005;

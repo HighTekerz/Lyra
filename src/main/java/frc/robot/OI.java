@@ -62,8 +62,8 @@ public class OI {
          *    Add Elevator
          */
 
-        // Button bothFlapsDown = new JoystickButton(dipStick, Y_BUTTON);
-        // bothFlapsDown.whenPressed(new DropElevatorAndFlaps());
+        Button bothFlapsDown = new JoystickButton(dipStick, Y_BUTTON);
+        bothFlapsDown.whenPressed(new BothFlapsDown());
 
         Button bothFlapsUp = new JoystickButton(dipStick, A_BUTTON);
         bothFlapsUp.whenPressed(new BothFlapsUp());
