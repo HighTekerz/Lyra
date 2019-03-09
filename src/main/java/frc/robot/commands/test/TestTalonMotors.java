@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.tekerz.utilities.L;
 
 public class TestTalonMotors extends Command {
@@ -55,12 +54,12 @@ public class TestTalonMotors extends Command {
     //   lastMotor = currentMotor;
     // }
 
-    if (Robot.oi.getButtonBRip()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYRip() / 10.0);
-    } else if (Robot.oi.getButtonARip()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYRip() / 5.0);      
-    } else if (Robot.oi.getButtonYRip()) {
-      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYRip());
+    if (Robot.oi.getButtonBLip()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYLip() / 10.0);
+    } else if (Robot.oi.getButtonALip()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYLip() / 5.0);      
+    } else if (Robot.oi.getButtonYLip()) {
+      talon.set(ControlMode.PercentOutput, Robot.oi.getLeftStickYLip());
     } else {
       talon.set(ControlMode.PercentOutput, 0.0);
     }

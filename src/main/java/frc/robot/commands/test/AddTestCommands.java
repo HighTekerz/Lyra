@@ -10,9 +10,6 @@ package frc.robot.commands.test;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.hablifter.ClearEncoder;
-import frc.robot.commands.hablifter.SetHabArmPosition;
-import frc.robot.subsystems.HabLifter;
 
 public class AddTestCommands extends Command {
   public AddTestCommands() {
