@@ -140,14 +140,20 @@ public class HabLifter extends Subsystem {
     return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
   }
   /**
+ * Maximum output in each direction is 0.2 when this function is used
  * 
  * @param setpointInDegrees the angle (in degrees) you want the arm to travel to.
  */
   public void setArmSetpoint(double setpointInDegrees) {
+    setArmSetpoint(setpointInDegrees, 0.2);
+  }
 
+  public void setArmSetpoint(double setpointInDegrees, double maximumOutput) {
+    pIDLoop.setOutputRange(-Math.abs(maximumOutput), Math.abs(maximumOutput));
     double setpoint = setpointInDegrees * ROTATIONS_PER_DEGREE;
     this.pIDLoop.setSetpoint(setpoint);
   }
+
 
   public void enableArm() {
     this.pIDLoop.enable();

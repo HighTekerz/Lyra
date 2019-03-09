@@ -101,6 +101,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    System.out.println("Gracious Professionalism > Meaningful Life");
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

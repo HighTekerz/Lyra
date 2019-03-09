@@ -25,7 +25,7 @@ public class CargoEject extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.multiArm.setIntakeSpeed(-0.5);
+    Robot.Subsystems.multiArm.setCargoIntakeSpeed(-0.5);
   }
 
   // Make this return true when this Command no longer needs to run execute()

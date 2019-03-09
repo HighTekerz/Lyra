@@ -8,12 +8,16 @@
 package frc.robot.commands.CommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.elevator.SetElevatorHeight;
+import frc.robot.commands.multiarm.BothFlapsUp;
+import frc.robot.subsystems.Elevator;
 
 public class DropElevatorRaiseFlaps extends CommandGroup {
   /**
    * Add your docs here.
    */
   public DropElevatorRaiseFlaps() {
-
+    addSequential(new SetElevatorHeight(Elevator.Level_1HALF));
+    addSequential(new BothFlapsUp());
   }
 }

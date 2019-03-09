@@ -29,9 +29,9 @@ public class CargoCollect extends Command {
   @Override
   protected void execute() {
     if (!gm.hasCargo()) {
-      gm.setIntakeSpeed(0.5);
+      gm.setCargoIntakeSpeed(0.5);
     } else {
-      gm.setIntakeSpeed(0.0);
+      gm.setCargoIntakeSpeed(0.0);
     }
 
   }

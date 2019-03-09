@@ -25,13 +25,13 @@ public class MultiArm extends Subsystem {
   // here. Call these from Commands.
 
   Solenoid
-    intakeFlap = RobotMap.Pneumatics.intakeFlap,
+    cargoArm = RobotMap.Pneumatics.intakeFlap,
     hPFlap = RobotMap.Pneumatics.hPFlap,
     hPPusher = RobotMap.Pneumatics.hPPusher,
     hPFinger = RobotMap.Pneumatics.hPFinger;
 
   TalonSRX
-    intake = RobotMap.Talons.intake;
+    cargoIntake = RobotMap.Talons.intake;
 
   DigitalInput
     hPSensor0 = RobotMap.Switches.hPSensor0,
@@ -40,7 +40,7 @@ public class MultiArm extends Subsystem {
 
   public MultiArm() {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
-    intake.configAllSettings(config);
+    cargoIntake.configAllSettings(config);
   }
 
   @Override
@@ -57,15 +57,15 @@ public class MultiArm extends Subsystem {
   }
 
   public void runIntake(double speed) {
-    this.intake.set(ControlMode.PercentOutput, speed);
+    this.cargoIntake.set(ControlMode.PercentOutput, speed);
   }
 
-  public void intakeFlapUp() {
-    this.intakeFlap.set(true);
+  public void cargoArmUp() {
+    this.cargoArm.set(true);
   }
 
-  public void intakeFlap() {
-    this.intakeFlap.set(false);
+  public void cargoArmDown() {
+    this.cargoArm.set(false);
   }
 
   public void hPFlapUp() {
@@ -84,8 +84,8 @@ public class MultiArm extends Subsystem {
     this.hPPusher.set(false);
   }
 
-  public void setIntakeSpeed(double speed){
-    intake.set(ControlMode.PercentOutput, speed);
+  public void setCargoIntakeSpeed(double speed){
+    cargoIntake.set(ControlMode.PercentOutput, speed);
   }
 
   public void setFingerUp(){

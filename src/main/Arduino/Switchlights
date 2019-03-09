@@ -1,0 +1,138 @@
+#include <Wire.h>
+#include <Adafruit_NeoPixel.h>
+
+//built in class from arduino, strongly suggest looking at it on their website
+//it is not a complicated class
+
+// #include <Pixy.h>
+
+//this is provided by the pixy creators, you will have to go to the arduino sketch editor, 
+//click sketch, include library, and import the pixy .zip files
+
+//SETUP THE DEVICES
+
+//plug sda on RoboRIO into A4
+//plug scl on RoboRIO into A5
+//connect the two grounds
+
+// IMPORTANT
+        int mode = '2';
+// IMPORTANT
+
+//String piOutput = "none";//string to be sent to the robot
+
+String output = "nope";
+               
+String input = "blank";  //string received from the robot
+//const String PIXY = "pi";
+//Pixy pixy;
+
+int i = 0;
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(37, 6, NEO_GRB + NEO_KHZ800);
+int sensorValue = 0;        // value read from the pot
+int sensorPin = A0;    // select the input pin for the potentiometer
+
+void setup(){
+  Serial.begin(9600);
+  Wire.begin(4);                // join i2c bus with address #4 as a slave device
+  Wire.onReceive(receiveEvent); // Registers a function to be called when a slave device receives a transmission from a master
+  Wire.onRequest(requestEvent); // Register a function to be called when a master requests data from this slave device
+//  pixy.init();
+  Serial.print("rollin");
+ pinMode(9, INPUT_PULLUP); 
+   strip.begin();
+  strip.show(); // Initialize all pixels to 'off'
+}
+
+void loop(){
+  switch(mode){
+    case 1: colorWipe(strip.Color(0, 255, 0), 10); break;
+    case 2: bouncyDot(strip.Color(0, 50, 50)); break;
+    case 3: colorWipeInfiniteColors(75); break;
+    case 4: johnWipe(); break;
+    default: colorWipe(strip.Color(0, 255, 0), 10); break;
+  }
+  output = String(i);
+  i++;
+  delay(70); //gives time for everything to process
+}
+
+void requestEvent(){//called when RoboRIO request a message from this device
+  Wire.write(String{i}.c_str()); //writes data to the RoboRIO, converts it to string
+  Serial.println(i);
+}
+
+
+void colorWipe(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, c);
+      strip.show();
+      delay(wait);
+  }
+}
+
+float j = 0;
+
+void johnWipe() {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, strip.Color(sin(j) * 255, cos(j) * 255, tan(j) * 255));
+      strip.show();
+      delay(20);
+      j += .05;
+  }
+}
+
+int
+  whichColorToRaise = 1;
+uint32_t infiniteColor = strip.Color(0, 0, 0);
+
+void colorWipeInfiniteColors(uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+    if(whichColorToRaise == 8){
+      whichColorToRaise = 1;
+    }
+    switch(whichColorToRaise){
+      case 1: infiniteColor = strip.Color(255, 0, 0); break;
+      case 2: infiniteColor = strip.Color(255, 75, 0); break;
+      case 3: infiniteColor = strip.Color(250, 155, 0); break;
+      case 4: infiniteColor = strip.Color(0, 255, 0); break;
+      case 5: infiniteColor = strip.Color(0, 255, 245); break;
+      case 6: infiniteColor = strip.Color(0, 0, 255); break;
+      case 7: infiniteColor = strip.Color(145, 0, 255); break;
+    }
+    strip.setPixelColor(i, infiniteColor);
+    strip.setPixelColor(i + 1, infiniteColor);
+    strip.show();
+    delay(wait);
+    whichColorToRaise++;
+    i++;
+  }
+}
+
+void bouncyDot (uint32_t c){
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i - 1, strip.Color(0, 0, 0));
+    strip.setPixelColor(i, c);
+    strip.show();
+    delay(1000 / analogRead(sensorPin));
+    if(i == 36){
+      for(int16_t j=37; j>=0; j--) {
+        strip.setPixelColor(j + 1, strip.Color(0, 0, 0));
+        strip.setPixelColor(j, c);
+        strip.show();
+        delay(1000 / analogRead(sensorPin));
+      }
+    }
+  }
+}
+
+// function that executes whenever data is received from master
+// this function is registered as an event, see setup()
+void receiveEvent(int howMany) {
+  int i = 0;
+  while (i < howMany) { // loop through all but the last
+    mode = Wire.read() - '0'; // receive byte as a character
+    i++;
+  }
+}
