@@ -8,7 +8,6 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.tekerz.utilities.L;
@@ -18,8 +17,6 @@ public class SetElevatorHeight extends Command {
   private double 
     targetHeightInInches = 0.0;
 
-  @SuppressWarnings("unused")
-  private SetElevatorHeight() {}
   public SetElevatorHeight(double targetHeightInInches) {
     // Use requires() here to declare subsystem dependencies
     this.targetHeightInInches = targetHeightInInches;

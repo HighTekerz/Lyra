@@ -9,34 +9,28 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.DoNothing;
 import frc.robot.commands.AutoLift.CompleteStageThreeAutoLift;
 import frc.robot.commands.AutoLift.CompleteStageTwoAutoLift;
 import frc.robot.commands.AutoLift.PrepareStageThreeAutoLift;
 import frc.robot.commands.AutoLift.ReturnToBasePosition;
-import frc.robot.commands.CommandGroups.DropElevatorAndFlaps;
-import frc.robot.commands.Rioduino.SetMode;
-import frc.robot.commands.drivetrain.DriveForDistance;
+import frc.robot.commands.drivetrain.SlowTurn;
 import frc.robot.commands.drivetrain.TurnToDegree;
 import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.hablifter.ClearEncoder;
-import frc.robot.commands.hablifter.RunClimberWheels;
 import frc.robot.commands.hablifter.SetHabArmPosition;
 import frc.robot.commands.multiarm.BothFlapsDown;
 import frc.robot.commands.multiarm.BothFlapsUp;
 import frc.robot.commands.multiarm.CargoCollect;
 import frc.robot.commands.multiarm.CargoEject;
-import frc.robot.commands.multiarm.HatchFlapDown;
-import frc.robot.commands.multiarm.HatchFlapUp;
-import frc.robot.commands.multiarm.HPPushShortTime;
 import frc.robot.commands.multiarm.HPPushWhileHeld;
 import frc.robot.commands.multiarm.HatchFingerRelease;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.DpadButton;
-import frc.robot.tekerz.utilities.L;
 import frc.robot.tekerz.utilities.TriggerButton;
 
 /**
@@ -46,6 +40,7 @@ import frc.robot.tekerz.utilities.TriggerButton;
 public class OI {
     XboxController dipStick = new XboxController(0);
     XboxController ripStick = new XboxController(1);
+    Joystick climbButton = new Joystick(2);
 
     static final int A_BUTTON = 1, B_BUTTON = 2, X_BUTTON = 3, Y_BUTTON = 4, LEFT_BUMPER = 5, RIGHT_BUMPER = 6,
             BACK = 7, START = 8, RIGHT_THUMBSTICK_BUTTON = 9, LEFT_THUMBSTICK_BUTTON = 10, LEFT_TRIGGER = 2,
@@ -76,7 +71,18 @@ public class OI {
 
         Button hPEject = new JoystickButton(dipStick, LEFT_BUMPER);
         hPEject.whileHeld(new HPPushWhileHeld());
+
+        Button slowTurnLeft = new DpadButton(dipStick, 0, 90);
+        slowTurnLeft.whileHeld(new SlowTurn(-.15));
+
+        Button slowTurnRight = new DpadButton(dipStick, 0, 270);
+        slowTurnRight.whileHeld(new SlowTurn(.15));
+
+        Button smallTurnLeft = new JoystickButton(dipStick, LEFT_BUMPER);
+        smallTurnLeft.whenPressed(new TurnToDegree(-5, .6));
         
+        Button smallTurnRight = new JoystickButton(dipStick, RIGHT_BUMPER);
+        smallTurnRight.whenPressed(new TurnToDegree(5, .6));
 
         /**
          * ripStick
@@ -86,14 +92,14 @@ public class OI {
          *  Dpad
          *  Right Bumper: complete climb procedure
          */
-        Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
-        elevatorToLevel1.whenPressed(new SetElevatorHeight(0));
+        // Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
+        // elevatorToLevel1.whenPressed(new SetElevatorHeight(Elevator.Level_1));
         
-        Button elevatorToLevel2 = new JoystickButton(ripStick, B_BUTTON);
-        elevatorToLevel2.whenPressed(new SetElevatorHeight(20));
+        // Button elevatorToLevel2 = new JoystickButton(ripStick, B_BUTTON);
+        // elevatorToLevel2.whenPressed(new SetElevatorHeight(Elevator.Level_2));
 
-        Button elevatorToLevel3 = new JoystickButton(ripStick, Y_BUTTON);
-        elevatorToLevel3.whenPressed(new SetElevatorHeight(40));
+        // Button elevatorToLevel3 = new JoystickButton(ripStick, Y_BUTTON);
+        // elevatorToLevel3.whenPressed(new SetElevatorHeight(Elevator.Level_3));
 
         Button returnToCease = new DpadButton(ripStick, 0, 180);
         returnToCease.whenPressed(new ReturnToBasePosition());
@@ -110,6 +116,11 @@ public class OI {
         // Button rainbowMode = new DpadButton(ripStick, 0, 90);
         // rainbowMode.whenPressed(new SetMode("3"));
 
+        Button completeClimb = new JoystickButton(climbButton, 6);
+        completeClimb.whenPressed(new DoNothing());
+
+        Button foldFlaps = new JoystickButton(climbButton, 9);
+        foldFlaps.whenPressed(new BothFlapsUp());
         
     SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
     SmartDashboard.putData("clear arm encs", new ClearEncoder());
@@ -126,6 +137,14 @@ public class OI {
 
     public double getLeftStickYDip(){
         return -dipStick.getRawAxis(1);
+    }
+
+    public double getLeftStickXDip(){
+        return dipStick.getRawAxis(0);
+    }
+
+    public double getRightStickYDip() {
+        return -dipStick.getRawAxis(5);
     }
 
     public boolean getButtonARip() {
