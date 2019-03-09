@@ -19,7 +19,6 @@ import frc.robot.commands.AutoLift.PrepareStageThreeAutoLift;
 import frc.robot.commands.AutoLift.ReturnToBasePosition;
 import frc.robot.commands.drivetrain.SlowTurn;
 import frc.robot.commands.drivetrain.TurnToDegree;
-import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.hablifter.ClearEncoder;
 import frc.robot.commands.hablifter.SetHabArmPosition;
 import frc.robot.commands.multiarm.BothFlapsDown;
@@ -28,7 +27,6 @@ import frc.robot.commands.multiarm.CargoCollect;
 import frc.robot.commands.multiarm.CargoEject;
 import frc.robot.commands.multiarm.HPPushWhileHeld;
 import frc.robot.commands.multiarm.HatchFingerRelease;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.DpadButton;
 import frc.robot.tekerz.utilities.TriggerButton;
@@ -37,10 +35,12 @@ import frc.robot.tekerz.utilities.TriggerButton;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+@SuppressWarnings("resource")
 public class OI {
     XboxController dipStick = new XboxController(0);
     XboxController ripStick = new XboxController(1);
     Joystick climbButton = new Joystick(2);
+    XboxController lipStick = new XboxController(3);
 
     static final int A_BUTTON = 1, B_BUTTON = 2, X_BUTTON = 3, Y_BUTTON = 4, LEFT_BUMPER = 5, RIGHT_BUMPER = 6,
             BACK = 7, START = 8, RIGHT_THUMBSTICK_BUTTON = 9, LEFT_THUMBSTICK_BUTTON = 10, LEFT_TRIGGER = 2,
@@ -48,13 +48,9 @@ public class OI {
 
     public OI() {
         /**
-         * dipstick:
-         *  left trigger: outtake
-         *  right trigger: intake
-         *  
-         *  Y button: Double flap down
-         *  A button: Double flap up
-         *    Add Elevator
+         * dipstick: left trigger: outtake right trigger: intake
+         * 
+         * Y button: Double flap down A button: Double flap up Add Elevator
          */
 
         Button bothFlapsDown = new JoystickButton(dipStick, Y_BUTTON);
@@ -80,21 +76,17 @@ public class OI {
 
         Button smallTurnLeft = new JoystickButton(dipStick, LEFT_BUMPER);
         smallTurnLeft.whenPressed(new TurnToDegree(-5, .6));
-        
+
         Button smallTurnRight = new JoystickButton(dipStick, RIGHT_BUMPER);
         smallTurnRight.whenPressed(new TurnToDegree(5, .6));
 
         /**
-         * ripStick
-         *  A = Level 1
-         *  B = Level 2
-         *  Y = Level 3
-         *  Dpad
-         *  Right Bumper: complete climb procedure
+         * ripStick A = Level 1 B = Level 2 Y = Level 3 Dpad Right Bumper: complete
+         * climb procedure
          */
         // Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
         // elevatorToLevel1.whenPressed(new SetElevatorHeight(Elevator.Level_1));
-        
+
         // Button elevatorToLevel2 = new JoystickButton(ripStick, B_BUTTON);
         // elevatorToLevel2.whenPressed(new SetElevatorHeight(Elevator.Level_2));
 
@@ -121,10 +113,11 @@ public class OI {
 
         Button foldFlaps = new JoystickButton(climbButton, 9);
         foldFlaps.whenPressed(new BothFlapsUp());
-        
-    SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
-    SmartDashboard.putData("clear arm encs", new ClearEncoder());
-    SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
+
+        SmartDashboard.putData("Hab Arm to 18in End Degrees",
+                new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
+        SmartDashboard.putData("clear arm encs", new ClearEncoder());
+        SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
     }
 
     public double getLeftStickYRip() {
@@ -135,11 +128,11 @@ public class OI {
         return dipStick.getRawAxis(4);
     }
 
-    public double getLeftStickYDip(){
+    public double getLeftStickYDip() {
         return -dipStick.getRawAxis(1);
     }
 
-    public double getLeftStickXDip(){
+    public double getLeftStickXDip() {
         return dipStick.getRawAxis(0);
     }
 
@@ -149,18 +142,34 @@ public class OI {
 
     public boolean getButtonARip() {
         return ripStick.getAButton();
-      }
-    
-      public boolean getButtonBRip() {
-        return ripStick.getBButton();
-      }
-    
-      public boolean getButtonYRip() {
-        return ripStick.getYButton();
-      }
+    }
 
-      public void log(){
+    public boolean getButtonBRip() {
+        return ripStick.getBButton();
+    }
+
+    public boolean getButtonYRip() {
+        return ripStick.getYButton();
+    }
+
+    public double getLeftStickYLip() {
+        return -lipStick.getRawAxis(1);
+    }
+
+    public boolean getButtonALip() {
+        return lipStick.getAButton();
+    }
+
+    public boolean getButtonBLip() {
+        return lipStick.getBButton();
+    }
+
+    public boolean getButtonYLip() {
+        return lipStick.getYButton();
+    }
+
+    public void log() {
         // L.ogSD("DipStick Dpad POV", dipStick.getPOV(0));
         // L.ogSD("RipStick Left Trigger", ripStick.getRawAxis(LEFT_TRIGGER));
-      }
     }
+}
