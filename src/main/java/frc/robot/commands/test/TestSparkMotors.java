@@ -21,7 +21,7 @@ public class TestSparkMotors extends Command {
     // Use requires() here to declare subsystem dependencies
     // requires(Robot.Subsystems.drivetrain);
     // requires(Robot.Subsystems.elevator);
-    // requires(Robot.Subsystems.habLifter);
+    requires(Robot.Subsystems.habLifter);
     // requires(Robot.Subsystems.multiArm);
   }
 

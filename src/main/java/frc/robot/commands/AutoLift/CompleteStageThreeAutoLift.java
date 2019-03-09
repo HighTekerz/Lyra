@@ -21,7 +21,7 @@ public class CompleteStageThreeAutoLift extends CommandGroup {
    */
   public CompleteStageThreeAutoLift() {
     addSequential(new DeployLegs());
-    addSequential(new DoNothing(0.5));
+    addSequential(new DoNothing(1.0));
     addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB * .85));
     addParallel(new RunClimberWheels(0.75));
     addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));

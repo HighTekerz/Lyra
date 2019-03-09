@@ -38,8 +38,8 @@ public class HabLifter extends Subsystem {
     FULL_SENSOR_RANGE = MAX_SENSOR_READING - MIN_SENSOR_READING;
 
   public static final double
-    START_DEGREES_FOR_HAB_CLIMB = -55.0,
-    END_DEGREES_FOR_HAB_CLIMB = -128.0,
+    START_DEGREES_FOR_HAB_CLIMB = -65.0,
+    END_DEGREES_FOR_HAB_CLIMB = -138.0,
     TOP_DEAD_CENTER = -14.0;
 
   TalonSRX
