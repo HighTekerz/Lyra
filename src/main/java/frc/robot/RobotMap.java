@@ -48,15 +48,14 @@ public class RobotMap {
   }
 
   public static class Pneumatics {
-    public static int PCM_ON_ARM = 31;
-    // public static int PCM_ON_ARM = 30;
+    public static int PCM_ON_ARM = 30;
     public static int PCM_ON_MAIN = 31;
 
     public static Solenoid
-      intakeFlap = new Solenoid(PCM_ON_ARM,2),
-      hPFlap = new Solenoid(PCM_ON_ARM,3),
-      hPPusher = new Solenoid(PCM_ON_ARM,4),
-      hPFinger = new Solenoid(PCM_ON_ARM,5),
+      intakeFlap = new Solenoid(PCM_ON_ARM,3),
+      hPFlap = new Solenoid(PCM_ON_ARM,2),
+      hPPusher = new Solenoid(PCM_ON_ARM,1),
+      hPFinger = new Solenoid(PCM_ON_ARM,0),
       habLifterLegs1 = new Solenoid(PCM_ON_MAIN,0),
       habLifterLegs2 = new Solenoid(PCM_ON_MAIN,1);
   }

@@ -72,8 +72,10 @@ public class Drivetrain extends Subsystem {
 
   public void startBrakeMode() {
     rightMotorLead.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    rightMotorFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
     leftMotorLead.setIdleMode(CANSparkMax.IdleMode.kBrake);
-  }
+    leftMotorFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
+  } 
 
   /**
    * a method to check the encoder vaues of the drivetrain wheels, 1 at a time.

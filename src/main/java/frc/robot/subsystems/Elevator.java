@@ -25,11 +25,17 @@ import frc.robot.tekerz.utilities.L;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public static double MOTOR_HOLD_VALUE = 0.0;
+  public static double MOTOR_HOLD_VALUE = 0.0,
   // measured ticks
-  public static double TICKS_PER_INCH = -653 / 20;
+  TICKS_PER_INCH = -653 / 20,
   // system length is 30 inches
-  public static double MAX_ERROR = 30 * TICKS_PER_INCH;
+  MAX_ERROR = 30 * TICKS_PER_INCH,
+
+  Level_0 = 0,
+  Level_1HALF = 5,
+  Level_1 = 19.5,
+  Level_2 = Level_1 + 28,
+  Level_3 = Level_2 + 28;
 
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 

@@ -36,10 +36,10 @@ public class AddTestCommands extends Command {
     SmartDashboard.putData(new TestTalonMotors(RobotMap.Talons.liftLead, "9, 10 elevator"));
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.habLifterLegs1, "MainPCM-0"));
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.habLifterLegs2, "MainPCM-1"));
-    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.intakeFlap, "ArmPCM-2"));
-    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFlap, "ArmPCM-3"));
-    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPPusher, "ArmPCM-4"));
-    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFinger, "ArmPCM-5"));
+    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.intakeFlap, "3 Cargo Flap"));
+    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFlap, "2 HP Flap"));
+    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPPusher, "1 HP Pusher"));
+    SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFinger, "0 HP Finger"));
   }
 
   // Make this return true when this Command no longer needs to run execute()

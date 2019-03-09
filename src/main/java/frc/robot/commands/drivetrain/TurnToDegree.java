@@ -20,6 +20,11 @@ public class TurnToDegree extends Command {
     currentAngle,
     acceptableError = 3;
 
+	/**
+	 * 
+	 * @param targetDegree Positive for a right turn, Negative for left
+	 * @param speed any double between 0.0 and 1.0 (negatives have no effect on the code)
+	 */
 	public TurnToDegree(double targetDegree, double speed) {
 		this.speed = speed;
 		this.degreeToReach = targetDegree;
