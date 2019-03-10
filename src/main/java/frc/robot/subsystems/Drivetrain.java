@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Counter.Mode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.drivetrain.DriveWithJoy;
 import frc.robot.tekerz.utilities.L;
@@ -56,6 +57,8 @@ public class Drivetrain extends Subsystem {
     rightMotorLead.setOpenLoopRampRate(0.5);
     leftMotorLead.setClosedLoopRampRate(0.5);
     leftMotorLead.setOpenLoopRampRate(0.5);
+
+    // SmartDashboard.putData(this);
   }
 
   public void setWheelSpeed(double leftSpeed, double rightSpeed) {

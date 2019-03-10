@@ -54,8 +54,8 @@ public class RobotMap {
     public static Solenoid
       intakeFlap = new Solenoid(PCM_ON_ARM,3),
       hPFlap = new Solenoid(PCM_ON_ARM,2),
-      hPPusher = new Solenoid(PCM_ON_ARM,1),
-      hPFinger = new Solenoid(PCM_ON_ARM,0),
+      hPPusher = new Solenoid(PCM_ON_ARM,6),
+      hPFinger = new Solenoid(PCM_ON_ARM,7),
       habLifterLegs1 = new Solenoid(PCM_ON_MAIN,0),
       habLifterLegs2 = new Solenoid(PCM_ON_MAIN,1);
   }

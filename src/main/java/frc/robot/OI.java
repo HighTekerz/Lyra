@@ -85,10 +85,10 @@ public class OI {
         // slowTurnRight.whileHeld(new TurnToDegree(5, .6));
 
         Button slowDriveForward = new DpadButton(dipStick, 0, 0);
-        slowDriveForward.whileHeld(new PowerDrive(-.15));
+        slowDriveForward.whileHeld(new PowerDrive(.1));
 
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
-        slowDriveBack.whileHeld(new PowerDrive(.15));
+        slowDriveBack.whileHeld(new PowerDrive(-.1));
 
 /**
  * Ripstick
