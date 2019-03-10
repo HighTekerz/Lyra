@@ -33,14 +33,34 @@ public class DriveWithJoy extends Command {
   @Override
   protected void execute() {
     throttle = oi.getRightStickYDip();
-    if(Math.abs(throttle) < .1){
+    if(Math.abs(throttle) < 0.1){
       throttle = 0;
     }
+    
     turn = oi.getLeftStickXDip();
-    if(Math.abs(turn) < .1){
+    if(Math.abs(turn) < 0.1){
       turn = 0;
     }
-    drivetrain.arcadeDrive(Math.pow(throttle, 3), Math.pow(turn, 3));
+
+    if(Math.abs(throttle) > 0.9){
+      if(throttle < 0){
+        throttle = -0.9;
+      }
+      else{
+        throttle = 0.9;
+      }
+    }
+
+    if(Math.abs(turn) > 0.9){
+      if(turn < 0){
+        turn = -0.9;
+      }
+      else{
+        turn = 0.9;
+      }
+    }
+
+    drivetrain.arcadeDrive(throttle, turn);
   }
 
   // Make this return true when this Command no longer needs to run execute()

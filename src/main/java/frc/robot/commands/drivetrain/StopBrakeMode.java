@@ -5,45 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.MultiArm;
 
-public class HPPushWhileHeld extends Command {
-  MultiArm m = Robot.Subsystems.multiArm;
-
-  public HPPushWhileHeld() {
+public class StopBrakeMode extends Command {
+  public StopBrakeMode() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.Subsystems.drivetrain.startCoastMode();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    m.hPPusherOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    m.hPPusherIn();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    m.hPPusherIn();
   }
 }

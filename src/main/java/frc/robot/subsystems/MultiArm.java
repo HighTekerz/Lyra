@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.multiarm.HatchFingerHold;
 import frc.robot.commands.multiarm.HatchFingerRelease;
 
 /**
@@ -45,7 +46,7 @@ public class MultiArm extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new HatchFingerRelease());
+    setDefaultCommand(new HatchFingerHold());
   }
 
   public boolean hasCargo() {
@@ -53,7 +54,8 @@ public class MultiArm extends Subsystem {
   }
 
   public boolean hasHP() {
-    return (this.hPSensor0.get() || this.hPSensor1.get());
+    // We want these to return true when we have a hatch panel or when they come unplugged
+    return (!this.hPSensor0.get() || !this.hPSensor1.get());
   }
 
   public void runIntake(double speed) {
@@ -89,11 +91,11 @@ public class MultiArm extends Subsystem {
   }
 
   public void setFingerUp(){
-    hPFinger.set(true);
+    hPFinger.set(false);
   }
 
   public void setFingerDown(){
-    hPFinger.set(false);
+    hPFinger.set(true);
   }
 
   /**

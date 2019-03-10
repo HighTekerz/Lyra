@@ -5,28 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.AutoLift;
+package frc.robot.commands.CommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DoNothing;
-import frc.robot.commands.drivetrain.DriveForDistance;
-import frc.robot.commands.drivetrain.StopBrakeMode;
-import frc.robot.commands.hablifter.DeployLegs;
+import frc.robot.commands.hablifter.RetractLegs;
 import frc.robot.commands.hablifter.RunClimberWheels;
 import frc.robot.commands.hablifter.SetHabArmPosition;
 import frc.robot.subsystems.HabLifter;
 
-public class CompleteStageThreeAutoLift extends CommandGroup {
+public class RetractLegsButRunWheels extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CompleteStageThreeAutoLift() {
-    addSequential(new StopBrakeMode());
-    addSequential(new DeployLegs());
-    addSequential(new DoNothing(1.25));
-    // addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB * .85));
-    addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
-    addParallel(new RunClimberWheels(0.75));
-    // addSequential(new DriveForDistance(-12.0, .75));
+  public RetractLegsButRunWheels() {
+    addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB + 6.0));
+    addParallel(new RunClimberWheels(.2));
+    addSequential(new RetractLegs());    
   }
 }

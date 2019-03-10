@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.tekerz.utilities.L;
 
@@ -27,7 +28,7 @@ public class Elevator extends Subsystem {
   // here. Call these from Commands.
   public static double MOTOR_HOLD_VALUE = 0.0,
   // measured ticks
-  TICKS_PER_INCH = -653 / 20,
+  TICKS_PER_INCH = -270 / 20,
   // system length is 30 inches
   MAX_ERROR = 30 * TICKS_PER_INCH,
 
@@ -35,6 +36,7 @@ public class Elevator extends Subsystem {
   Level_1HALF = 5,
   Level_1 = 19.5,
   Level_2 = Level_1 + 28,
+  
   Level_3 = Level_2 + 28;
 
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
@@ -77,6 +79,8 @@ public class Elevator extends Subsystem {
     liftFollower.follow(liftLead);
   
     pIDLoop.setOutputRange(-0.3, 0.3);
+
+    SmartDashboard.putData(this);
   }
 
   private void setElevatorPIDOutput(double out) {

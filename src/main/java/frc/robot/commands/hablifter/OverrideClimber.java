@@ -5,27 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.MultiArm;
+import frc.robot.subsystems.HabLifter;
 
-public class HPPushWhileHeld extends Command {
-  MultiArm m = Robot.Subsystems.multiArm;
-
-  public HPPushWhileHeld() {
+public class OverrideClimber extends Command {
+  HabLifter hL = Robot.Subsystems.habLifter;
+  double setpoint;
+  public OverrideClimber() {
+    requires(hL);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    hL.enableArm();
+    setpoint = hL.getArmPositionDegrees();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    m.hPPusherOut();
+    this.setpoint += Robot.oi.getRightStickYRip();
+    if (setpoint > -20.0) setpoint = -20.0;
+    hL.setArmSetpoint(this.setpoint);    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,13 +42,11 @@ public class HPPushWhileHeld extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    m.hPPusherIn();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    m.hPPusherIn();
   }
 }

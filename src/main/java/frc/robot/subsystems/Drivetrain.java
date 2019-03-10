@@ -77,6 +77,13 @@ public class Drivetrain extends Subsystem {
     leftMotorFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
   } 
 
+  public void startCoastMode() {
+    rightMotorLead.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    rightMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    leftMotorLead.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    leftMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+  } 
+
   /**
    * a method to check the encoder vaues of the drivetrain wheels, 1 at a time.
    * 
@@ -101,7 +108,7 @@ public class Drivetrain extends Subsystem {
   }
 
   public void log() {
-    // L.ogSD("Left Drive Encoder", getEnc(true));
+    L.ogSD("Left Drive Encoder", getEnc(true));
     // L.ogSD("Right Drive Encoder", getEnc(false));
     L.ogSD("Robot Angle", getAngle());
     // L.ogSD("Drivetrain", this);
