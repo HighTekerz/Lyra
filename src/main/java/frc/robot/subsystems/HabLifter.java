@@ -118,13 +118,13 @@ public class HabLifter extends Subsystem {
   }
 
   public void feetOut() {
-    this.habLifterLegs1.set(true);
     this.habLifterLegs2.set(true);
+    this.habLifterLegs1.set(true);
   }
 
   public void feetIn() {
-    this.habLifterLegs1.set(false);
     this.habLifterLegs2.set(false);
+    this.habLifterLegs1.set(false);
   }
 
   public void setArmPIDOutput(double out) {

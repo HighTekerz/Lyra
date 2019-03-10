@@ -19,7 +19,7 @@ public class RetractLegsButRunWheels extends CommandGroup {
    */
   public RetractLegsButRunWheels() {
     addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB + 6.0));
-    addParallel(new RunClimberWheels(.2));
+    addParallel(new RunClimberWheels(.15));
     addSequential(new RetractLegs());    
   }
 }
