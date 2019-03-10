@@ -8,21 +8,28 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.tekerz.utilities.L;
 
 public class PowerDrive extends Command {
-  public PowerDrive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  Drivetrain d = Robot.Subsystems.drivetrain;
+  double power;
+  public PowerDrive(double drivePower) {
+    requires(d);
+    power = drivePower;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    d.arcadeDrive(power, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,5 +47,6 @@ public class PowerDrive extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    d.arcadeDrive(0.0, 0.0);
   }
 }

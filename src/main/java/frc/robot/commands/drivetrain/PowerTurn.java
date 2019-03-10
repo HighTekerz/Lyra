@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
-public class SlowTurn extends Command {
+public class PowerTurn extends Command {
   
   Drivetrain d = Robot.Subsystems.drivetrain;
   double turnSpeed;
 
-  public SlowTurn(double turnSpeed) {
+  public PowerTurn(double turnSpeed) {
     requires(d);
     this.turnSpeed = turnSpeed;
   }

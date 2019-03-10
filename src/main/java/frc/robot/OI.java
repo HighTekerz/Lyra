@@ -18,7 +18,8 @@ import frc.robot.commands.AutoLift.CompleteStageTwoAutoLift;
 import frc.robot.commands.AutoLift.PrepareStageThreeAutoLift;
 import frc.robot.commands.AutoLift.ReturnToBasePosition;
 import frc.robot.commands.CommandGroups.RetractLegsButRunWheels;
-import frc.robot.commands.drivetrain.SlowTurn;
+import frc.robot.commands.drivetrain.PowerDrive;
+import frc.robot.commands.drivetrain.PowerTurn;
 import frc.robot.commands.drivetrain.TurnToDegree;
 import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.hablifter.ClearEncoder;
@@ -76,13 +77,18 @@ public class OI {
         cargoOuttake.whileHeld(new HPPushWhileHeld());
 
         Button slowTurnLeft = new DpadButton(dipStick, 0, 90);
-        slowTurnLeft.whileHeld(new SlowTurn(-.15));
+        slowTurnLeft.whileHeld(new PowerTurn(-.15));
         // slowTurnLeft.whileHeld(new TurnToDegree(-5, .6));
-
         
         Button slowTurnRight = new DpadButton(dipStick, 0, 270);
-        slowTurnRight.whileHeld(new SlowTurn(.15));
+        slowTurnRight.whileHeld(new PowerTurn(.15));
         // slowTurnRight.whileHeld(new TurnToDegree(5, .6));
+
+        Button slowDriveForward = new DpadButton(dipStick, 0, 0);
+        slowDriveForward.whileHeld(new PowerDrive(-.15));
+
+        Button slowDriveBack = new DpadButton(dipStick, 0, 180);
+        slowDriveBack.whileHeld(new PowerDrive(.15));
 
 /**
  * Ripstick
@@ -124,14 +130,6 @@ public class OI {
         SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
     }
 
-    public double getLeftStickYRip() {
-        return -ripStick.getRawAxis(1);
-    }
-
-    public double getRightStickXDip() {
-        return dipStick.getRawAxis(4);
-    }
-
     public double getLeftStickYDip() {
         return -dipStick.getRawAxis(1);
     }
@@ -142,6 +140,14 @@ public class OI {
 
     public double getRightStickYDip() {
         return -dipStick.getRawAxis(5);
+    }
+
+    public double getRightStickXDip() {
+        return dipStick.getRawAxis(4);
+    }
+
+    public double getLeftStickYRip() {
+        return -ripStick.getRawAxis(1);
     }
 
     public double getRightStickYRip() {
