@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   public static class Subsystems {
     public static Drivetrain drivetrain = new Drivetrain();
     public static Elevator elevator = new Elevator();
-    // public static Sensors sensors = new Sensors();
+    public static Sensors sensors = new Sensors();
     public static MultiArm multiArm = new MultiArm();
     public static HabLifter habLifter = new HabLifter();
     public static HabLifterWheels habLifterWheels = new HabLifterWheels();
@@ -151,7 +151,7 @@ public class Robot extends TimedRobot {
   }
 
   private void log() {
-    // Robot.Subsystems.sensors.log();
+    Robot.Subsystems.sensors.log();
     Robot.Subsystems.elevator.log();
     Robot.Subsystems.multiArm.log();
     Robot.Subsystems.drivetrain.log();
