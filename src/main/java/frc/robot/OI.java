@@ -23,6 +23,7 @@ import frc.robot.commands.drivetrain.PowerTurn;
 import frc.robot.commands.drivetrain.TurnToDegree;
 import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.hablifter.ClearEncoder;
+import frc.robot.commands.hablifter.KeepLevel;
 import frc.robot.commands.hablifter.OverrideClimber;
 import frc.robot.commands.hablifter.RetractLegs;
 import frc.robot.commands.hablifter.SetHabArmPosition;
@@ -128,6 +129,9 @@ public class OI {
         SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
         SmartDashboard.putData("clear arm encs", new ClearEncoder());
         SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
+
+        Button keepLevel = new JoystickButton(lipStick, START);
+        keepLevel.whenPressed(new KeepLevel(0.0, 0.3));
     }
 
     public double getLeftStickYDip() {

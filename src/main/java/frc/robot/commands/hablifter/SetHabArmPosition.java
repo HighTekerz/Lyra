@@ -33,8 +33,8 @@ public class SetHabArmPosition extends Command {
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
-    h.setArmSetpoint(this.positionInDegrees, this.maximumOutput);
-    L.og("setpoint in degrees: " + this.positionInDegrees);
+    h.setArmSetpoint(positionInDegrees, maximumOutput);
+    L.og("setpoint in degrees: " + positionInDegrees);
     h.enableArm();
   }
 
@@ -46,7 +46,7 @@ public class SetHabArmPosition extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return h.getArmPositionDegrees() <= (positionInDegrees + 4) && h.getArmPositionDegrees() >= (positionInDegrees - 4);
+    return h.getArmOrPitchPositionDegrees() <= (positionInDegrees + 4) && h.getArmOrPitchPositionDegrees() >= (positionInDegrees - 4);
   }
 
   // Called once after isFinished returns true

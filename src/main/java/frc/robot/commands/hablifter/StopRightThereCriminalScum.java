@@ -22,7 +22,7 @@ public class StopRightThereCriminalScum extends Command {
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
-    hL.setArmSetpoint(hL.getArmPositionDegrees());
+    hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees());
     hL.enableArm();
   }
 

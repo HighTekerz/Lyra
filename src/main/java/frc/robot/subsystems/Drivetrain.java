@@ -105,6 +105,18 @@ public class Drivetrain extends Subsystem {
     return ageSwine.getFusedHeading();
   }
 
+  double[] yawPitchRollArray = new double[3];
+
+  public double getPitch(){
+    ageSwine.getYawPitchRoll(yawPitchRollArray);
+    return yawPitchRollArray[1];
+  }
+
+  public double getRoll(){
+    ageSwine.getYawPitchRoll(yawPitchRollArray);
+    return yawPitchRollArray[2];
+  }
+
   public void clearEncoder() {
     driveEncLeft.setPosition(0.0);
     driveEncRight.setPosition(0.0);
@@ -115,6 +127,8 @@ public class Drivetrain extends Subsystem {
     // L.ogSD("Right Drive Encoder", getEnc(false));
     L.ogSD("Robot Angle", getAngle());
     // L.ogSD("Drivetrain", this);
+    L.ogSD("Robot Pitch", getPitch());
+    L.ogSD("Robot Roll", getRoll());
   }
 
   /******************************************** STUFF FOR PID */

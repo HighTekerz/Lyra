@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.hablifter.StopRightThereCriminalScum;
 import frc.robot.tekerz.utilities.L;
@@ -56,11 +57,14 @@ public class HabLifter extends Subsystem {
     habLifterLegs1 = RobotMap.Pneumatics.habLifterLegs1,
     habLifterLegs2 = RobotMap.Pneumatics.habLifterLegs2;
 
-  double 
+  double
     p = 8.0 / FULL_SENSOR_RANGE,
     i = 0.0,
     d = 0.0,
     loopLengthInSeconds = .005;
+
+  boolean
+    runningOnPidgeon = false;
 
   private final PIDOutput output = this::setArmPIDOutput;
   private final PIDSource input = new PIDSource() {
@@ -71,7 +75,7 @@ public class HabLifter extends Subsystem {
   
     @Override
     public double pidGet() {
-      return getArmPosition();
+      return getArmOrPitchPosition();
     }
   
     @Override
@@ -84,7 +88,7 @@ public class HabLifter extends Subsystem {
     @Override
     protected double calculateFeedForward() {
       // MULTIPLY
-      double amountOfGravity = Math.sin(Math.toRadians((getArmPosition() / ROTATIONS_PER_DEGREE) + (-TOP_DEAD_CENTER)));
+      double amountOfGravity = Math.sin(Math.toRadians((getArmOrPitchPosition() / ROTATIONS_PER_DEGREE) + (-TOP_DEAD_CENTER)));
       double fF = amountOfGravity * FULL_HOLD_POWER;
       L.ogSD("PID ARM FF", fF);
       return fF;
@@ -97,7 +101,7 @@ public class HabLifter extends Subsystem {
     habLifterRollingFollower.configAllSettings(config);
     
     habLifterRollingFollower.setInverted(true);
-    habLifterRollingFollower.follow(habLifterRollingLead);;
+    habLifterRollingFollower.follow(habLifterRollingLead);
 
     habLifterArmsLead.restoreFactoryDefaults();
     habLifterArmsFollower.restoreFactoryDefaults();
@@ -106,6 +110,7 @@ public class HabLifter extends Subsystem {
     habLifterArmsFollower.follow(habLifterArmsLead, true);
 
     pIDLoop.setOutputRange(-0.2, 0.2);
+    runningOnPidgeon = false;
   }
 
   @Override
@@ -132,12 +137,30 @@ public class HabLifter extends Subsystem {
     L.ogSD("PID ARM ouput", out);
   }
 
-  public double getArmPosition() {
-    return habLifterEnc.getPosition();
+  /**
+   * 
+   * @param runOnPigeon do you want to run on pigeon or not
+   */
+  public void runOnPidgeon(boolean runOnPigeon){
+    runningOnPidgeon = runOnPigeon;
   }
 
-  public double getArmPositionDegrees() {
-    return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
+  public double getArmOrPitchPosition() {
+    if (runningOnPidgeon){
+      return Robot.Subsystems.drivetrain.getRoll() * ROTATIONS_PER_DEGREE;
+    }
+    else{
+      return habLifterEnc.getPosition();
+    }
+  }
+
+  public double getArmOrPitchPositionDegrees() {
+    if (runningOnPidgeon){
+      return Robot.Subsystems.drivetrain.getRoll();
+    }
+    else{
+      return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
+    }
   }
   /**
  * Maximum output in each direction is 0.2 when this function is used
@@ -168,6 +191,6 @@ public class HabLifter extends Subsystem {
   }
   
   public void log() {
-    L.ogSD("PID ARM Sensor Degrees", getArmPositionDegrees());
+    L.ogSD("PID ARM Sensor Degrees", getArmOrPitchPositionDegrees());
   }
 }

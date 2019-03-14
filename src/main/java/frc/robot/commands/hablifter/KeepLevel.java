@@ -10,27 +10,38 @@ package frc.robot.commands.hablifter;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.HabLifter;
+import frc.robot.tekerz.utilities.L;
 
-public class OverrideClimber extends Command {
+public class KeepLevel extends Command {
+
+  double 
+    extraDegrees,
+    maximumOutput;
+
   HabLifter hL = Robot.Subsystems.habLifter;
-  double setpoint;
-  public OverrideClimber() {
+  
+  /**
+   * @param extraDegrees degrees past level you'd like to stop at
+   */
+  public KeepLevel(double extraDegrees, double maximumOutput){
     requires(hL);
+    this.extraDegrees = extraDegrees;
+    this.maximumOutput = maximumOutput;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
+    hL.runOnPidgeon(true);
+    hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees() + extraDegrees, maximumOutput);
+    L.og("setpoint in degrees: " + hL.getArmOrPitchPositionDegrees() + extraDegrees);
     hL.enableArm();
-    setpoint = hL.getArmOrPitchPositionDegrees();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    this.setpoint += Robot.oi.getRightStickYRip();
-    if (setpoint > -20.0) setpoint = -20.0;
-    hL.setArmSetpoint(this.setpoint);    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,11 +53,15 @@ public class OverrideClimber extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
+    hL.runOnPidgeon(false);
+    hL.disableArm();
   }
 }
