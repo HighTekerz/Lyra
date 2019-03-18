@@ -23,8 +23,11 @@ import frc.robot.commands.drivetrain.DriveWithJoy;
 import frc.robot.tekerz.utilities.L;
 
 public class Drivetrain extends Subsystem {
-  CANSparkMax rightMotorLead = RobotMap.Sparks.rightMotorLead, rightMotorFollower = RobotMap.Sparks.rightMotorFollower,
-      leftMotorLead = RobotMap.Sparks.leftMotorLead, leftMotorFollower = RobotMap.Sparks.leftMotorFollower;
+  CANSparkMax 
+    rightMotorLead = RobotMap.Sparks.rightMotorLead,
+    rightMotorFollower = RobotMap.Sparks.rightMotorFollower,
+    leftMotorLead = RobotMap.Sparks.leftMotorLead,
+    leftMotorFollower = RobotMap.Sparks.leftMotorFollower;
 
   PigeonIMU ageSwine = RobotMap.Pigeon.imu;
 

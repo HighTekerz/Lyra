@@ -34,11 +34,13 @@ public class Elevator extends Subsystem {
 
   Level_0 = 0,
   Level_1HALF = 5,
-  Level_1 = 19.5,
-  Level_2 = Level_1 + 28,
-  
-  Level_3 = Level_2 + 28;
-
+  LEVEL_1 = 19.5,
+  LEVEL_2 = LEVEL_1 + 28,
+  LEVEL_3 = LEVEL_2 + 28,
+  CARGO_LEVEL_1 = 21.5,
+  CARGO_LEVEL_1dot5 = 38.5,
+  CARGO_LEVEL_2 = CARGO_LEVEL_1 + 26,
+  CARGO_LEVEL_3 = CARGO_LEVEL_2 + 26;
   TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
 
   double 
