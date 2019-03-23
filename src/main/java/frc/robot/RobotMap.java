@@ -37,7 +37,7 @@ public class RobotMap {
   }
 
   public static class Sparks {
-    public static CANSparkMax 
+    public static CANSparkMax
       rightMotorLead = new CANSparkMax(2, MotorType.kBrushless),
       rightMotorFollower = new CANSparkMax(4, MotorType.kBrushless),
       leftMotorLead = new CANSparkMax(1, MotorType.kBrushless),
@@ -60,17 +60,17 @@ public class RobotMap {
       habLifterLegs2 = new Solenoid(PCM_ON_MAIN,1);
   }
 
-  public static class Analogs {
-    public static AnalogInput
-      a0 = new AnalogInput(0),
-      a1 = new AnalogInput(1),
-      a2 = new AnalogInput(2),
-      a3 = new AnalogInput(3),
-      a4 = new AnalogInput(4),
-      a5 = new AnalogInput(5),
-      a6 = new AnalogInput(6),
-      a7 = new AnalogInput(7);
-  }
+  // public static class Analogs {
+  //   public static AnalogInput[] inputs = new AnalogInput[8];
+      // a0 = new AnalogInput(0),
+      // a1 = new AnalogInput(1),
+      // a2 = new AnalogInput(2),
+      // a3 = new AnalogInput(3),
+      // a4 = new AnalogInput(4),
+      // a5 = new AnalogInput(5),
+      // a6 = new AnalogInput(6),
+      // a7 = new AnalogInput(7);
+  // }
 
   public static class Pigeon {
     public static PigeonIMU

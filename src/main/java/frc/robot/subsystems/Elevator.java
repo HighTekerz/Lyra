@@ -34,9 +34,9 @@ public class Elevator extends Subsystem {
 
   Level_0 = 0,
   Level_1HALF = 5,
-  LEVEL_1 = 19.5,
-  LEVEL_2 = LEVEL_1 + 28,
-  LEVEL_3 = LEVEL_2 + 28,
+  HP_LEVEL_1 = 19.5,
+  HP_LEVEL_2 = HP_LEVEL_1 + 28,
+  HP_LEVEL_3 = HP_LEVEL_2 + 28,
   CARGO_LEVEL_1 = 21.5,
   CARGO_LEVEL_1dot5 = 38.5,
   CARGO_LEVEL_2 = CARGO_LEVEL_1 + 26,
