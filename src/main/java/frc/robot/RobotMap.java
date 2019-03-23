@@ -33,7 +33,6 @@ public class RobotMap {
       liftLead = new TalonSRX(9),
       liftFollower = new TalonSRX(10),
       intake = new TalonSRX(11);
-
   }
 
   public static class Sparks {

@@ -30,7 +30,7 @@ public class OverrideClimber extends Command {
   protected void execute() {
     this.setpoint += Robot.oi.getRightStickYRip();
     if (setpoint > -20.0) setpoint = -20.0;
-    hL.setArmSetpoint(this.setpoint);    
+    hL.setArmSetpoint(this.setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()

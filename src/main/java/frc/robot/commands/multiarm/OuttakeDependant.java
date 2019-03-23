@@ -24,7 +24,7 @@ public class OuttakeDependant extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (m.getHPFlapIsUp()){
+    if (m.isHPFlapUp()){
       hpKickoff = true;
     }
     else{

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.multiarm.HatchFingerHold;
 import frc.robot.commands.multiarm.HatchFingerRelease;
+import frc.robot.tekerz.utilities.L;
 
 /**
  * Add your docs here.
@@ -101,11 +102,13 @@ public class MultiArm extends Subsystem {
   /**
    * @return is hp flap up.
    */
-  public boolean getHPFlapIsUp(){
+  public boolean isHPFlapUp(){
     return hPFlap.get();
   }
 
   public void log() {
-    
+    L.ogSD("Hatch flap is up", isHPFlapUp());
+    L.ogSD("HP Sensor 0", hPSensor0.get());
+    L.ogSD("HP Sensor 1", hPSensor1.get());
   }
 }

@@ -58,12 +58,9 @@ public class OI {
             RIGHT_TRIGGER = 3;
 
     public OI() {
-        /**
-         * dipstick: left trigger: outtake right trigger: intake
-         * 
-         * Y button: Double flap down A button: Double flap up Add Elevator
-         */
-
+/**
+* Dipstick
+*/
         // Button bothFlapsDown = new JoystickButton(dipStick, Y_BUTTON);
         // bothFlapsDown.whenPressed(new BothFlapsDown());
         // bothFlapsDown.whenPressed(new HatchFlapDown());
@@ -85,30 +82,31 @@ public class OI {
         slowTurnRight.whileHeld(new PowerTurn(.15));
         // slowTurnRight.whileHeld(new TurnToDegree(5, .6));
 
-        Button slowDriveForward = new DpadButton(dipStick, 0, 0);
-        slowDriveForward.whileHeld(new PowerDrive(.1));
+        // Button slowDriveForward = new DpadButton(dipStick, 0, 0);
+        // slowDriveForward.whileHeld(new PowerDrive(.1));
 
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
         slowDriveBack.whileHeld(new PowerDrive(-.1));
 
-/**
+
+/*
  * Ripstick
  */
 
-        // Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
-        // elevatorToLevel1.whenPressed(new SetElevatorHeight(Elevator.Level_1));
+        Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
+        elevatorToLevel1.whenPressed(new SetElevatorHeight(Elevator.HP_LEVEL_1));
 
-        // Button elevatorToLevel2 = new JoystickButton(ripStick, B_BUTTON);
-        // elevatorToLevel2.whenPressed(new SetElevatorHeight(Elevator.Level_2));
+        Button elevatorToLevel2 = new JoystickButton(ripStick, B_BUTTON);
+        elevatorToLevel2.whenPressed(new SetElevatorHeight(Elevator.HP_LEVEL_2));
 
-        // Button elevatorToLevel3 = new JoystickButton(ripStick, Y_BUTTON);
-        // elevatorToLevel3.whenPressed(new SetElevatorHeight(Elevator.Level_3));
+        Button elevatorToLevel3 = new JoystickButton(ripStick, Y_BUTTON);
+        elevatorToLevel3.whenPressed(new SetElevatorHeight(Elevator.HP_LEVEL_3));
 
         Button returnToCease = new DpadButton(ripStick, 0, 180);
         returnToCease.whenPressed(new ReturnToBasePosition());
 
-        Button prepForStage3 = new DpadButton(ripStick, 0, 0);
-        prepForStage3.whenPressed(new PrepareStageThreeAutoLift());
+        // Button prepForStage3 = new DpadButton(ripStick, 0, 0);
+        // prepForStage3.whenPressed(new PrepareStageThreeAutoLift());
 
         Button overrideClimber = new TriggerButton(ripStick, RIGHT_TRIGGER);
         overrideClimber.whileHeld(new OverrideClimber());
@@ -119,6 +117,11 @@ public class OI {
         Button overrideHPFinger = new TriggerButton(ripStick, LEFT_TRIGGER);
         overrideHPFinger.whileHeld(new HatchFingerRelease());
 
+
+/*
+* Climb Button
+*/
+
         Button completeClimb = new JoystickButton(climbButton, 9);
         // completeClimb.whenPressed(new DoNothing());
         completeClimb.whenPressed(new CompleteStageThreeAutoLift());
@@ -126,14 +129,26 @@ public class OI {
         Button foldFlaps = new JoystickButton(climbButton, 6);
         foldFlaps.whenPressed(new RetractLegsButRunWheels());
 
+
+/*
+* SmartDashboard
+*/
+
         SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
         SmartDashboard.putData("clear arm encs", new ClearEncoder());
         SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
 
+/*
+* Lipstick
+*/
         Button keepLevel = new JoystickButton(lipStick, START);
         keepLevel.whenPressed(new KeepLevel(0.0, 0.3));
     }
 
+
+/*
+* DIPSTICK
+*/
     public double getLeftStickYDip() {
         return -dipStick.getRawAxis(1);
     }
@@ -150,6 +165,10 @@ public class OI {
         return dipStick.getRawAxis(4);
     }
 
+
+/*
+* RIPSTICK
+*/
     public double getLeftStickYRip() {
         return -ripStick.getRawAxis(1);
     }
@@ -170,6 +189,10 @@ public class OI {
         return ripStick.getYButton();
     }
 
+
+/*
+* LIPSTICK
+*/
     public double getLeftStickYLip() {
         return -lipStick.getRawAxis(1);
     }
@@ -187,7 +210,5 @@ public class OI {
     }
 
     public void log() {
-        // L.ogSD("DipStick Dpad POV", dipStick.getPOV(0));
-        // L.ogSD("RipStick Left Trigger", ripStick.getRawAxis(LEFT_TRIGGER));
     }
 }

@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -41,7 +42,9 @@ public class Elevator extends Subsystem {
   CARGO_LEVEL_1dot5 = 38.5,
   CARGO_LEVEL_2 = CARGO_LEVEL_1 + 26,
   CARGO_LEVEL_3 = CARGO_LEVEL_2 + 26;
-  TalonSRX liftLead = RobotMap.Talons.liftLead, liftFollower = RobotMap.Talons.liftFollower;
+  TalonSRX 
+    liftLead = RobotMap.Talons.liftLead,
+    liftFollower = RobotMap.Talons.liftFollower;
 
   double 
   p = 0.002, 

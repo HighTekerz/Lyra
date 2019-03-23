@@ -113,6 +113,5 @@ public class SensorUpdater implements Runnable {
             System.out.println(ex);
 
         }
-
     }
 }

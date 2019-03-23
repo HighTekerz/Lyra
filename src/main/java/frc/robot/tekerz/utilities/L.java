@@ -42,6 +42,10 @@ public class L {
 		SmartDashboard.putString(key, value);
 	}
 
+	public static void ogSD(String key, boolean value) {
+		SmartDashboard.putBoolean(key, value);
+	}
+
 	public static void ogSD(String key, Sendable data) {
 		SmartDashboard.putData(key, data);
 	}
