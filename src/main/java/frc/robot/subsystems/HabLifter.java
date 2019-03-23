@@ -147,7 +147,7 @@ public class HabLifter extends Subsystem {
 
   public double getArmOrPitchPosition() {
     if (runningOnPidgeon){
-      return Robot.Subsystems.drivetrain.getRoll() * ROTATIONS_PER_DEGREE;
+      return Robot.Subsystems.drivetrain.getPitch() * ROTATIONS_PER_DEGREE;
     }
     else{
       return habLifterEnc.getPosition();
@@ -156,7 +156,7 @@ public class HabLifter extends Subsystem {
 
   public double getArmOrPitchPositionDegrees() {
     if (runningOnPidgeon){
-      return Robot.Subsystems.drivetrain.getRoll();
+      return Robot.Subsystems.drivetrain.getPitch();
     }
     else{
       return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
