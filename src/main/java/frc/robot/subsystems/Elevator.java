@@ -27,27 +27,29 @@ import frc.robot.tekerz.utilities.L;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public static double MOTOR_HOLD_VALUE = 0.0,
+  public static double MOTOR_HOLD_VALUE = -0.167,
   // measured ticks
-  TICKS_PER_INCH = -270 / 20,
+  TICKS_PER_INCH = -934 / 28,
   // system length is 30 inches
   MAX_ERROR = 30 * TICKS_PER_INCH,
 
+  STARTING_HEIGHT = 11.75,
   Level_0 = 0,
-  Level_1HALF = 5,
+  Level_1HALF = 5.0,
   HP_LEVEL_1 = 19.5,
-  HP_LEVEL_2 = HP_LEVEL_1 + 28,
-  HP_LEVEL_3 = HP_LEVEL_2 + 28,
+  HP_LEVEL_2 = HP_LEVEL_1 + 28.0,
+  HP_LEVEL_3 = HP_LEVEL_2 + 28.0,
   CARGO_LEVEL_1 = 21.5,
   CARGO_LEVEL_1dot5 = 38.5,
-  CARGO_LEVEL_2 = CARGO_LEVEL_1 + 26,
-  CARGO_LEVEL_3 = CARGO_LEVEL_2 + 26;
+  CARGO_LEVEL_2 = CARGO_LEVEL_1 + 28.0,
+  CARGO_LEVEL_3 = CARGO_LEVEL_2 + 28.0;
+
   TalonSRX 
     liftLead = RobotMap.Talons.liftLead,
     liftFollower = RobotMap.Talons.liftFollower;
 
   double 
-  p = 0.002, 
+  p = 0.004, 
   i = 0.0, 
   d = 0.0, 
   loopLengthInSeconds = .005;
@@ -83,7 +85,7 @@ public class Elevator extends Subsystem {
     liftFollower.configAllSettings(config);
     liftFollower.follow(liftLead);
   
-    pIDLoop.setOutputRange(-0.3, 0.3);
+    pIDLoop.setOutputRange(-0.4, 0.0);
 
     SmartDashboard.putData(this);
   }
@@ -98,7 +100,7 @@ public class Elevator extends Subsystem {
   }
 
   public void setSetpoint(double setpointInInches) {
-    this.pIDLoop.setSetpoint(setpointInInches * TICKS_PER_INCH);
+    this.pIDLoop.setSetpoint((setpointInInches - STARTING_HEIGHT) * TICKS_PER_INCH);
   }
 
   public void enableElevator() {
@@ -111,6 +113,7 @@ public class Elevator extends Subsystem {
 
   public void log() {
     L.ogSD("Elevator Ticks", getElevatorPosition());
+    L.ogSD("elevator speed", liftLead.getMotorOutputPercent());
   }
 
   @Override

@@ -26,6 +26,14 @@ public class MultiArm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  public enum MODE {
+    CARGO,
+    HATCH_PANEL,
+    DEFENSE
+  }
+
+  private MODE mode = MODE.DEFENSE;
+
   Solenoid
     cargoArm = RobotMap.Pneumatics.intakeFlap,
     hPFlap = RobotMap.Pneumatics.hPFlap,
@@ -48,6 +56,14 @@ public class MultiArm extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new HatchFingerHold());
+  }
+
+  public void setMode(MODE mode){
+    this.mode = mode;
+  }
+
+  public MODE getMode() {
+    return this.mode;
   }
 
   public boolean hasCargo() {

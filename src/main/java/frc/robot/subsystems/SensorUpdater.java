@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.tekerz.utilities.L;
@@ -108,6 +109,9 @@ public class SensorUpdater implements Runnable {
                 // distanceFromBay = RobotMap.Analogs.a0.getVoltage() -
                 // RobotMap.Analogs.a1.getVoltage();
                 // L.ogSD("sensor class encoder value", distanceSinceBar);
+                // for (AnalogInput var : analogs) {
+                //     SmartDashboard.putNumber("analog " + var.getChannel(), var.getVoltage());
+                // }
             }
         } catch (Exception ex) {
             System.out.println(ex);

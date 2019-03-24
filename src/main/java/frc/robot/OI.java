@@ -37,6 +37,7 @@ import frc.robot.commands.multiarm.HatchFingerHold;
 import frc.robot.commands.multiarm.HatchFingerRelease;
 import frc.robot.commands.multiarm.HatchFlapDown;
 import frc.robot.commands.multiarm.HatchFlapUp;
+import frc.robot.commands.multiarm.startHatchPanelMode;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.DpadButton;
@@ -82,15 +83,19 @@ public class OI {
         slowTurnRight.whileHeld(new PowerTurn(.15));
         // slowTurnRight.whileHeld(new TurnToDegree(5, .6));
 
-        // Button slowDriveForward = new DpadButton(dipStick, 0, 0);
-        // slowDriveForward.whileHeld(new PowerDrive(.1));
+        Button slowDriveForward = new DpadButton(dipStick, 0, 0);
+        slowDriveForward.whileHeld(new PowerDrive(.1));
 
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
         slowDriveBack.whileHeld(new PowerDrive(-.1));
 
+        Button startHatchPanelMode = new JoystickButton(dipStick, X_BUTTON);
+        startHatchPanelMode.whenPressed(new startHatchPanelMode());
+
 
 /*
  * Ripstick
+ * 
  */
 
         Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
@@ -105,8 +110,8 @@ public class OI {
         Button returnToCease = new DpadButton(ripStick, 0, 180);
         returnToCease.whenPressed(new ReturnToBasePosition());
 
-        // Button prepForStage3 = new DpadButton(ripStick, 0, 0);
-        // prepForStage3.whenPressed(new PrepareStageThreeAutoLift());
+        Button prepForStage3 = new DpadButton(ripStick, 0, 0);
+        prepForStage3.whenPressed(new PrepareStageThreeAutoLift());
 
         Button overrideClimber = new TriggerButton(ripStick, RIGHT_TRIGGER);
         overrideClimber.whileHeld(new OverrideClimber());
@@ -137,12 +142,13 @@ public class OI {
         SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
         SmartDashboard.putData("clear arm encs", new ClearEncoder());
         SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
+        SmartDashboard.putData("keep level", new KeepLevel(0.0, 0.25));
 
 /*
 * Lipstick
 */
-        Button keepLevel = new JoystickButton(lipStick, START);
-        keepLevel.whenPressed(new KeepLevel(0.0, 0.3));
+        // Button keepLevel = new JoystickButton(lipStick, START);
+        // keepLevel.whenPressed(new KeepLevel(0.0, 0.3));
     }
 
 

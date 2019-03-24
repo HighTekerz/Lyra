@@ -9,28 +9,35 @@ package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.subsystems.MultiArm;
 import frc.robot.subsystems.MultiArm.MODE;
 
-public class HPPushWhileHeld extends Command {
-  MultiArm m = Robot.Subsystems.multiArm;
-
-  public HPPushWhileHeld() {
-    requires(m);
+public class startHatchPanelMode extends Command {
+  public startHatchPanelMode() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.Subsystems.multiArm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    m.setMode(MODE.DEFENSE);
+    Robot.Subsystems.multiArm.setMode(MODE.HATCH_PANEL);
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    m.hPPusherOut();
-    m.setFingerDown();
+
+    if (Robot.Subsystems.multiArm.hasHP()){
+       Robot.Subsystems.multiArm.setFingerUp();
+    } else {
+       Robot.Subsystems.multiArm.setFingerDown(); 
+    }
   }
+
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -41,15 +48,11 @@ public class HPPushWhileHeld extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    m.hPPusherIn();
-    m.setFingerUp();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    m.hPPusherIn();
-    m.setFingerUp();
   }
 }
