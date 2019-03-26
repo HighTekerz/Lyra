@@ -18,7 +18,7 @@ public class TurnToDegree extends Command {
 	degreeToReach,
 	speed,
     currentAngle,
-    acceptableError = 3;
+    acceptableError = 2;
 
 	/**
 	 * 

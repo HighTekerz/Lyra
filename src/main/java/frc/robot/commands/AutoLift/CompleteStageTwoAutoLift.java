@@ -18,9 +18,12 @@ public class CompleteStageTwoAutoLift extends CommandGroup {
    * Add your docs here.
    */
   public CompleteStageTwoAutoLift() {
-    addParallel(new RunClimberWheels(.2));
+    addSequential(new SetHabArmPosition(-100.0, 0.5));
+    addSequential(new SetHabArmPosition(-145.0, 0.5));
+    addParallel(new RunClimberWheels(.4));
+    addSequential(new DriveForDistance(-20.0, 0.4));
     addSequential(new SetHabArmPosition(-170.0, 0.5));
-    addSequential(new DriveForDistance(-2.0, 0.2));
+    addSequential(new DriveForDistance(-14.0, 0.4));
     addSequential(new SetHabArmPosition(-90.0));
     addSequential(new DoNothing(.5));
     addSequential(new DriveForDistance(-4.0, 0.2));

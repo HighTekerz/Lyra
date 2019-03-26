@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Timer;
@@ -34,14 +36,20 @@ public class SensorUpdater implements Runnable {
 
     private List<AnalogInput> analogs = new ArrayList<AnalogInput>();
 
+    private Dictionary<Integer, Double> readings = new Hashtable<Integer,Double>() {
+    };
+
     private AnalogInput 
     first, 
     second, 
     third;
 
     public SensorUpdater() {
+        AnalogInput.setGlobalSampleRate(62500);
         for (int i = 0; i < 8; i++) {
             analogs.add(new AnalogInput(i));
+            analogs.get(i).setOversampleBits(4);        
+            analogs.get(i).setAverageBits(2);
         }
     }
 
@@ -50,7 +58,7 @@ public class SensorUpdater implements Runnable {
 
     public void getLinePosition(){
         for(int i = 0; i < analogs.size(); i++){
-            if(analogs.get(i).getVoltage() >= goodEnoughTape){
+            if(analogs.get(i).getAverageVoltage() >= goodEnoughTape){
                 leftEncoderOverLinePosition = Robot.Subsystems.drivetrain.getEnc(true);
                 rightEncoderOverLinePosition = Robot.Subsystems.drivetrain.getEnc(false);
             }
@@ -60,16 +68,16 @@ public class SensorUpdater implements Runnable {
     private void howFarOffCenter() {
         first = second = third = null;
         for (int i = 0; i < analogs.size(); i++) {
-            if (analogs.get(i).getVoltage() > first.getVoltage()) {
+            if (analogs.get(i).getAverageVoltage() > first.getAverageVoltage()) {
                 third = second;
                 second = first;
                 first = analogs.get(i);
             }
-            else if (analogs.get(i).getVoltage() > second.getVoltage()) {
+            else if (analogs.get(i).getAverageVoltage() > second.getAverageVoltage()) {
                 third = second;
                 second = analogs.get(i);
             }
-            else if (analogs.get(i).getVoltage() > third.getVoltage()){
+            else if (analogs.get(i).getAverageVoltage() > third.getAverageVoltage()){
                 third = analogs.get(i);
             }
         }
@@ -77,10 +85,10 @@ public class SensorUpdater implements Runnable {
         distanceFromCenter = ((first.getChannel() - 3.5) * 2);
         distanceFromCenter += (first.getChannel() - second.getChannel());
 
-        double direction = (first.getVoltage() - second.getVoltage())
-                / Math.abs((first.getVoltage() - second.getVoltage()));
+        double direction = (first.getAverageVoltage() - second.getAverageVoltage())
+                / Math.abs((first.getAverageVoltage() - second.getAverageVoltage()));
 
-        if (Math.abs(first.getVoltage() - second.getVoltage()) > 1.0) {
+        if (Math.abs(first.getAverageVoltage() - second.getAverageVoltage()) > 1.0) {
             L.ogSD("Inches Off Center", ((first.getChannel() - 3.5) * 2));
         } else {
             L.ogSD("Inches Off Center", ((first.getChannel() - 3.5) * 2) + (.5 * direction));
@@ -91,7 +99,7 @@ public class SensorUpdater implements Runnable {
         Collections.sort(analogs, new Comparator<AnalogInput>(){
             @Override
             public int compare(AnalogInput arg0, AnalogInput arg1) {
-                return arg0.getVoltage() > arg1.getVoltage() ? -1 : (arg0.getVoltage() < arg1.getVoltage() ? 1 : 0);
+                return arg0.getAverageVoltage() > arg1.getAverageVoltage() ? -1 : (arg0.getAverageVoltage() < arg1.getAverageVoltage() ? 1 : 0);
             }
             
         });
@@ -102,16 +110,16 @@ public class SensorUpdater implements Runnable {
         try {
             while (true) {
                 Thread.sleep(2);
-                howFarOffCenter();
-                getLinePosition();
-                now = t.get();
-                lastTime = now;
-                // distanceFromBay = RobotMap.Analogs.a0.getVoltage() -
-                // RobotMap.Analogs.a1.getVoltage();
+                // howFarOffCenter();
+                // getLinePosition();
+                // now = t.get();
+                // lastTime = now;
+                // distanceFromBay = RobotMap.Analogs.a0.getAverageVoltage() -
+                // RobotMap.Analogs.a1.getAverageVoltage();
                 // L.ogSD("sensor class encoder value", distanceSinceBar);
-                // for (AnalogInput var : analogs) {
-                //     SmartDashboard.putNumber("analog " + var.getChannel(), var.getVoltage());
-                // }
+                for (AnalogInput var : analogs) {
+                    L.ogSD("analog #" + var.getChannel(), var.getAverageVoltage());
+                }
             }
         } catch (Exception ex) {
             System.out.println(ex);

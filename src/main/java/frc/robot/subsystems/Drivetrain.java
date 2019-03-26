@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.drivetrain.DriveWithJoy;
+import frc.robot.commands.drivetrain.StopBrakeMode;
 import frc.robot.tekerz.utilities.L;
 
 public class Drivetrain extends Subsystem {
@@ -56,10 +57,15 @@ public class Drivetrain extends Subsystem {
 
     startBrakeMode();
 
-    rightMotorLead.setClosedLoopRampRate(0.5);
-    rightMotorLead.setOpenLoopRampRate(0.5);
-    leftMotorLead.setClosedLoopRampRate(0.5);
-    leftMotorLead.setOpenLoopRampRate(0.5);
+    rightMotorLead.setClosedLoopRampRate(0.1);
+    rightMotorLead.setOpenLoopRampRate(0.1);
+    leftMotorLead.setClosedLoopRampRate(0.1);
+    leftMotorLead.setOpenLoopRampRate(0.1);
+
+    rightMotorLead.setSmartCurrentLimit(60);
+    leftMotorLead.setSmartCurrentLimit(60);
+    rightMotorFollower.setSmartCurrentLimit(60);
+    leftMotorFollower.setSmartCurrentLimit(60);
 
     // SmartDashboard.putData(this);
   }
@@ -120,9 +126,13 @@ public class Drivetrain extends Subsystem {
     return yawPitchRollArray[2];
   }
 
-  public void clearEncoder() {
+  public void clearEncoders() {
     driveEncLeft.setPosition(0.0);
     driveEncRight.setPosition(0.0);
+  }
+
+  public void resetYaw(){
+    ageSwine.setYaw(0.0);
   }
 
   public void log() {
@@ -209,11 +219,6 @@ public class Drivetrain extends Subsystem {
   public void disablePID() {
     this.pIDLeftLoop.disable();
     this.pIDRightLoop.disable();
-  }
-
-  public void clearEncoders() {
-    driveEncLeft.setPosition(0.0);
-    driveEncRight.setPosition(0.0);
   }
 
 }

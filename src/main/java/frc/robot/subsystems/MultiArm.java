@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.multiarm.FingerUpWhileSensorTripped;
 import frc.robot.commands.multiarm.HatchFingerHold;
 import frc.robot.commands.multiarm.HatchFingerRelease;
 import frc.robot.tekerz.utilities.L;
@@ -72,7 +73,7 @@ public class MultiArm extends Subsystem {
 
   public boolean hasHP() {
     // We want these to return true when we have a hatch panel or when they come unplugged
-    return (!this.hPSensor0.get() || !this.hPSensor1.get());
+    return (!this.hPSensor0.get() && !this.hPSensor1.get());
   }
 
   public void runIntake(double speed) {
@@ -119,10 +120,11 @@ public class MultiArm extends Subsystem {
    * @return is hp flap up.
    */
   public boolean isHPFlapUp(){
-    return hPFlap.get();
+    return !hPFlap.get();
   }
 
   public void log() {
+    L.ogSD("Hatch flap in system", hasHP());
     L.ogSD("Hatch flap is up", isHPFlapUp());
     L.ogSD("HP Sensor 0", hPSensor0.get());
     L.ogSD("HP Sensor 1", hPSensor1.get());

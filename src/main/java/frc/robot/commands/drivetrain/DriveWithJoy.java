@@ -60,6 +60,7 @@ public class DriveWithJoy extends Command {
       }
     }
 
+    
     drivetrain.arcadeDrive(Math.pow(throttle, 3), Math.pow(turn, 3));
   }
 

@@ -21,6 +21,7 @@ import frc.robot.commands.CommandGroups.RetractLegsButRunWheels;
 import frc.robot.commands.drivetrain.PowerDrive;
 import frc.robot.commands.drivetrain.PowerTurn;
 import frc.robot.commands.drivetrain.TurnToDegree;
+import frc.robot.commands.elevator.DisableElevator;
 import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.hablifter.ClearEncoder;
 import frc.robot.commands.hablifter.KeepLevel;
@@ -76,18 +77,18 @@ public class OI {
         cargoOuttake.whileHeld(new HPPushWhileHeld());
 
         Button slowTurnLeft = new DpadButton(dipStick, 0, 90);
-        slowTurnLeft.whileHeld(new PowerTurn(-.15));
+        slowTurnLeft.whileHeld(new PowerTurn(.2));
         // slowTurnLeft.whileHeld(new TurnToDegree(-5, .6));
         
         Button slowTurnRight = new DpadButton(dipStick, 0, 270);
-        slowTurnRight.whileHeld(new PowerTurn(.15));
+        slowTurnRight.whileHeld(new PowerTurn(-.2));
         // slowTurnRight.whileHeld(new TurnToDegree(5, .6));
 
         Button slowDriveForward = new DpadButton(dipStick, 0, 0);
-        slowDriveForward.whileHeld(new PowerDrive(.1));
+        slowDriveForward.whileHeld(new PowerDrive(.05));
 
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
-        slowDriveBack.whileHeld(new PowerDrive(-.1));
+        slowDriveBack.whileHeld(new PowerDrive(-.05));
 
         Button startHatchPanelMode = new JoystickButton(dipStick, X_BUTTON);
         startHatchPanelMode.whenPressed(new startHatchPanelMode());
@@ -121,6 +122,9 @@ public class OI {
 
         Button overrideHPFinger = new TriggerButton(ripStick, LEFT_TRIGGER);
         overrideHPFinger.whileHeld(new HatchFingerRelease());
+
+        Button elevatorDisable = new JoystickButton(ripStick, BACK);
+        elevatorDisable.toggleWhenPressed(new DisableElevator());
 
 
 /*

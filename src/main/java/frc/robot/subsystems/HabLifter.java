@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.PIDBase;
 import edu.wpi.first.wpilibj.PIDController;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Counter.Mode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -105,6 +107,9 @@ public class HabLifter extends Subsystem {
 
     habLifterArmsLead.restoreFactoryDefaults();
     habLifterArmsFollower.restoreFactoryDefaults();
+
+    habLifterArmsLead.setIdleMode(IdleMode.kBrake);
+    habLifterArmsFollower.setIdleMode(IdleMode.kBrake);
 
     habLifterArmsLead.setInverted(false);
     habLifterArmsFollower.follow(habLifterArmsLead, true);
