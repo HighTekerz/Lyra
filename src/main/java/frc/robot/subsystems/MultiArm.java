@@ -128,5 +128,6 @@ public class MultiArm extends Subsystem {
     L.ogSD("Hatch flap is up", isHPFlapUp());
     L.ogSD("HP Sensor 0", hPSensor0.get());
     L.ogSD("HP Sensor 1", hPSensor1.get());
+    L.ogSD("MultiArm", this);
   }
 }

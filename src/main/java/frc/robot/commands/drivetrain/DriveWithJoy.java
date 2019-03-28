@@ -32,36 +32,12 @@ public class DriveWithJoy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    throttle = oi.getRightStickYDip();
-    if(Math.abs(throttle) < 0.1){
-      throttle = 0;
-    }
+    throttle = speedModifications(oi.getRightStickYDip(), 3);
+    turn = speedModifications(oi.getLeftStickXDip(), 5);
     
-    turn = oi.getLeftStickXDip();
-    if(Math.abs(turn) < 0.1){
-      turn = 0;
-    }
+    // turn = lowerTurnByThrottle(turn, throttle);
 
-    if(Math.abs(throttle) > 0.9){
-      if(throttle < 0){
-        throttle = -0.9;
-      }
-      else{
-        throttle = 0.9;
-      }
-    }
-
-    if(Math.abs(turn) > 0.9){
-      if(turn < 0){
-        turn = -0.9;
-      }
-      else{
-        turn = 0.9;
-      }
-    }
-
-    
-    drivetrain.arcadeDrive(Math.pow(throttle, 3), Math.pow(turn, 3));
+    drivetrain.arcadeDrive(throttle, turn);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -79,5 +55,39 @@ public class DriveWithJoy extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+  }
+
+  private double speedModifications(double speed, int exponent) {
+    if (Math.abs(speed) < 0.1) {
+      speed = 0;
+    } else if (Math.abs(speed) > 0.9) {
+      speed = 0.9 * (Math.abs(speed) / speed);
+    }
+    // if (speed < 0.0){
+    //   speed = -Math.pow(speed, 4);
+    // } else{
+    //   speed = Math.pow(speed, 4);
+    // }
+    speed = Math.pow(speed, exponent);
+    if (Robot.Subsystems.elevator.elevatorTicks < -900 && Math.abs(speed) > .15) {
+      speed = 0.15 * (Math.abs(speed) / speed);
+    }
+    return speed;
+  }
+
+  final double koolKidKonstant = 1.0;
+
+  private double lowerTurnByThrottle(double turn, double throttle){
+    return turn * (1 - (Math.abs(throttle) * koolKidKonstant));
+  }
+
+  private double johnScale(double speed){
+    double direction = Math.abs(speed) / speed;
+      if(Math.abs(speed) < 0.8){
+        return (speed / 2.0) * direction;
+      }
+      else{
+        return speed * 3.0 - (2.0 * direction);
+      }
   }
 }

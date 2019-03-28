@@ -17,11 +17,13 @@ import frc.robot.commands.AutoLift.CompleteStageThreeAutoLift;
 import frc.robot.commands.AutoLift.CompleteStageTwoAutoLift;
 import frc.robot.commands.AutoLift.PrepareStageThreeAutoLift;
 import frc.robot.commands.AutoLift.ReturnToBasePosition;
+import frc.robot.commands.CommandGroups.DriverRightTriggerPanelFeederMode;
 import frc.robot.commands.CommandGroups.RetractLegsButRunWheels;
 import frc.robot.commands.drivetrain.PowerDrive;
 import frc.robot.commands.drivetrain.PowerTurn;
 import frc.robot.commands.drivetrain.TurnToDegree;
 import frc.robot.commands.elevator.DisableElevator;
+import frc.robot.commands.elevator.ResetElevatorEncoder;
 import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.hablifter.ClearEncoder;
 import frc.robot.commands.hablifter.KeepLevel;
@@ -38,7 +40,7 @@ import frc.robot.commands.multiarm.HatchFingerHold;
 import frc.robot.commands.multiarm.HatchFingerRelease;
 import frc.robot.commands.multiarm.HatchFlapDown;
 import frc.robot.commands.multiarm.HatchFlapUp;
-import frc.robot.commands.multiarm.startHatchPanelMode;
+import frc.robot.commands.multiarm.StartHatchPanelMode;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.DpadButton;
@@ -78,11 +80,11 @@ public class OI {
 
         Button slowTurnLeft = new DpadButton(dipStick, 0, 90);
         slowTurnLeft.whileHeld(new PowerTurn(.2));
-        // slowTurnLeft.whileHeld(new TurnToDegree(-5, .6));
+        // slowTurnLeft.whenPressed(new TurnToDegree(-10, .6));
         
         Button slowTurnRight = new DpadButton(dipStick, 0, 270);
         slowTurnRight.whileHeld(new PowerTurn(-.2));
-        // slowTurnRight.whileHeld(new TurnToDegree(5, .6));
+        // slowTurnRight.whenPressed(new TurnToDegree(10, .6));
 
         Button slowDriveForward = new DpadButton(dipStick, 0, 0);
         slowDriveForward.whileHeld(new PowerDrive(.05));
@@ -90,8 +92,8 @@ public class OI {
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
         slowDriveBack.whileHeld(new PowerDrive(-.05));
 
-        Button startHatchPanelMode = new JoystickButton(dipStick, X_BUTTON);
-        startHatchPanelMode.whenPressed(new startHatchPanelMode());
+        Button startHatchPanelMode = new TriggerButton(dipStick, RIGHT_TRIGGER);
+        startHatchPanelMode.whenPressed(new DriverRightTriggerPanelFeederMode());
 
 
 /*
@@ -116,6 +118,9 @@ public class OI {
 
         Button overrideClimber = new TriggerButton(ripStick, RIGHT_TRIGGER);
         overrideClimber.whileHeld(new OverrideClimber());
+
+        Button resetElevatorEncoder = new JoystickButton(ripStick, START);
+        resetElevatorEncoder.whenPressed(new ResetElevatorEncoder());
 
         // Button completeStage3 = new JoystickButton(ripStick, START);
         // completeStage3.whenPressed(new CompleteStageThreeAutoLift());

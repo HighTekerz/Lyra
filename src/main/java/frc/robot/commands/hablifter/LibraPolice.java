@@ -5,27 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.elevator;
+package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.HabLifter;
+import frc.robot.tekerz.utilities.L;
 
-public class DisableElevator extends Command {
-  public DisableElevator() {
-    requires(Robot.Subsystems.elevator);
+public class LibraPolice extends Command {
+  HabLifter hL = Robot.Subsystems.habLifter;
+  public LibraPolice() {
+    requires(hL);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
+    hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees());
+    hL.enableArm();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.elevator.isHigh = false;
-    Robot.Subsystems.elevator.disableElevator();
+    if(Robot.Subsystems.drivetrain.getPitch() < 30){
+      hL.setArmSetpoint(hL.START_DEGREES_FOR_HAB_CLIMB);      
+    }
+    else{
+      hL.setArmSetpoint(0.0);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

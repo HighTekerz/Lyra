@@ -30,15 +30,15 @@ public class Elevator extends Subsystem {
   // here. Call these from Commands.
   public static double MOTOR_HOLD_VALUE = -0.167,
   // measured ticks
-  TICKS_PER_INCH = -934 / 28, //33.357
+  TICKS_PER_INCH = -934.0 / 28.0, //-33.357
   // system length is 30 inches
   MAX_ERROR = 30 * TICKS_PER_INCH,
 
-  STARTING_HEIGHT = 9.5,
-  Level_0 = 0,
+  STARTING_OFFSET = 16.5, //(15.25), +5.75 from initial 11.75 (9.5)
   Level_1HALF = 5.0,
-  HP_LEVEL_1 = 19.5,
-  SAFTEY_HEIGHT = 24,
+  HP_FEEDER_PICKUP = 19.5,
+  HP_LEVEL_1 = 21.5,
+  DRIVE_SLOW_HEIGHT = 24,
   HP_LEVEL_2 = HP_LEVEL_1 + 28.0,
   HP_LEVEL_3 = HP_LEVEL_2 + 28.0,
   CARGO_LEVEL_1 = 21.5,
@@ -94,7 +94,8 @@ public class Elevator extends Subsystem {
     liftLead.setNeutralMode(NeutralMode.Brake);
     liftFollower.setNeutralMode(NeutralMode.Brake);
 
-    pIDLoop.setOutputRange(-0.6, -0.03715);
+    // pIDLoop.setOutputRange(-0.6, -0.03715);
+    pIDLoop.setOutputRange(-0.6, 0.1);
 
     SmartDashboard.putData(this);
   }
@@ -109,8 +110,8 @@ public class Elevator extends Subsystem {
   }
 
   public void setSetpoint(double setpointInInches) {
-    isHigh = setpointInInches > SAFTEY_HEIGHT? true:false;
-    this.pIDLoop.setSetpoint((setpointInInches - STARTING_HEIGHT) * TICKS_PER_INCH);
+    isHigh = setpointInInches > DRIVE_SLOW_HEIGHT? true:false;
+    this.pIDLoop.setSetpoint((setpointInInches - STARTING_OFFSET) * TICKS_PER_INCH);
   }
 
   public void enableElevator() {
@@ -121,8 +122,15 @@ public class Elevator extends Subsystem {
     this.pIDLoop.disable();
   }
 
+  public void resetElevatorEncoder(){
+    liftLead.setSelectedSensorPosition(0);
+  }
+
+  public double elevatorTicks;
+
   public void log() {
-    L.ogSD("Elevator Ticks", getElevatorPosition());
+    elevatorTicks = getElevatorPosition();
+    L.ogSD("Elevator Ticks", elevatorTicks);
     L.ogSD("elevator speed", liftLead.getMotorOutputPercent());
   }
 

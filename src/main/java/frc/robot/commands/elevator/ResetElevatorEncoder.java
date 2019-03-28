@@ -9,10 +9,9 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
 
-public class DisableElevator extends Command {
-  public DisableElevator() {
+public class ResetElevatorEncoder extends Command {
+  public ResetElevatorEncoder() {
     requires(Robot.Subsystems.elevator);
   }
 
@@ -24,8 +23,7 @@ public class DisableElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.elevator.isHigh = false;
-    Robot.Subsystems.elevator.disableElevator();
+    Robot.Subsystems.elevator.resetElevatorEncoder();
   }
 
   // Make this return true when this Command no longer needs to run execute()

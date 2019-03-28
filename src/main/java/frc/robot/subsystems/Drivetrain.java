@@ -43,6 +43,8 @@ public class Drivetrain extends Subsystem {
     setDefaultCommand(new DriveWithJoy());
   }
 
+  private double rampRate = 0.35; // 0.1
+
   public Drivetrain() {
     rightMotorLead.restoreFactoryDefaults();
     rightMotorFollower.restoreFactoryDefaults();
@@ -57,10 +59,10 @@ public class Drivetrain extends Subsystem {
 
     startBrakeMode();
 
-    rightMotorLead.setClosedLoopRampRate(0.1);
-    rightMotorLead.setOpenLoopRampRate(0.1);
-    leftMotorLead.setClosedLoopRampRate(0.1);
-    leftMotorLead.setOpenLoopRampRate(0.1);
+    rightMotorLead.setClosedLoopRampRate(rampRate);
+    rightMotorLead.setOpenLoopRampRate(rampRate);
+    leftMotorLead.setClosedLoopRampRate(rampRate);
+    leftMotorLead.setOpenLoopRampRate(rampRate);
 
     rightMotorLead.setSmartCurrentLimit(60);
     leftMotorLead.setSmartCurrentLimit(60);
@@ -111,7 +113,8 @@ public class Drivetrain extends Subsystem {
   }
 
   public double getAngle() {
-    return ageSwine.getFusedHeading();
+    ageSwine.getYawPitchRoll(yawPitchRollArray);
+    return yawPitchRollArray[0];
   }
 
   double[] yawPitchRollArray = new double[3];
@@ -144,7 +147,51 @@ public class Drivetrain extends Subsystem {
     L.ogSD("Robot Roll", getRoll());
   }
 
-  /******************************************** STUFF FOR PID */
+  /*
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  * STUFF FOR PID 
+  */
   double 
     p = 0.0001, 
     i = 0.0, 

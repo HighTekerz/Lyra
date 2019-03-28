@@ -13,8 +13,11 @@ import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.subsystems.MultiArm;
 import frc.robot.subsystems.MultiArm.MODE;
 
-public class startHatchPanelMode extends Command {
-  public startHatchPanelMode() {
+public class StartHatchPanelMode extends Command {
+
+  private boolean hadHatchPanel;
+
+  public StartHatchPanelMode() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.Subsystems.multiArm);
@@ -23,15 +26,15 @@ public class startHatchPanelMode extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    hadHatchPanel = false;
     Robot.Subsystems.multiArm.setMode(MODE.HATCH_PANEL);
-
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    if (Robot.Subsystems.multiArm.hasHP()){
+    if (Robot.Subsystems.multiArm.hasHP() || hadHatchPanel){
+      hadHatchPanel = true;
        Robot.Subsystems.multiArm.setFingerUp();
     } else {
        Robot.Subsystems.multiArm.setFingerDown(); 
