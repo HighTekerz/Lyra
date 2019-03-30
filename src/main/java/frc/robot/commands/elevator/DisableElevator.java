@@ -24,8 +24,10 @@ public class DisableElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.elevator.isHigh = false;
-    Robot.Subsystems.elevator.disableElevator();
+    Robot.Subsystems.elevator.disablePid();
+    if(timeSinceInitialized() > 5){  
+      Robot.Subsystems.elevator.resetEncoder();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

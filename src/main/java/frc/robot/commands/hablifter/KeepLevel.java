@@ -36,7 +36,7 @@ public class KeepLevel extends Command {
     hL.runOnPidgeon(true);
     hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees() + extraDegrees, maximumOutput);
     L.og("setpoint in degrees: " + hL.getArmOrPitchPositionDegrees() + extraDegrees);
-    hL.enableArm();
+    hL.enablePid();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -54,6 +54,8 @@ public class KeepLevel extends Command {
   @Override
   protected void end() {
     L.ogCmdEnd(this);
+    hL.runOnPidgeon(false);
+    hL.disablePid();
   }
 
   // Called when another command which requires one or more of the same
@@ -62,6 +64,6 @@ public class KeepLevel extends Command {
   protected void interrupted() {
     L.ogCmdInterrupted(this);
     hL.runOnPidgeon(false);
-    hL.disableArm();
+    hL.disablePid();
   }
 }

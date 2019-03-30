@@ -32,7 +32,7 @@ public class DriveWithJoy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    throttle = speedModifications(oi.getRightStickYDip(), 3);
+    throttle = speedModifications(oi.getRightStickYDip(), 5);
     turn = speedModifications(oi.getLeftStickXDip(), 5);
     
     // turn = lowerTurnByThrottle(turn, throttle);
@@ -64,14 +64,17 @@ public class DriveWithJoy extends Command {
       speed = 0.9 * (Math.abs(speed) / speed);
     }
     // if (speed < 0.0){
-    //   speed = -Math.pow(speed, 4);
+    //   speed = -Math.pow(speed, exponent);
     // } else{
-    //   speed = Math.pow(speed, 4);
+    //   speed = Math.pow(speed, exponent);
     // }
     speed = Math.pow(speed, exponent);
     if (Robot.Subsystems.elevator.elevatorTicks < -900 && Math.abs(speed) > .15) {
       speed = 0.15 * (Math.abs(speed) / speed);
     }
+    // if (Math.abs(speed) > 0.9) {
+    //   speed = 0.9 * (Math.abs(speed) / speed);
+    // }
     return speed;
   }
 

@@ -10,6 +10,9 @@ package frc.robot.commands.test;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.hablifter.DeployLegs;
+import frc.robot.commands.hablifter.RunClimberWheels;
+import frc.robot.commands.hablifter.RunClimberWheelsOnAngle;
 
 public class AddTestCommands extends Command {
   public AddTestCommands() {
@@ -37,6 +40,7 @@ public class AddTestCommands extends Command {
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFlap, "2 HP Flap"));
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPPusher, "1 HP Pusher"));
     SmartDashboard.putData(new TestSolenoiods(RobotMap.Pneumatics.hPFinger, "0 HP Finger"));
+    SmartDashboard.putData(new RunClimberWheelsOnAngle(.15, .75, -136));
   }
 
   // Make this return true when this Command no longer needs to run execute()

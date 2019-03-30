@@ -21,7 +21,7 @@ public class OverrideClimber extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    hL.enableArm();
+    hL.enablePid();
     setpoint = hL.getArmOrPitchPositionDegrees();
   }
 

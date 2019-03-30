@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DoNothing;
-import frc.robot.commands.AutoLift.CompleteStageThreeAutoLift;
-import frc.robot.commands.AutoLift.CompleteStageTwoAutoLift;
+import frc.robot.commands.AutoLift.StageThreeAutoLift;
+import frc.robot.commands.AutoLift.StageThreeKeepLevel;
+import frc.robot.commands.AutoLift.StageTwoAutoLift;
 import frc.robot.commands.AutoLift.PrepareStageThreeAutoLift;
 import frc.robot.commands.AutoLift.ReturnToBasePosition;
-import frc.robot.commands.CommandGroups.DriverRightTriggerPanelFeederMode;
+import frc.robot.commands.CommandGroups.PanelFeederMode;
 import frc.robot.commands.CommandGroups.RetractLegsButRunWheels;
 import frc.robot.commands.drivetrain.PowerDrive;
 import frc.robot.commands.drivetrain.PowerTurn;
@@ -92,13 +93,12 @@ public class OI {
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
         slowDriveBack.whileHeld(new PowerDrive(-.05));
 
-        Button startHatchPanelMode = new TriggerButton(dipStick, RIGHT_TRIGGER);
-        startHatchPanelMode.whenPressed(new DriverRightTriggerPanelFeederMode());
+        Button startHatchPanelMode = new TriggerButton(dipStick, RIGHT_BUMPER);
+        startHatchPanelMode.whenPressed(new PanelFeederMode());
 
 
 /*
- * Ripstick
- * 
+ * Ripstick 
  */
 
         Button elevatorToLevel1 = new JoystickButton(ripStick, A_BUTTON);
@@ -119,9 +119,6 @@ public class OI {
         Button overrideClimber = new TriggerButton(ripStick, RIGHT_TRIGGER);
         overrideClimber.whileHeld(new OverrideClimber());
 
-        Button resetElevatorEncoder = new JoystickButton(ripStick, START);
-        resetElevatorEncoder.whenPressed(new ResetElevatorEncoder());
-
         // Button completeStage3 = new JoystickButton(ripStick, START);
         // completeStage3.whenPressed(new CompleteStageThreeAutoLift());
 
@@ -131,33 +128,35 @@ public class OI {
         Button elevatorDisable = new JoystickButton(ripStick, BACK);
         elevatorDisable.toggleWhenPressed(new DisableElevator());
 
+        Button resetElevatorEncoder = new JoystickButton(ripStick, START);
+        resetElevatorEncoder.whenPressed(new ResetElevatorEncoder());
 
 /*
 * Climb Button
 */
 
+        // final double 
+
         Button completeClimb = new JoystickButton(climbButton, 9);
         // completeClimb.whenPressed(new DoNothing());
-        completeClimb.whenPressed(new CompleteStageThreeAutoLift());
+        completeClimb.whenPressed(new StageThreeKeepLevel());
 
         Button foldFlaps = new JoystickButton(climbButton, 6);
-        foldFlaps.whenPressed(new RetractLegsButRunWheels());
+        foldFlaps.whenPressed(new RetractLegs());
+
+        Button sixInAutoClimb = new JoystickButton(climbButton, 8);
+        sixInAutoClimb.whenPressed(new StageTwoAutoLift());
 
 
 /*
 * SmartDashboard
 */
 
-        SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
+        // SmartDashboard.putData("Hab Arm to 18in End Degrees", new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
+        SmartDashboard.putData("StageThreeKeepLevel", new StageThreeKeepLevel());
         SmartDashboard.putData("clear arm encs", new ClearEncoder());
-        SmartDashboard.putData("Stage 2", new CompleteStageTwoAutoLift());
-        SmartDashboard.putData("keep level", new KeepLevel(0.0, 0.25));
-
-/*
-* Lipstick
-*/
-        // Button keepLevel = new JoystickButton(lipStick, START);
-        // keepLevel.whenPressed(new KeepLevel(0.0, 0.3));
+        SmartDashboard.putData("Stage 2", new StageTwoAutoLift());
+        // SmartDashboard.putData("keep level", new KeepLevel(0.0, 0.25));
     }
 
 
@@ -224,6 +223,9 @@ public class OI {
         return lipStick.getYButton();
     }
 
+/*
+* Log
+*/
     public void log() {
     }
 }

@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.drivetrain.DriveWithJoy;
-import frc.robot.commands.drivetrain.StopBrakeMode;
+import frc.robot.commands.drivetrain.StartBrakeMode;
 import frc.robot.tekerz.utilities.L;
 
 public class Drivetrain extends Subsystem {
@@ -46,10 +46,10 @@ public class Drivetrain extends Subsystem {
   private double rampRate = 0.35; // 0.1
 
   public Drivetrain() {
-    rightMotorLead.restoreFactoryDefaults();
-    rightMotorFollower.restoreFactoryDefaults();
-    leftMotorLead.restoreFactoryDefaults();
-    leftMotorFollower.restoreFactoryDefaults();
+    prepareMotor(leftMotorLead);
+    prepareMotor(leftMotorFollower);
+    prepareMotor(rightMotorLead);
+    prepareMotor(rightMotorFollower);
 
     rightMotorFollower.follow(rightMotorLead);
     leftMotorFollower.follow(leftMotorLead);
@@ -58,18 +58,12 @@ public class Drivetrain extends Subsystem {
     rightMotorFollower.setInverted(true);
 
     startBrakeMode();
+  }
 
-    rightMotorLead.setClosedLoopRampRate(rampRate);
-    rightMotorLead.setOpenLoopRampRate(rampRate);
-    leftMotorLead.setClosedLoopRampRate(rampRate);
-    leftMotorLead.setOpenLoopRampRate(rampRate);
-
-    rightMotorLead.setSmartCurrentLimit(60);
-    leftMotorLead.setSmartCurrentLimit(60);
-    rightMotorFollower.setSmartCurrentLimit(60);
-    leftMotorFollower.setSmartCurrentLimit(60);
-
-    // SmartDashboard.putData(this);
+  private void prepareMotor(CANSparkMax motor){
+    motor.restoreFactoryDefaults();
+    motor.setClosedLoopRampRate(rampRate);
+    motor.setSmartCurrentLimit(60);
   }
 
   public void setWheelSpeed(double leftSpeed, double rightSpeed) {
@@ -102,7 +96,7 @@ public class Drivetrain extends Subsystem {
    * a method to check the encoder vaues of the drivetrain wheels, 1 at a time.
    * 
    * @param leftEnc True to get the left value, false to get the right
-   * @return
+   * @return Returns the ticks of the chosen encoder
    */
   public double getEnc(boolean leftEnc) {
     if (leftEnc) {
@@ -112,12 +106,12 @@ public class Drivetrain extends Subsystem {
     }
   }
 
+  double[] yawPitchRollArray = new double[3];
+
   public double getAngle() {
     ageSwine.getYawPitchRoll(yawPitchRollArray);
     return yawPitchRollArray[0];
   }
-
-  double[] yawPitchRollArray = new double[3];
 
   public double getPitch(){
     ageSwine.getYawPitchRoll(yawPitchRollArray);
@@ -139,37 +133,11 @@ public class Drivetrain extends Subsystem {
   }
 
   public void log() {
-    L.ogSD("Left Drive Encoder", getEnc(true));
-    // L.ogSD("Right Drive Encoder", getEnc(false));
     L.ogSD("Robot Angle", getAngle());
-    // L.ogSD("Drivetrain", this);
     L.ogSD("Robot Pitch", getPitch());
-    L.ogSD("Robot Roll", getRoll());
   }
 
   /*
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
-  *
   *
   *
   *

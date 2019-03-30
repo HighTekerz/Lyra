@@ -15,25 +15,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.multiarm.FingerUpWhileSensorTripped;
 import frc.robot.commands.multiarm.HatchFingerHold;
-import frc.robot.commands.multiarm.HatchFingerRelease;
 import frc.robot.tekerz.utilities.L;
 
-/**
- * Add your docs here.
- */
 public class MultiArm extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  public enum MODE {
-    CARGO,
-    HATCH_PANEL,
-    DEFENSE
-  }
-
-  private MODE mode = MODE.DEFENSE;
 
   Solenoid
     cargoArm = RobotMap.Pneumatics.intakeFlap,
@@ -59,14 +44,6 @@ public class MultiArm extends Subsystem {
     setDefaultCommand(new HatchFingerHold());
   }
 
-  public void setMode(MODE mode){
-    this.mode = mode;
-  }
-
-  public MODE getMode() {
-    return this.mode;
-  }
-
   public boolean hasCargo() {
     return cargoSensor.get();
   }
@@ -74,10 +51,6 @@ public class MultiArm extends Subsystem {
   public boolean hasHP() {
     // We want these to return true when we have a hatch panel or when they come unplugged
     return (!this.hPSensor0.get() && !this.hPSensor1.get());
-  }
-
-  public void runIntake(double speed) {
-    this.cargoIntake.set(ControlMode.PercentOutput, speed);
   }
 
   public void cargoArmUp() {
@@ -124,10 +97,7 @@ public class MultiArm extends Subsystem {
   }
 
   public void log() {
-    L.ogSD("Hatch flap in system", hasHP());
-    L.ogSD("Hatch flap is up", isHPFlapUp());
-    L.ogSD("HP Sensor 0", hPSensor0.get());
-    L.ogSD("HP Sensor 1", hPSensor1.get());
-    L.ogSD("MultiArm", this);
+    L.ogSD("Hatch panel in system", hasHP());
+    // L.ogSD("MultiArm", this);
   }
 }

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.subsystems.MultiArm;
-import frc.robot.subsystems.MultiArm.MODE;
 
 public class StartHatchPanelMode extends Command {
 
@@ -27,7 +26,6 @@ public class StartHatchPanelMode extends Command {
   @Override
   protected void initialize() {
     hadHatchPanel = false;
-    Robot.Subsystems.multiArm.setMode(MODE.HATCH_PANEL);
   }
 
   // Called repeatedly when this Command is scheduled to run

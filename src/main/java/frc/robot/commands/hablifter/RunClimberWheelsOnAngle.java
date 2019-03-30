@@ -5,19 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.MultiArm;
+import frc.robot.subsystems.HabLifter;
+import frc.robot.subsystems.HabLifterWheels;
 import frc.robot.tekerz.utilities.L;
 
-public class CargoCollect extends Command {
-  private MultiArm mA = Robot.Subsystems.multiArm;
+public class RunClimberWheelsOnAngle extends Command {
+  
+  HabLifterWheels hLW = Robot.Subsystems.habLifterWheels;
+  HabLifter hL = Robot.Subsystems.habLifter;
+  double wheelSpeedLow, wheelSpeedFast, angleToSpeedUp;
 
-  public CargoCollect() {
-    requires(mA);
+  public RunClimberWheelsOnAngle(double wheelSpeedLow, double wheelSpeedFast, double angleToSpeedUp) {
+    requires(hLW);
+    this.wheelSpeedLow = wheelSpeedLow;
+    this.angleToSpeedUp = angleToSpeedUp;
+    this.wheelSpeedFast = wheelSpeedFast;
   }
+
+  // public RunClimberWheels(double wheelSpeed, boolean neverStop) {
+  //   requires(hL);
+  //   this.wheelSpeed = wheelSpeed;
+  // }
 
   // Called just before this Command runs the first time
   @Override
@@ -28,12 +40,12 @@ public class CargoCollect extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (!mA.hasCargo()) {
-      mA.setCargoIntakeSpeed(0.5);
-    } else {
-      mA.setCargoIntakeSpeed(0.0);
+    if(Robot.Subsystems.habLifter.getDegrees() < angleToSpeedUp){
+      hL.driveWheels(wheelSpeedFast);
     }
-
+    else{
+      hL.driveWheels(wheelSpeedLow);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -45,11 +57,14 @@ public class CargoCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
+    hL.driveWheels(0);
   }
 }

@@ -22,19 +22,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.tekerz.utilities.L;
 
-/**
- * Add your docs here.
- */
 public class Elevator extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
   public static double MOTOR_HOLD_VALUE = -0.167,
+
   // measured ticks
   TICKS_PER_INCH = -934.0 / 28.0, //-33.357
   // system length is 30 inches
   MAX_ERROR = 30 * TICKS_PER_INCH,
 
-  STARTING_OFFSET = 16.5, //(15.25), +5.75 from initial 11.75 (9.5)
+  STARTING_OFFSET = 18.75,
   Level_1HALF = 5.0,
   HP_FEEDER_PICKUP = 19.5,
   HP_LEVEL_1 = 21.5,
@@ -46,19 +43,18 @@ public class Elevator extends Subsystem {
   CARGO_LEVEL_2 = CARGO_LEVEL_1 + 28.0,
   CARGO_LEVEL_3 = CARGO_LEVEL_2 + 28.0;
 
-  public boolean 
-    isHigh;
-
   TalonSRX 
     liftLead = RobotMap.Talons.liftLead,
     liftFollower = RobotMap.Talons.liftFollower;
 
   double 
-  p = 0.002,
-  //TODO: Create an I value and drop the P by a suitable amount
-  i = 0.0,
-  d = 0.0,
-  loopLengthInSeconds = .02;
+    p = 0.002,
+    i = 0.0,
+    d = 0.0,
+    loopLengthInSeconds = .02;
+
+  public double
+    elevatorTicks;
 
   private final PIDOutput output = this::setElevatorPIDOutput;
   private final PIDSource input = new PIDSource() {
@@ -100,6 +96,10 @@ public class Elevator extends Subsystem {
     SmartDashboard.putData(this);
   }
 
+  @Override
+  protected void initDefaultCommand() {
+  }
+
   private void setElevatorPIDOutput(double out) {
     liftLead.set(ControlMode.PercentOutput, out);
     L.ogSD("PID Elevator ouput", out);
@@ -110,31 +110,23 @@ public class Elevator extends Subsystem {
   }
 
   public void setSetpoint(double setpointInInches) {
-    isHigh = setpointInInches > DRIVE_SLOW_HEIGHT? true:false;
     this.pIDLoop.setSetpoint((setpointInInches - STARTING_OFFSET) * TICKS_PER_INCH);
   }
 
-  public void enableElevator() {
+  public void enablePid() {
     this.pIDLoop.enable();
   }
 
-  public void disableElevator() {
+  public void disablePid() {
     this.pIDLoop.disable();
   }
 
-  public void resetElevatorEncoder(){
+  public void resetEncoder(){
     liftLead.setSelectedSensorPosition(0);
   }
-
-  public double elevatorTicks;
 
   public void log() {
     elevatorTicks = getElevatorPosition();
     L.ogSD("Elevator Ticks", elevatorTicks);
-    L.ogSD("elevator speed", liftLead.getMotorOutputPercent());
-  }
-
-  @Override
-  protected void initDefaultCommand() {
   }
 }

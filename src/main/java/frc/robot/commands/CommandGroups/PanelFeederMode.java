@@ -13,13 +13,9 @@ import frc.robot.commands.elevator.SetElevatorHeight;
 import frc.robot.commands.multiarm.StartHatchPanelMode;
 import frc.robot.subsystems.Elevator;
 
-public class DriverRightTriggerPanelFeederMode extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public DriverRightTriggerPanelFeederMode() {
-    // addSequential(new DisableElevator());
-    addSequential(new SetElevatorHeight(Elevator.HP_FEEDER_PICKUP), 2);
+public class PanelFeederMode extends CommandGroup {
+  public PanelFeederMode() {
+    addSequential(new DisableElevator());
     addSequential(new StartHatchPanelMode());
   }
 }

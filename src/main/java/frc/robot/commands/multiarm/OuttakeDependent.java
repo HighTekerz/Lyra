@@ -5,30 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.drivetrain;
+package frc.robot.commands.multiarm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.MultiArm;
 
-public class StopBrakeMode extends Command {
-  public StopBrakeMode() {
+public class OuttakeDependent extends Command {
+  
+  MultiArm m = Robot.Subsystems.multiArm;
+
+  private boolean hpKickoff;
+
+  public OuttakeDependent() {
+    requires(m);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.Subsystems.drivetrain.startCoastMode();
+    if (m.isHPFlapUp()){
+      hpKickoff = true;
+    }
+    else{
+      hpKickoff = false;
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(hpKickoff){
+      m.setFingerDown();
+      m.hPPusherOut();
+    } 
+    else{
+      m.setCargoIntakeSpeed(0.5);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -40,5 +59,7 @@ public class StopBrakeMode extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    m.hPPusherIn();
+    m.setCargoIntakeSpeed(0.0);
   }
 }

@@ -10,22 +10,25 @@ package frc.robot.commands.AutoLift;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.DoNothing;
 import frc.robot.commands.drivetrain.DriveForDistance;
+import frc.robot.commands.drivetrain.StartBrakeMode;
+import frc.robot.commands.drivetrain.StartCoastMode;
+import frc.robot.commands.hablifter.DeployLegs;
 import frc.robot.commands.hablifter.RunClimberWheels;
 import frc.robot.commands.hablifter.SetHabArmPosition;
+import frc.robot.subsystems.HabLifter;
 
-public class CompleteStageTwoAutoLift extends CommandGroup {
+public class StageThreeAutoLift extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CompleteStageTwoAutoLift() {
-    addSequential(new SetHabArmPosition(-100.0, 0.5));
-    addSequential(new SetHabArmPosition(-145.0, 0.5));
-    addParallel(new RunClimberWheels(.4));
-    addSequential(new DriveForDistance(-20.0, 0.4));
-    addSequential(new SetHabArmPosition(-170.0, 0.5));
-    addSequential(new DriveForDistance(-14.0, 0.4));
-    addSequential(new SetHabArmPosition(-90.0));
-    addSequential(new DoNothing(.5));
-    addSequential(new DriveForDistance(-4.0, 0.2));
+  public StageThreeAutoLift() {
+    addSequential(new StartCoastMode());
+    addParallel(new RunClimberWheels(0.75));
+    addSequential(new DeployLegs());
+    addSequential(new DoNothing(1.25));
+    // addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB * .85));
+    addSequential(new SetHabArmPosition(HabLifter.END_DEGREES_FOR_HAB_CLIMB));
+    addParallel(new RunClimberWheels(0.75));
+    // addSequential(new DriveForDistance(-12.0, .75));
   }
 }

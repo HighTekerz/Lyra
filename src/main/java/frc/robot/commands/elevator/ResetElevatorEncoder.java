@@ -23,7 +23,8 @@ public class ResetElevatorEncoder extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.elevator.resetElevatorEncoder();
+    Robot.Subsystems.elevator.disablePid();
+    Robot.Subsystems.elevator.resetEncoder();
   }
 
   // Make this return true when this Command no longer needs to run execute()

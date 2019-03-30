@@ -23,7 +23,7 @@ public class StopRightThereCriminalScum extends Command {
   protected void initialize() {
     L.ogCmdInit(this);
     hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees());
-    hL.enableArm();
+    hL.enablePid();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -47,6 +47,6 @@ public class StopRightThereCriminalScum extends Command {
   @Override
   protected void interrupted() {
     L.ogCmdInterrupted(this);
-    hL.disableArm();
+    hL.disablePid();
   }
 }

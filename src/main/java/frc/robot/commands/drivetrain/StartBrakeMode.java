@@ -5,49 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.MultiArm;
 
-public class OuttakeDependant extends Command {
-  
-  MultiArm m = Robot.Subsystems.multiArm;
-
-  private boolean hpKickoff;
-
-  public OuttakeDependant() {
-    requires(m);
+public class StartBrakeMode extends Command {
+  public StartBrakeMode() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (m.isHPFlapUp()){
-      hpKickoff = true;
-    }
-    else{
-      hpKickoff = false;
-    }
+    Robot.Subsystems.drivetrain.startBrakeMode();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(hpKickoff){
-      m.setFingerDown();
-      m.hPPusherOut();
-    } 
-    else{
-      m.runIntake(0.5);
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
@@ -59,7 +40,5 @@ public class OuttakeDependant extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    m.hPPusherIn();
-    m.runIntake(0.0);
   }
 }

@@ -28,9 +28,6 @@ import frc.robot.RobotMap;
 import frc.robot.commands.hablifter.StopRightThereCriminalScum;
 import frc.robot.tekerz.utilities.L;
 
-/**
- * The hablifter implements the 
- */
 public class HabLifter extends Subsystem {
   // we had 32 rotations per 90 degrees
   private final double 
@@ -167,7 +164,12 @@ public class HabLifter extends Subsystem {
       return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
     }
   }
-  /**
+
+  public double getDegrees(){
+    return habLifterEnc.getPosition() / ROTATIONS_PER_DEGREE;
+  }
+
+ /**
  * Maximum output in each direction is 0.2 when this function is used
  * 
  * @param setpointInDegrees the angle (in degrees) you want the arm to travel to.
@@ -182,12 +184,11 @@ public class HabLifter extends Subsystem {
     this.pIDLoop.setSetpoint(setpoint);
   }
 
-
-  public void enableArm() {
+  public void enablePid() {
     this.pIDLoop.enable();
   }
 
-  public void disableArm() {
+  public void disablePid() {
     this.pIDLoop.disable();
   }
 
@@ -196,6 +197,6 @@ public class HabLifter extends Subsystem {
   }
   
   public void log() {
-    L.ogSD("PID ARM Sensor Degrees", getArmOrPitchPositionDegrees());
+    L.ogSD("Climber Degrees", getDegrees());
   }
 }

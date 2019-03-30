@@ -35,7 +35,7 @@ public class SetHabArmPosition extends Command {
     L.ogCmdInit(this);
     h.setArmSetpoint(positionInDegrees, maximumOutput);
     L.og("setpoint in degrees: " + positionInDegrees);
-    h.enableArm();
+    h.enablePid();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -60,6 +60,6 @@ public class SetHabArmPosition extends Command {
   @Override
   protected void interrupted() {
     L.ogCmdInterrupted(this);
-    h.disableArm();
+    h.disablePid();
   }
 }

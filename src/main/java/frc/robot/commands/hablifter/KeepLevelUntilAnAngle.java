@@ -5,51 +5,68 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.hablifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.MultiArm;
+import frc.robot.subsystems.HabLifter;
 import frc.robot.tekerz.utilities.L;
 
-public class CargoCollect extends Command {
-  private MultiArm mA = Robot.Subsystems.multiArm;
+public class KeepLevelUntilAnAngle extends Command {
 
-  public CargoCollect() {
-    requires(mA);
+  double 
+    extraDegrees,
+    maximumOutput;
+
+  HabLifter hL = Robot.Subsystems.habLifter;
+  
+  /**
+   * @param extraDegrees degrees past level you'd like to stop at
+   */
+  public KeepLevelUntilAnAngle(double extraDegrees, double maximumOutput){
+    requires(hL);
+    this.extraDegrees = extraDegrees;
+    this.maximumOutput = maximumOutput;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
+    hL.runOnPidgeon(true);
+    hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees() + extraDegrees, maximumOutput);
+    L.og("setpoint in degrees: " + hL.getArmOrPitchPositionDegrees() + extraDegrees);
+    hL.enablePid();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (!mA.hasCargo()) {
-      mA.setCargoIntakeSpeed(0.5);
-    } else {
-      mA.setCargoIntakeSpeed(0.0);
-    }
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if(Robot.Subsystems.habLifter.getDegrees() < -137){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    L.ogCmdEnd(this);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
+    hL.runOnPidgeon(false);
+    hL.disablePid();
   }
 }

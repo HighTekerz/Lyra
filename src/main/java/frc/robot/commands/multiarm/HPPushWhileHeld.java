@@ -10,7 +10,6 @@ package frc.robot.commands.multiarm;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.MultiArm;
-import frc.robot.subsystems.MultiArm.MODE;
 
 public class HPPushWhileHeld extends Command {
   MultiArm m = Robot.Subsystems.multiArm;
@@ -22,7 +21,6 @@ public class HPPushWhileHeld extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    m.setMode(MODE.DEFENSE);
   }
 
   // Called repeatedly when this Command is scheduled to run

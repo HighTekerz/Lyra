@@ -28,7 +28,7 @@ public class SetElevatorHeight extends Command {
   protected void initialize() {
     L.ogCmdInit(this);
     el.setSetpoint(targetHeightInInches);
-    el.enableElevator();
+    el.enablePid();
   }
 
   // Called repeatedly when this Command is scheduled to run

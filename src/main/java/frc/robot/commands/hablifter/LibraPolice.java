@@ -23,14 +23,14 @@ public class LibraPolice extends Command {
   protected void initialize() {
     L.ogCmdInit(this);
     hL.setArmSetpoint(hL.getArmOrPitchPositionDegrees());
-    hL.enableArm();
+    hL.enablePid();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.Subsystems.drivetrain.getPitch() < 30){
-      hL.setArmSetpoint(hL.START_DEGREES_FOR_HAB_CLIMB);      
+    if(Robot.Subsystems.drivetrain.getPitch() < -30){
+      hL.setArmSetpoint(HabLifter.START_DEGREES_FOR_HAB_CLIMB, 0.5);
     }
     else{
       hL.setArmSetpoint(0.0);

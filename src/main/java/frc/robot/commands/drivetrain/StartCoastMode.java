@@ -5,41 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.multiarm;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.tekerz.utilities.L;
 
-public class HPPushShortTime extends Command {
-  private boolean amIFinished = false;
-
-  public HPPushShortTime() {
-    requires(Robot.Subsystems.multiArm);
+public class StartCoastMode extends Command {
+  public StartCoastMode() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    amIFinished = false;
-    L.ogCmdInit(this);
+    Robot.Subsystems.drivetrain.startCoastMode();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (timeSinceInitialized() < 0.5) {
-      Robot.Subsystems.multiArm.hPPusherOut();
-    } else {
-      Robot.Subsystems.multiArm.hPPusherIn();
-      amIFinished = true;
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return amIFinished;
+    return true;
   }
 
   // Called once after isFinished returns true
