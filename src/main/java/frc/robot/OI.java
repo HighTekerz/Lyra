@@ -93,7 +93,7 @@ public class OI {
         Button slowDriveBack = new DpadButton(dipStick, 0, 180);
         slowDriveBack.whileHeld(new PowerDrive(-.05));
 
-        Button startHatchPanelMode = new TriggerButton(dipStick, RIGHT_BUMPER);
+        Button startHatchPanelMode = new JoystickButton(dipStick, RIGHT_BUMPER);
         startHatchPanelMode.whenPressed(new PanelFeederMode());
 
 

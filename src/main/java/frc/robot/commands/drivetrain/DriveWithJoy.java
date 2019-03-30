@@ -32,8 +32,8 @@ public class DriveWithJoy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    throttle = speedModifications(oi.getRightStickYDip(), 5);
-    turn = speedModifications(oi.getLeftStickXDip(), 5);
+    throttle = speedModifications(oi.getRightStickYDip(), 3);
+    turn = speedModifications(oi.getLeftStickXDip(), 3);
     
     // turn = lowerTurnByThrottle(turn, throttle);
 

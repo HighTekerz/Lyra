@@ -98,6 +98,8 @@ public class MultiArm extends Subsystem {
 
   public void log() {
     L.ogSD("Hatch panel in system", hasHP());
-    // L.ogSD("MultiArm", this);
+    L.ogSD("HP Switch 1", hPSensor0.get());
+    L.ogSD("HP Switch 2", hPSensor1.get());
+    L.ogSD("MultiArm", this);
   }
 }
