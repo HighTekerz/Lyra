@@ -10,6 +10,7 @@ package frc.robot.commands.elevator;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
+import frc.robot.tekerz.utilities.L;
 
 public class DisableElevator extends Command {
   public DisableElevator() {
@@ -19,6 +20,7 @@ public class DisableElevator extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdInit(this);
   }
 
   // Called repeatedly when this Command is scheduled to run

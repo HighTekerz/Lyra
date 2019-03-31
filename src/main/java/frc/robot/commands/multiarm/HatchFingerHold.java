@@ -43,5 +43,6 @@ public class HatchFingerHold extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    L.ogCmdInterrupted(this);
   }
 }

@@ -15,7 +15,7 @@ import frc.robot.subsystems.Elevator;
 
 public class PanelFeederMode extends CommandGroup {
   public PanelFeederMode() {
-    addSequential(new DisableElevator());
+    addParallel(new DisableElevator());
     addSequential(new StartHatchPanelMode());
   }
 }
