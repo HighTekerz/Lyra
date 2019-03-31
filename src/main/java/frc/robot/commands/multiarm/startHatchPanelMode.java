@@ -11,20 +11,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.Rioduino.SetMode;
 import frc.robot.subsystems.MultiArm;
+import frc.robot.tekerz.utilities.L;
 
 public class StartHatchPanelMode extends Command {
 
   private boolean hadHatchPanel;
 
   public StartHatchPanelMode() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.Subsystems.multiArm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    L.ogCmdEnd(this);
     hadHatchPanel = false;
   }
 
