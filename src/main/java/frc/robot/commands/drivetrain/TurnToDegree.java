@@ -40,22 +40,30 @@ public class TurnToDegree extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {			
+		// if (relativeDegreeToReach > Robot.Subsystems.drivetrain.getAngle()) {
+		// 	speed = -Math.abs(speed);
+		// }
+		// else {
+		// 	speed = Math.abs(speed);
+		// }
+
 		if (relativeDegreeToReach > Robot.Subsystems.drivetrain.getAngle()) {
-			speed = -Math.abs(speed);
+			Robot.Subsystems.drivetrain.setWheelSpeed(0, -speed);
 		}
 		else {
-			speed = Math.abs(speed);
+			Robot.Subsystems.drivetrain.setWheelSpeed(-speed, 0);
 		}
 
 		currentAngle = Robot.Subsystems.drivetrain.getAngle();
 
-		Robot.Subsystems.drivetrain.arcadeDrive(0, speed);
+		// Robot.Subsystems.drivetrain.arcadeDrive(-speed, -speed);
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-    if (currentAngle > relativeDegreeToReach - acceptableError &&
-        currentAngle < relativeDegreeToReach + acceptableError) {
+    if (currentAngle > relativeDegreeToReach + acceptableError &&
+        currentAngle < relativeDegreeToReach - acceptableError) {
 			System.out.println("TurnToDegree Is Finished at: " + currentAngle);
 			return true;
 		} else {

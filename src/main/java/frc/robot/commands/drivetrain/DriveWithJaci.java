@@ -27,16 +27,19 @@ public class DriveWithJaci extends Command {
 	public TankModifier modifier;
 	public EncoderFollower left;
   public EncoderFollower right;
+  double startLeftEnc, startRightEnc;
+
   
   private final double 
     DELTA_TIME = 0.02, 
-    MAX_VEL = 0.3,
-    MAX_ACCEL = 0.3,
-    MAX_JERK = 0.5,
+    MAX_VEL = 3.0,
+    MAX_ACCEL = 2.0,
+    MAX_JERK = 0.9,
     WHEELBASE_WIDTH = 25.0 * 0.0254,
     WHEEL_DIAMETER_METERS = 7.75 * 0.0254, //in * in/meter
-    P = 0.001;
-  private final int TICKS_PER_REV = 1000;
+    P = 0.00005,
+    TRANSMISSION_TICKS = 10710;
+  private final int TICKS_PER_MOTOR_REV = 1000;
   
 
   /** used to run a path of points
@@ -48,7 +51,7 @@ public class DriveWithJaci extends Command {
 
     config = new Trajectory.Config(
       Trajectory.FitMethod.HERMITE_CUBIC, 
-      Trajectory.Config.SAMPLES_HIGH, 
+      Trajectory.Config.SAMPLES_FAST, 
       DELTA_TIME, 
       MAX_VEL,
       MAX_ACCEL,
@@ -60,7 +63,7 @@ public class DriveWithJaci extends Command {
   private void setupPath() {
     trajectory = Pathfinder.generate(points, config);
     for (Segment s : trajectory.segments) {
-      System.out.println(String.format("%3f %3f %3f %3f", s.x, s.velocity, s.acceleration, s.jerk));
+      System.out.println(String.format("%.3f %.3f %.3f %.3f", s.x, s.velocity, s.acceleration, s.jerk));
     }
 
 		// TODO find distance between front and rear axles of a vehicle
@@ -70,11 +73,11 @@ public class DriveWithJaci extends Command {
   }
 
   private int getLeft() {
-    return (int)(dt.getEnc(true) * 1000.0);
+    return (int)((dt.getEnc(true)-startLeftEnc) * TRANSMISSION_TICKS);
   }
 
   private int getRight() {
-    return (int)(dt.getEnc(false) * 1000.0);
+    return (int)((dt.getEnc(false)-startLeftEnc) * TRANSMISSION_TICKS);
   }
 
 
@@ -82,9 +85,12 @@ public class DriveWithJaci extends Command {
   @Override
   protected void initialize() {
     dt.resetYaw();
-    dt.clearEncoders();
-    left.configureEncoder(getLeft(), TICKS_PER_REV, WHEEL_DIAMETER_METERS);
-		right.configureEncoder(getRight(), TICKS_PER_REV, WHEEL_DIAMETER_METERS);
+    startLeftEnc = dt.getEnc(true);
+    startRightEnc = dt.getEnc(false);
+    
+    // dt.clearEncoders();
+    left.configureEncoder(getLeft(), TICKS_PER_MOTOR_REV, WHEEL_DIAMETER_METERS);
+		right.configureEncoder(getRight(), TICKS_PER_MOTOR_REV, WHEEL_DIAMETER_METERS);
 		left.configurePIDVA(P, 0.0, 0.0, (1 / MAX_VEL), 0.0);
     right.configurePIDVA(P, 0.0, 0.0, (1 / MAX_VEL), 0.0);
   }
@@ -104,7 +110,7 @@ public class DriveWithJaci extends Command {
     SmartDashboard.putNumber("jaci R", r);
     SmartDashboard.putNumber("jaci T", turn);
 
-    // System.out.println(String.format("%3f %3f %3f", l, dt.getEnc(true), dt.getEncLSpeed()));
+    System.out.println(String.format("%3f %3f %3f", l, getLeft() / this.TRANSMISSION_TICKS, dt.getEncLSpeed()));
 
     dt.setWheelSpeed(l, r);
   }

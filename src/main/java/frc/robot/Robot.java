@@ -13,6 +13,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DoNothing;
+import frc.robot.commands.CommandGroups.PlaceAndReverse;
+import frc.robot.commands.CommandGroups.Turn180;
+import frc.robot.commands.drivetrain.DriveByPorcupine;
+import frc.robot.commands.drivetrain.DriveForDistance;
+import frc.robot.commands.drivetrain.DriveWithJaci;
+import frc.robot.commands.drivetrain.TurnToDegree;
 import frc.robot.commands.test.AddTestCommands;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -22,6 +28,7 @@ import frc.robot.subsystems.MultiArm;
 import frc.robot.subsystems.Sensors;
 import frc.robot.tekerz.Rioduino;
 import frc.robot.tekerz.utilities.L;
+import jaci.pathfinder.Waypoint;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -58,6 +65,18 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putData(new AddTestCommands());
     SmartDashboard.putData(Scheduler.getInstance());
+
+    Waypoint[] testPoints  =  new  Waypoint[] {
+      new  Waypoint(0.0, 0.0, 0.0),
+      new  Waypoint(4.0, 0.0, 0.0),
+    };
+    // SmartDashboard.putData("test path", new  DriveWithJaci(testPoints));
+    // SmartDashboard.putData("Tekerz Path(z)", new DriveByPorcupine(88, 88, 0.5, 0.0, true));
+    // SmartDashboard.putData("Cargo Front Auto", new DriveByPorcupine(62, 62, 0.3, 0.0, true));
+    SmartDashboard.putData(new DriveForDistance(24.0, 0.4));
+    SmartDashboard.putData(new PlaceAndReverse());
+    SmartDashboard.putData(new Turn180());
+    SmartDashboard.putData(new TurnToDegree(90, 1));
   }
 
   /**

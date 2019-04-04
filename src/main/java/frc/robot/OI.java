@@ -41,6 +41,7 @@ import frc.robot.commands.multiarm.HatchFingerHold;
 import frc.robot.commands.multiarm.HatchFingerRelease;
 import frc.robot.commands.multiarm.HatchFlapDown;
 import frc.robot.commands.multiarm.HatchFlapUp;
+import frc.robot.commands.multiarm.LightOn;
 import frc.robot.commands.multiarm.StartHatchPanelMode;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HabLifter;
@@ -95,6 +96,9 @@ public class OI {
 
         Button startHatchPanelMode = new JoystickButton(dipStick, RIGHT_BUMPER);
         startHatchPanelMode.whenPressed(new PanelFeederMode());
+
+        Button runLED = new JoystickButton(dipStick, A_BUTTON);
+        runLED.whileHeld(new LightOn());
 
 
 /*

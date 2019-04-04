@@ -27,7 +27,7 @@ public class MultiArm extends Subsystem {
     hPFinger = RobotMap.Pneumatics.hPFinger;
 
   TalonSRX
-    cargoIntake = RobotMap.Talons.intake;
+    brightLight = RobotMap.Talons.intake;
 
   DigitalInput
     hPSensor0 = RobotMap.Switches.hPSensor0,
@@ -36,7 +36,14 @@ public class MultiArm extends Subsystem {
 
   public MultiArm() {
     TalonSRXConfiguration config = new TalonSRXConfiguration();
-    cargoIntake.configAllSettings(config);
+    brightLight.configAllSettings(config);
+
+    ///JUST FOR LED
+    brightLight.enableCurrentLimit(true);
+    brightLight.configPeakCurrentDuration(1);
+    brightLight.configPeakCurrentLimit(1);
+    brightLight.configContinuousCurrentLimit(1);
+
   }
 
   @Override
@@ -78,7 +85,7 @@ public class MultiArm extends Subsystem {
   }
 
   public void setCargoIntakeSpeed(double speed){
-    cargoIntake.set(ControlMode.PercentOutput, speed);
+    brightLight.set(ControlMode.PercentOutput, speed);
   }
 
   public void setFingerUp(){
@@ -94,6 +101,18 @@ public class MultiArm extends Subsystem {
    */
   public boolean isHPFlapUp(){
     return !hPFlap.get();
+  }
+
+  public void runLED() {
+    brightLight.set(ControlMode.PercentOutput, exactVoltage(4.0, brightLight.getBusVoltage()));
+  }
+
+  public void killLED() {
+    brightLight.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  public double exactVoltage(double requiredVoltage, double busVolatage){
+    return requiredVoltage/busVolatage;
   }
 
   public void log() {

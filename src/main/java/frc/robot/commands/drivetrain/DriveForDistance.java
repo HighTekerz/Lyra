@@ -13,6 +13,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.tekerz.utilities.L;
 
 public class DriveForDistance extends Command {
+  Drivetrain dt = Robot.Subsystems.drivetrain;
   Double 
     inches,
     speed, 
@@ -22,7 +23,7 @@ public class DriveForDistance extends Command {
   boolean reverse;
 
   public DriveForDistance(Double inches, double speed) {
-    requires(Robot.Subsystems.drivetrain);
+    requires(dt);
     this.inches = inches;
     this.speed = speed;
     if (inches < 0) {
@@ -35,31 +36,31 @@ public class DriveForDistance extends Command {
   @Override
   protected void initialize() {
     L.ogCmdInit(this);
-    Robot.Subsystems.drivetrain.startBrakeMode();
-    tickTargetLeft = (inches * Drivetrain.TICKS_PER_INCH) + Robot.Subsystems.drivetrain.getEnc(true);
-    tickTargetRight = (inches * Drivetrain.TICKS_PER_INCH) + Robot.Subsystems.drivetrain.getEnc(false);
+    dt.startBrakeMode();
+    tickTargetLeft = (inches * Drivetrain.TICKS_PER_INCH) + dt.getEnc(true);
+    tickTargetRight = (inches * Drivetrain.TICKS_PER_INCH) + dt.getEnc(false);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.Subsystems.drivetrain.arcadeDrive(speed, 0.0);
+    dt.arcadeDrive(speed, 0.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     if (reverse) {
-      if (Robot.Subsystems.drivetrain.getEnc(true) <= tickTargetLeft
-          && Robot.Subsystems.drivetrain.getEnc(false) <= tickTargetRight) {
+      if (dt.getEnc(true) <= tickTargetLeft
+          && dt.getEnc(false) <= tickTargetRight) {
         return true;
       } else {
         log();
         return false;
       }
     } else{
-      if (Robot.Subsystems.drivetrain.getEnc(true) >= tickTargetLeft
-      && Robot.Subsystems.drivetrain.getEnc(false) >= tickTargetRight) {
+      if (dt.getEnc(true) >= tickTargetLeft
+      && dt.getEnc(false) >= tickTargetRight) {
     return true;
   } else {
     log();
@@ -73,6 +74,7 @@ public class DriveForDistance extends Command {
   @Override
   protected void end() {
     L.ogCmdEnd(this);
+    dt.arcadeDrive(0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same
@@ -83,11 +85,11 @@ public class DriveForDistance extends Command {
   }
 
   public void log() {
-    if (Robot.Subsystems.drivetrain.getEnc(true) < tickTargetLeft) {
-      L.og("I have not reached LEFT target. currently: " + Robot.Subsystems.drivetrain.getEnc(true));
+    if (dt.getEnc(true) < tickTargetLeft) {
+      L.og("I have not reached LEFT target. currently: " + dt.getEnc(true));
     }
-    if (Robot.Subsystems.drivetrain.getEnc(false) < tickTargetRight) {
-      L.og("I have not reached RIGHT target. currently: " + Robot.Subsystems.drivetrain.getEnc(false));
+    if (dt.getEnc(false) < tickTargetRight) {
+      L.og("I have not reached RIGHT target. currently: " + dt.getEnc(false));
     }
   }
 }

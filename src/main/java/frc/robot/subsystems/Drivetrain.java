@@ -19,9 +19,11 @@ import edu.wpi.first.wpilibj.Counter.Mode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.drivetrain.DriveWithJaci;
 import frc.robot.commands.drivetrain.DriveWithJoy;
 import frc.robot.commands.drivetrain.StartBrakeMode;
 import frc.robot.tekerz.utilities.L;
+import jaci.pathfinder.Waypoint;
 
 public class Drivetrain extends Subsystem {
   CANSparkMax 
@@ -36,14 +38,15 @@ public class Drivetrain extends Subsystem {
 
   public static double
   // TODO: fix this number
-  TICKS_PER_INCH = 0.5;
+  TICKS_PER_INCH = .2;
 
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new DriveWithJoy());
   }
 
-  private double rampRate = 0.35; // 0.1
+  private double 
+  rampRate = 0.35; // 0.1
 
   public Drivetrain() {
     prepareMotor(leftMotorLead);
@@ -58,6 +61,9 @@ public class Drivetrain extends Subsystem {
     rightMotorFollower.setInverted(true);
 
     startBrakeMode();
+
+    
+
   }
 
   private void prepareMotor(CANSparkMax motor){
@@ -105,6 +111,13 @@ public class Drivetrain extends Subsystem {
       return driveEncRight.getPosition();
     }
   }
+  public double getEncLSpeed() {
+    return driveEncLeft.getVelocity();
+  }
+  
+  public double getEncRSpeed() {
+    return driveEncRight.getVelocity();
+  }
 
   double[] yawPitchRollArray = new double[3];
 
@@ -133,6 +146,9 @@ public class Drivetrain extends Subsystem {
   }
 
   public void log() {
+    L.ogSD("left", getEnc(true));
+    L.ogSD("Speed Left", getEncLSpeed());
+
     L.ogSD("Robot Angle", getAngle());
     L.ogSD("Robot Pitch", getPitch());
   }

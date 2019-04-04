@@ -38,6 +38,9 @@ public class DriveWithJoy extends Command {
     // turn = lowerTurnByThrottle(turn, throttle);
 
     drivetrain.arcadeDrive(throttle, turn);
+
+    // System.out.println("left Enc Speed: " + drivetrain.getEncLSpeed());
+    // System.out.println("right Enc Speed: " + drivetrain.getEncRSpeed());
   }
 
   // Make this return true when this Command no longer needs to run execute()
